@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include SessionsHelper
+  include AttendancesHelper
   
   $days_of_the_week = %w{日 月 火 水 木 金 土}
   
@@ -46,7 +47,7 @@ class ApplicationController < ActionController::Base
       end
       @attendances = @user.attendances.where(worked_on: @first_day..@last_day).order(:worked_on)
     end
-
+    
   rescue ActiveRecord::RecordInvalid
     flash[:danger] = "ページ情報の取得に失敗しました、再アクセスしてください。"
     redirect_to root_url

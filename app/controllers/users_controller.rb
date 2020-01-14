@@ -7,8 +7,16 @@ class UsersController < ApplicationController
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
   before_action :set_one_month, only: :show
   
-  def index 
-    @users = User.paginate(page: params[:page])
+  def index
+    @users = if params[:search]
+      User.paginate(page: params[:page]).search(params[:search])
+    else
+      User.paginate(page: params[:page])
+    end
+  end
+  
+  def search
+    @users = User.search(params[:search]).paginate(page: params[:page])
   end
   
   def show

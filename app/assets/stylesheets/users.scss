@@ -1,3 +1,10 @@
+/* ユーザー情報テーブル */
+
+.user-table {
+  vertical-align: middle;
+  twxt-align: center;
+}
+
 /* ユーザー情報下ボタン */
 
 .btn-users-show {
@@ -11,8 +18,6 @@
     vertical-align: middle;
     text-align: center;
   }
-  
-  #table-attendances {
   td {
     vertical-align: middle;
     text-align: center;
@@ -43,15 +48,4 @@
   td {
     vertical-align: middle;
   }
-}
-
-/* 基本情報編集モーダルウインドウ */
-
-.label-basic-info {
-  margin-top: 5px;
-}
-
-.btn-basic-info {
-  margin: 15px 0;
-  width: 30%;
 }

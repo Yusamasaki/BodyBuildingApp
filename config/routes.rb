@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get    '/login', to: 'sessions#new'
   post   '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
-
+  
   resources :users do
     member do
       get 'edit_basic_info'
@@ -14,6 +14,10 @@ Rails.application.routes.draw do
       get 'attendances/edit_one_month'
       patch 'attendances/update_one_month'
     end
+    collection do
+      get 'search'
+    end
     resources :attendances, only: :update 
   end
+  
 end

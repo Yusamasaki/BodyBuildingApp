@@ -1,41 +1,42 @@
-<% provide(:title, '全てのユーザー') %>
+<% provide(:title, 'User <all></all>') %>
 
-<h1>全てのユーザー</h1>
+<h1>ユーザ一覧</h1>
 
 <div class="row">
-  <div class="col-md-10 col-md-offset-8">
-    <p>ユーザー名検索</p>
-    <%= form_with url:search_users_path, method: :get, local: true do |f| %>
-      <%= f.text_field :search %>
-      <%= f.submit '検索' %>
+  <div class="col-md-10 col-md-offset-1">
+    <%= form_tag import_users_path, multipart: true do %>
+      <%= file_field_tag :file %>
+      <%= submit_tag "インポート" %>
     <% end %>
   </div>
 </div>
 
-<div class="col-md-10 col-md-offset-1">
-  <%= will_paginate %>
-  <table class="table table-condensed table-hover" id="table-users">
-    <thead>
-      <tr>
-        <th><%= User.human_attribute_name :name %></th>
-        <th></th>
-      </tr>
-    </thead>
 
+<table class="table table-condensed table-hover btn-group-vertical" id="table-users">
+  <thead>
     <% @users.each do |user| %>
       <tr>
-        <td>
-          <%= link_to user.name, user %> |
-          <% if current_user.admin? && !current_user?(user) %>
-            <%= link_to "削除", user, method: :delete, 
-                data: { confirm: "削除してよろしいですか？" }, 
-                class: "btn-default" %>
-          <% end %>
-        </td>
-        <td>
+        <% if current_user.admin? && !current_user?(user) %>
+        <td><%= user.name%>
+        <% end %>
+          <%= link_to "削除", user, method: :delete,
+            data: { confirm: "削除してよろしいですか？" },
+            class: "btn btn-primary" %>
+            <div class="panel-group">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse<%= user.id %>"><button type="submit" class="btn btn-primary">編集</button></a>
+                  </h4>
+                </div>
+              </div>
+            </div>
+          <%= link_to "編集", edit_basic_info_user_path(user), remote: true, 
+            class: "btn btn-primary" %>
+        
         </td>
       </tr>
     <% end %>
-  </table>
-  <%= will_paginate %>
-</div>
+  </thead>
+</table>
+      

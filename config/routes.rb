@@ -10,14 +10,21 @@ Rails.application.routes.draw do
   resources :users do
     collection { post :import }
     member do
+      get 'bases_info'
       get 'edit_basic_info'
       patch 'update_basic_info'
       get 'edit_base_info'
       patch 'update_base_info'
       get 'attendances/edit_one_month'
       patch 'attendances/update_one_month'
+      get 'index_attendance'
     end
-    resources :attendances, only: :update 
+    resources :attendances do
+      patch 'update'
+      
+      get 'edit_overwork_request'
+      patch 'update_overwork_request'
+    end
   end
   
 end

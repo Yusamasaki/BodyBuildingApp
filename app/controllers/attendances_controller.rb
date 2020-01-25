@@ -60,11 +60,18 @@ class AttendancesController < ApplicationController
       redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
   
+  def edit_overwork_request
+  end
+    
+  def update_overwork_request
+  end
+    
   private
     # １ヶ月分の勤怠情報を扱います。
     def attendances_params
       params.require(:user).permit(attendances: [:started_at, :finished_at, :note])[:attendances]
     end
+    
     
     # beforeフィルター
     

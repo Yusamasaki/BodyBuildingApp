@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   
   def index
     @users = User.all
+    @user = User.new
   end
   
   def import
@@ -74,7 +75,14 @@ class UsersController < ApplicationController
     end
     redirect_to users_url
   end
-
+  
+  def index_attendance
+    @users = User.all.includes(:attendances)
+  end
+  
+  def bases_info
+  end
+  
   private
 
     def user_params

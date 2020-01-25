@@ -50,11 +50,19 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, nil)
   end
   
-  def self.search(search) #ここでのself.はUser.を意味する
-    if search
-      where(['name LIKE ?', "%#{search}%"]) #検索とnameの部分一致を表示。User.は省略
-    else
-      all #全て表示。User.は省略
+  def self.import(file)
+    CSV.foreach(file.path, headers: true) do |row|
+      # IDが見つかれば、レコードを呼び出し、見つかれなければ、新しく作成
+      user = find_by(id: row["id"]) || new
+      # CSVからデータを取得し、設定する
+      user.attributes = row.to_hash.slice(*updatable_attributes)
+      # 保存する
+      user.save
     end
+  end
+
+  # 更新を許可するカラムを定義
+  def self.updatable_attributes
+    ["id", "name", "age"]
   end
 end

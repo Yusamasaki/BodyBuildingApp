@@ -1,19 +1,22 @@
-<% provide(:title, 'User <all></all>') %>
+<% provide(:title, 'User All') %>
 
 <h1>ユーザ一覧</h1>
 
-
-<%= form_tag import_users_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "インポート" %>
-<% end %>
+<div class="row">
+  <div class="col-md-6">
+    <%= form_tag import_users_path, multipart: true do %>
+      <%= file_field_tag :file %>
+      <%= submit_tag "インポート" %>
+    <% end %>
+  </div>
+</div>
 
 <table class="table table-condensed table-hover btn-group-vertical" id="table-users">
   <thead>
     <% @users.each do |user| %>
       <tr>
         <% if current_user.admin? && !current_user?(user) %>
-        <td><%= user.name%></br>
+        <td><%= user.name%></br>  
         <% end %>
           <%= link_to "削除", user, method: :delete,
             data: { confirm: "削除してよろしいですか？" },

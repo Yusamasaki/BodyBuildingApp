@@ -25,6 +25,7 @@ class UsersController < ApplicationController
   
   def show
     @worked_sum = @attendances.where.not(started_at: nil).count
+    @user = User.find(params[:id])
   end
   
   def new
@@ -80,7 +81,11 @@ class UsersController < ApplicationController
     @users = User.all.includes(:attendances)
   end
   
-  def bases_info
+  def edit_overwork_request
+    @day = Date.parse(params[:day])
+  end
+      
+  def update_overwork_request
   end
   
   private
@@ -91,5 +96,9 @@ class UsersController < ApplicationController
     
     def basic_info_params
       params.require(:user).permit(:department, :basic_time, :work_time)
+    end
+    
+    def edit_overwork_request_params
+      params.require(:user).permit(attendances: [:id, :scheduled_end_time, :work_description])[:attendances]
     end
 end

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   patch '/new', to: 'bases#create'
   delete '/destroy', to: 'bases#destroy'
   get '/edit', to: 'bases#edit'
-  patch 'bases/update'
+  patch '/update/:id/', to: 'bases#update'
 
   root 'static_pages#top'
   get '/signup', to: 'users#new'
@@ -24,12 +24,16 @@ Rails.application.routes.draw do
       get 'attendances/edit_one_month'
       patch 'attendances/update_one_month'
       get 'index_attendance'
-      
-    end
-    resources :attendances do
       get 'edit_overwork_request'
       patch 'update_overwork_request'
+      get 'notice_overwork_request'
+      patch 'update_notice_overwork_request'
+    end
+    resources :attendances do
     end
   end
-  
+  resources :bases do
+    get 'edit'
+    patch 'update'
+  end
 end

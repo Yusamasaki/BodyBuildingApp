@@ -1,4 +1,5 @@
-<% provide(:button_text, '更新') %>
+<% provide(:class_text, 'notice-overwork-request') %>
+<% provide(:button_text, '残業を申請する') %>
 
 <div class="modal-dialog modal-lg modal-dialog-center">
   <div class="modal-content">
@@ -9,6 +10,8 @@
       <h1 class="modal-title">【残業申請】</h1>
     </div>
     <div class="modal-body">
+      <%= form_with(model: @attendance, url: update_notice_overwork_request_user_path, local: true, method: :patch) do |f| %>
+      
       <table class="table table-bordered table-overwork">
         <thead>
           <tr>
@@ -23,19 +26,18 @@
         
         <tbody>
           <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
-          
         </tbody>
       </table>
+    <div class="center">
+      <%= f.submit yield(:button_text), class: "btn btn-primary" %>
     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary btn-block">残業を申請する</button>
-    </div>
+      <% end %>
   </div>
 </div>

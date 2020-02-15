@@ -1,3 +1,4 @@
+<% provide(:class_text, '編集') %>
 <% provide(:title, 'User All') %>
 
 <h1>ユーザ一覧</h1>
@@ -30,7 +31,7 @@
                   <div>
                     <div id="collapse<%= user.id %>" class="panel-collapse collapse">
                       <ul class="list-group">
-                        <% render "user" %>
+                        <%= render 'user' %>
                       </ul>
                     </div>
                   </div>

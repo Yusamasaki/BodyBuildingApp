@@ -60,14 +60,6 @@ class AttendancesController < ApplicationController
       redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
     
-  def edit_overwork_request
-    @day = Date.parse(params[:day],[:user_id])
-  end
-      
-  def update_overwork_request
-    @user = User.find(params[:attendance][:user_id])
-  end
-    
   private
     # １ヶ月分の勤怠情報を扱います。
     def attendances_params
@@ -75,9 +67,8 @@ class AttendancesController < ApplicationController
     end
     
     def overwork_request_params
-      params.require(:user).permit(attendances: [:id])
+      params.require(:attendance).permit(attendances: [:id])
     end
-    
     
     # beforeフィルター
     

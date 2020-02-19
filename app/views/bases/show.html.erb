@@ -18,7 +18,7 @@
     <% @bases.each do |base| %>
     <tr>
       <td>
-        <%= link_to "修正",edit_basis_path(base.id), remote: true, class: "btn btn-primary" %>
+        <%= link_to "修正",edit_base_basis_path(base.id), remote: true, class: "btn btn-primary" %>
       </td>
       <td>
         <%= link_to "削除", destroy_path(id: base.id), method: :delete,
@@ -34,5 +34,5 @@
 <%= link_to "拠点情報追加", new_path, remote: true, class: "btn btn-primary" %>
 
 <!--モーダルウインドウ表示-->
-<div id="edit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="edit-base" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

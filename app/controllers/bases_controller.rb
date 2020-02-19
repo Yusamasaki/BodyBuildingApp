@@ -1,15 +1,15 @@
 class BasesController < ApplicationController
-     
-  def index
+  
+  def show
     @bases = Base.all
   end
   
-  def edit
-    @base = Base.new
+  def edit_base
+    @base = Base.find(params[:id])
   end
   
-  def update
-    @base = Base.find(params[:base_id])
+  def update_base
+    @base = Base.find(params[:id])
     if @base.update_attributes(base_params)
       flash[:success] = "拠点情報を更新しました。"
       redirect_to @base
@@ -42,6 +42,6 @@ class BasesController < ApplicationController
   private
   
     def base_params
-      params.require(:bases).permit(:basenumber, :basename, :baseinfo)
+      params.require(:base).permit(:basename, :basenumber, :baseinfo)
     end
 end

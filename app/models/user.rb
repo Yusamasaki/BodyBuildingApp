@@ -17,12 +17,6 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   validates :employee_number, presence: true
-  validates :uid, presence: true
-  validates :hour, presence: true
-  validates :minute, presence: true
-  validates :next_day, presence: true
-  validates :superior, presence: true
-  
       
   # 渡された文字列のハッシュ値を返します。
   def User.digest(string)

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'bases', to: 'bases#index'
+  get 'bases', to: 'bases#show'
   get '/new', to: 'bases#new'
   patch '/new', to: 'bases#create'
   delete '/destroy', to: 'bases#destroy'
@@ -33,7 +33,9 @@ Rails.application.routes.draw do
     end
   end
   resources :bases do
-    get 'edit'
-    patch 'update'
+    member do
+      get 'edit_base'
+      patch 'update_base'
+    end
   end
 end

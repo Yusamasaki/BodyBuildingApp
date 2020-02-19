@@ -18,10 +18,6 @@ ActiveRecord::Schema.define(version: 20200127213650) do
     t.datetime "finished_at"
     t.string "note"
     t.integer "user_id"
-    t.datetime "hour"
-    t.datetime "minute"
-    t.date "next_day"
-    t.string "superior"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_attendances_on_user_id"
@@ -39,7 +35,6 @@ ActiveRecord::Schema.define(version: 20200127213650) do
     t.string "name"
     t.string "email"
     t.string "employee_number"
-    t.string "uid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest"

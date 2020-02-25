@@ -24,6 +24,7 @@ class UsersController < ApplicationController
   end
   
   def show
+    @users = User.all
     @worked_sum = @attendances.where.not(started_at: nil).count
     @user = User.find(params[:id])
   end
@@ -97,16 +98,12 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
   
-  def update_notice_overwork_request
-    @attendance.update_attributes(overwork_request_params)
-    flash[:info] = "残業申請を送信しました。"
-    redirect_to users_url
-  end
-  
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :department, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :department, :employee_number,
+                                   :uid, :password, :password_confirmation, :basic_time,
+                                   :designated_work_start_time, :designated_work_end_time)
     end
     
     def basic_info_params

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   
   resources :users do
-    collection { post :import }
+    collection {post :import}
     member do
       get 'edit_basic_info'
       patch 'update_basic_info'
@@ -27,7 +27,6 @@ Rails.application.routes.draw do
       get 'edit_overwork_request'
       patch 'update_overwork_request'
       get 'notice_overwork_request'
-      patch 'update_notice_overwork_request'
     end
     resources :attendances do
     end

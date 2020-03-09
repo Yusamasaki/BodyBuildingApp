@@ -82,22 +82,6 @@ class UsersController < ApplicationController
     @users = User.all.includes(:attendances)
   end
   
-  def edit_overwork_request
-   @user = User.find(params[:id])
-   @day = Date.parse(params[:day])
-   @attendance = Attendance.find(params[:id])
-  end
-      
-  def update_overwork_request
-    @attendance.update_attributes(overwork_request_params)
-    flash[:info] = "残業申請を送信しました。"
-    redirect_to users_url
-  end
-  
-  def notice_overwork_request
-    @user = User.find(params[:id])
-  end
-  
   private
 
     def user_params
@@ -108,9 +92,5 @@ class UsersController < ApplicationController
     
     def basic_info_params
       params.require(:user).permit(:department, :basic_time, :work_time)
-    end
-    
-    def overwork_request_params 
-      params.require(:attendance).permit(:hour, :minute, :next_day, :superior)
     end
 end

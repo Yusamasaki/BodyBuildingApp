@@ -9,7 +9,7 @@
       <h1 class="modal-title">【残業申請】</h1>
     </div>
     <div class="modal-body">
-      <%= form_with(model: @attendance, url: update_overwork_request_user_path, local: true, method: :patch) do |f| %>
+      <%= form_with(model: @attendance, url: attendances_update_overwork_request_user_path, local: true, method: :patch) do |f| %>
       <table class="table table-bordered table-overwork">
         <thead>
           <tr>
@@ -26,11 +26,16 @@
           <tr>
             <td><%= l(@day, format: :short) %></td>
             <td><%= $days_of_the_week[@day.wday] %></td>
-            <td><%= f.select :hour, '1'..'24' %>
-                <%= f.select :minute, '01'..'59' %></td>
+            <td><%= f.time_field :expected_end_time, class: "form-control" %></td>
             <td><%= f.check_box :next_day %></td>
-            <td><%= f.text_field :note, class: "form-control" %></td>
-            <td><%= f.select :superior, '上長A'..'上長B' %></td>
+            <td><%= f.text_field :business_processing_contents, class: "form-control" %></td>
+            <td>
+              <%= f.select :instructor_confirmation,[
+                ["上長A", 0],
+                ["上長B", 1]
+                ]
+              %>
+            </td>
           </tr>
         </tbody>
       </table>

@@ -14,9 +14,9 @@ class User < ApplicationRecord
   validates :department, length: { in: 2..50 }, allow_blank: true
   validates :basic_time, presence: true
   validates :work_time, presence: true
+  validates :employee_number, presence: true
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-  validates :employee_number, presence: true
       
   # 渡された文字列のハッシュ値を返します。
   def User.digest(string)
@@ -61,11 +61,19 @@ class User < ApplicationRecord
       user.save
     end
   end
+  
+  def instructor_confirmation 
+    [
+     ["申請中", 0],
+     ["承認", 1],
+     ["否認", 2]
+    ]
+  end
 
   # 更新を許可するカラムを定義
   def self.updatable_attributes
     ["name", "email", "department", "employee_number",
      "uid", "password", "password_confirmation", "basic_time",
-     "designated_work_start_time", "designated_work_end_time"]
+     "designated_work_start_time", "designated_work_end_time",]
   end
 end

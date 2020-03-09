@@ -37,3 +37,12 @@ User.create!( name: "上長C",
               superior: true,
               uid: 4
             )
+User.create!( name: "一般A",
+              email: "generalA@email.com",
+              password: "password",
+              password_confirmation: "password",
+              admin: false,
+              employee_number: "employee_number",
+              superior: false,
+              uid: 5
+            )

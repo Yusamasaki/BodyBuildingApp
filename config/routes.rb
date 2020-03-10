@@ -25,10 +25,10 @@ Rails.application.routes.draw do
       patch 'attendances/update_one_month'
       get 'attendances/notice_edit_one_month'
       get 'index_attendance'
-      get 'attendances/edit_overwork_request'
-      patch 'attendances/update_overwork_request'
-      get 'attendances/notice_overwork_request'
-      patch 'attendances/update_notice_overwork_request'
+      get 'edit_overwork_request'
+      patch 'update_overwork_request'
+      get 'notice_overwork_request'
+      patch 'update_notice_overwork_request'
       
     end
     resources :attendances do

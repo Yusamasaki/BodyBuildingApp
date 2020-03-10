@@ -1,12 +1,12 @@
 class AttendancesController < ApplicationController
-  before_action :set_user, only: [:edit_one_month, :update_one_month, :update_overwork_request, :edit_overwork_request,
+  before_action :set_user, only: [:edit_one_month, :update_one_month,
                                   :update_overwork_request, :notice_overwork_request, :update_notice_overwork_request,
                                   :notice_edit_one_month, :update_notice_overwork_request]
-  before_action :logged_in_user, only: [:update, :edit_one_month, :notice_overwork_request, :update_overwork_request, :edit_overwork_request,
+  before_action :logged_in_user, only: [:update, :edit_one_month, :notice_overwork_request,
                                   :update_overwork_request, :notice_overwork_request, :update_notice_overwork_request,
                                   :notice_edit_one_month, :update_notice_overwork_request]
   before_action :admin_or_correct_user, only: [:update, :edit_one_month, :update_one_month]
-  before_action :set_one_month, only: [:edit_one_month, :edit_overwork_request, :notice_overwork_request, :notice_edit_one_month]
+  before_action :set_one_month, only: [:edit_one_month,:notice_overwork_request, :notice_edit_one_month]
   
   UPDATE_ERROR_MSG = "勤怠登録に失敗しました。やり直してください。"
 
@@ -65,30 +65,18 @@ class AttendancesController < ApplicationController
   end
   
   def notice_edit_one_month
+    @attendance = Attendance.all
     @attendance = Attendance.find(params[:id])
   end
   
   def update_notice_edit_month
   end
   
-  
-  def edit_overwork_request
-    @user = User.find(params[:id])
-    @day = Date.parse(params[:day])
-    @attendance = Attendance.find(params[:id])
-  end
-      
-  def update_overwork_request
-    @attendance = Attendance.find(params[:id])
-    @attendance.update_attributes(overwork_request_params)
-    flash[:info] = "残業申請を送信しました。"
-    redirect_to users_url
-  end
-  
   def notice_overwork_request
     @user = User.find(params[:id])
     @day = Attendance.find(params[:id])
     @attendance = Attendance.find(params[:id])
+    @attendance_2 = User.find(params[:id])
   end
   
   def update_notice_overwork_request
@@ -102,11 +90,6 @@ class AttendancesController < ApplicationController
     # １ヶ月分の勤怠情報を扱います。
     def attendances_params
       params.require(:user).permit(attendances: [:started_at, :finished_at, :note])[:attendances]
-    end
-    
-    def overwork_request_params 
-      params.require(:attendance).permit(attendances: [:worked_on, :expected_end_time, :next_day, 
-                                                       :business_processing_contents, :instructor_confirmation])
     end
     
     # 管理権限者、または現在ログインしているユーザーを許可します。

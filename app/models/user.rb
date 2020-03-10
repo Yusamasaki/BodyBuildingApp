@@ -17,6 +17,7 @@ class User < ApplicationRecord
   validates :employee_number, presence: true
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  
       
   # 渡された文字列のハッシュ値を返します。
   def User.digest(string)
@@ -74,6 +75,7 @@ class User < ApplicationRecord
   def self.updatable_attributes
     ["name", "email", "department", "employee_number",
      "uid", "password", "password_confirmation", "basic_time",
-     "designated_work_start_time", "designated_work_end_time",]
+     "designated_work_start_time", "designated_work_end_time",
+     "expected_end_time"]
   end
 end

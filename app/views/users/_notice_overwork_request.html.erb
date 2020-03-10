@@ -10,7 +10,7 @@
       <h1 class="modal-title">【<%= @user.name %>からの残業申請】</h1>
     </div>
     <div class="modal-body">
-      <%= form_with(model: @attendance, url: attendances_update_notice_overwork_request_user_path, local: true, method: :patch) do |f| %>
+      <%= form_with(model: @attendance, url: update_notice_overwork_request_user_path, local: true, method: :patch) do |f| %>
       <table class="table table-bordered table-overwork">
         <thead>
           <tr>
@@ -30,8 +30,8 @@
           <tr>
             <td><%= l(@day.worked_on, format: :short) %></td>
             <td><%= $days_of_the_week[@day.worked_on.wday] %></td>
-            <td><%= overwork_basic_info(@attendance.expected_end_time) %></td>
-            <td></td>
+            <td><%= format_basic_info(@user.expected_end_time) %></td>
+            <td><%= format_basic_info(@user.designated_work_end_time) %></td>
             <td></td> 
             <td></td>
             <td></td>

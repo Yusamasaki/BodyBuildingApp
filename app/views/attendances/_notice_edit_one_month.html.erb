@@ -10,7 +10,7 @@
       <h1 class="modal-title"><%= @user.name %>からの勤怠変更申請</h1>
     </div>
     <div class="modal-body">
-      <%= form_with(model: @attendance, local: true) do |f| %>
+      <%= form_with(model: @attendance, url: attendances_update_one_month_user_path, local: true) do |f| %>
 
       <table class="table table-bordered table-overwork">
         <thead>
@@ -33,22 +33,24 @@
         </thead>
         
         <tbody>
+          <% @attendances.each do |day| %>
           <tr>
+            <td><%= l(day.worked_on, format: :short) %></td>
+            <td><%= $days_of_the_week[day.worked_on.wday] %></td>
+            <td><%= day.started_at %></td>
+            <td><%= day.started_at %></td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td><%= day.note %></td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
           </tr>
+          <% end %>
         </tbody>
       </table>
     <div class="center">

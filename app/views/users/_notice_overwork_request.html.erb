@@ -27,18 +27,29 @@
         </thead>
         
         <tbody>
+          <% @attendances.each do |day| %>
+          <% if day.expected_end_time.present? %>
           <tr>
-            <td><%= l(@day.worked_on, format: :short) %></td>
-            <td><%= $days_of_the_week[@day.worked_on.wday] %></td>
-            <td><%= format_basic_info(@user.expected_end_time) %></td>
-            <td><%= format_basic_info(@user.designated_work_end_time) %></td>
-            <td></td> 
-            <td></td>
-            <td></td>
+            <td><%= l(day.worked_on, format: :short) %></td>
+            <td><%= $days_of_the_week[day.worked_on.wday] %></td>
+            <td><%= format_basic_info(day.expected_end_time) if day.expected_end_time.present? %></td>
+            <td><%= format_basic_info(day.designated_work_end_time) %></td>
+            <td><%= format("%.2f", @after_hours.to_f) %></td> 
+            <td><%= day.business_processing_contents %></td>
+            <td>
+              <%= f.select :instructor_confirmation, 
+                [
+                ["申請中", 0],
+                ["承認", 1],
+                ["否認", 2]
+                ]
+              %> 
+            </td>
             <td><%= f.check_box :next_day %></td>
             <td><%= link_to "確認", current_user, class: "btn btn-primary" %></td>
           </tr>
-          
+          <% end %>
+          <% end %>
         </tbody>
       </table>
       <div class="center">

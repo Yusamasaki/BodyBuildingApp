@@ -16,7 +16,7 @@
     </thead>
     <tbody>
       <% @attendances.each do |day| %>
-      <%= f.fields_for "attendances[]", day do |attendance| %>
+        <%= f.fields_for "attendances[]", day do |attendance| %>
         <tr>
           <td><%= l(day.worked_on, format: :short) %></td>
           <td><%= $days_of_the_week[day.worked_on.wday] %></td>
@@ -33,7 +33,16 @@
             <% end %>
           </td>
           <td><%= attendance.text_field :note, class: "form-control" %></td>
-          <td></td>
+          <td>
+            <%= f.select :instructor_confirmation, 
+              [
+              ["上長A", 0],
+              ["上長B", 1],
+              ["上長", 2]
+              ] 
+            %>
+          </td>
+        </tr>
         <% end %>
       <% end %>
     </tbody>

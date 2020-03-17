@@ -21,15 +21,18 @@ Rails.application.routes.draw do
       patch 'update_basic_info'
       get 'edit_base_info'
       patch 'update_base_info'
-      get 'attendances/edit_one_month'
-      patch 'attendances/update_one_month'
-      get 'attendances/notice_edit_one_month'
       get 'index_attendance'
       get 'edit_overwork_request'
       patch 'update_overwork_request'
       get 'notice_overwork_request'
       patch 'update_notice_overwork_request'
+      get 'approval_application'
+      patch 'update_approval_application'
       
+      get 'attendances/edit_one_month'
+      get 'attendances/notice_edit_one_month'
+      patch 'attendances/update_one_month'
+      get 'attendances/edit_one_month_log'
     end
     resources :attendances do
     end

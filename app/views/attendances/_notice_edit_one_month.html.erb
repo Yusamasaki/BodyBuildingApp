@@ -34,22 +34,32 @@
         
         <tbody>
           <% @attendances.each do |day| %>
+          <% if day.started_at && day.finished_at.present? %>
           <tr>
             <td><%= l(day.worked_on, format: :short) %></td>
             <td><%= $days_of_the_week[day.worked_on.wday] %></td>
-            <td><%= day.started_at %></td>
-            <td><%= day.started_at %></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td><%= day.started_at.hour if day.started_at.present? %></td>
+            <td><%= day.started_at.floor_to(15.minutes).min if day.started_at.present? %></td>
+            <td><%= day.finished_at.hour if day.finished_at.present? %></td>
+            <td><%= day.finished_at.floor_to(15.minutes).min if day.finished_at.present? %></td>
+            <td><%= day.started_at.hour if day.started_at.present? %></td>
+            <td><%= day.started_at.floor_to(15.minutes).min if day.started_at.present? %></td>
+            <td><%= day.finished_at.hour if day.finished_at.present? %></td>
+            <td><%= day.finished_at.floor_to(15.minutes).min if day.finished_at.present? %></td>
             <td><%= day.note %></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              <%= f.select :instructor_confirmation, 
+              [
+              ["申請中", 0],
+              ["承認", 1],
+              ["否認", 2]
+              ] 
+              %>
+            </td>
+            <td><%= f.check_box :change_digest %></td>
+            <td><%= link_to "確認", "#", class: "btn btn-primary" %></td>
           </tr>
+          <% end %>
           <% end %>
         </tbody>
       </table>

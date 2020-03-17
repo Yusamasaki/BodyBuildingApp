@@ -10,8 +10,8 @@
         </h5>
       </td>
       <td>
-        <h5>指定勤務開始時間：<%= format_basic_info(@user.designated_work_start_time) %></h5>
-        <h5>指定勤務終了時間：<%= format_basic_info(@user.designated_work_end_time) %></h5>
+        <h5>指定勤務開始時間：<%= format_basic_info(@attendance.designated_work_start_time) %></h5>
+        <h5>指定勤務終了時間：<%= format_basic_info(@attendance.designated_work_end_time) %></h5>
       </td>
       <td colspan = "3"><h5>基本時間：<%= format_basic_info(@user.basic_time) %></h5></td>
       <td><h5>初日：<%= l(@first_day, format: :short) %></h5></td>
@@ -30,7 +30,7 @@
 
   
 <div>
-  <div><%= link_to "【所属長承認申請のお知らせ】", "#", class: "btn" %></div>
+  <div><%= link_to "【所属長承認申請のお知らせ】", approval_application_user_path, remote: true, class: "btn" %></div>
   
   <div><%= link_to "【勤怠変更申請のお知らせ】", attendances_notice_edit_one_month_user_path, remote: true, class: "btn" %></div>
   
@@ -42,7 +42,7 @@
     <%= link_to "勤怠を編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-default btn-primary" %>
     <%= link_to "CSV出力", "#", class: "btn btn-default btn-primary" %>
   </div>
-  <div><%= link_to "勤怠修正ログ（承認済）", "#", class: "btn btn-default btn-primary" %></div>
+  <div><%= link_to "勤怠修正ログ（承認済）", attendances_edit_one_month_log_user_path, class: "btn btn-default btn-primary" %></div>
 </div>
 
 <div>
@@ -116,10 +116,10 @@
             <% end %>
           </td>
           <td><%= day.note %></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td><%= day.note %></td>
+          <td><%= day.expected_end_time.hour if day.expected_end_time.present? %></td>
+          <td><%= day.expected_end_time.min if day.expected_end_time.present? %></td>
+          <td><%= format("%.2f", @total_after_hours.to_f) %></td>
+          <td><%= day.business_processing_contents %></td>
           <td></td>
         </tr>
       <% end %>
@@ -132,6 +132,18 @@
         <td colspan="5"></td>
         <td colspan="2">累計在社時間</td>
         <td rowspan="2"></td>
+        <td rowspan="2"></td>
+        <td rowspan="2"></td>
+        <td rowspan="2"></td>
+        <td rowspan="2"></td>
+        <td rowspan="2"></td>
+        <td rowspan="2">
+          <%= form_with(model: @user, method: :patch) do |f| %>
+            <div class="approval"><%= "所属長承認" %></div>
+            <div class="approval"><%= f.select :superior, {include_blank: true} %></div>
+            <div class="approval"><%= f.submit "申請", class: "btn btn-primary btn-block" %></div>
+          <% end %>
+        </td>
       </tr>
       <tr>
         <td colspan="2"><%= format_basic_info(@user.work_time).to_f * @worked_sum %></td>
@@ -146,3 +158,4 @@
 <div id="edit-overwork-request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="notice-overwork-request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="notice-edit-one-month" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="approval-application" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

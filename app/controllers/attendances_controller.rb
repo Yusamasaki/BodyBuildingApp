@@ -72,18 +72,8 @@ class AttendancesController < ApplicationController
   def update_notice_edit_month
   end
   
-  def notice_overwork_request
-    @user = User.find(params[:id])
-    @day = Attendance.find(params[:id])
-    @attendance = Attendance.find(params[:id])
-    @attendance_2 = User.find(params[:id])
-  end
-  
-  def update_notice_overwork_request
-    @attendance = Attendance.find(params[:id])
-    @attendance.update_attributes(overwork_request_params)
-    flash[:info] = "変更内容を更新しました"
-    redirect_to @attendance
+  def edit_one_month_log
+    @attendances = Attendance.all
   end
     
   private

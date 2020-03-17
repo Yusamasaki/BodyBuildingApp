@@ -25,8 +25,10 @@ class UsersController < ApplicationController
   
   def show
     @users = User.all
+    @attendances =Attendance.all
     @worked_sum = @attendances.where.not(started_at: nil).count
     @user = User.find(params[:id])
+    @attendance = Attendance.find(params[:id])
   end
   
   def new
@@ -82,6 +84,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @day = Date.parse(params[:day])
     @attendance = Attendance.find(params[:id])
+    @attendances = Attendance.all
+    
   end
       
   def update_overwork_request
@@ -94,8 +98,8 @@ class UsersController < ApplicationController
   def notice_overwork_request
     @user = User.find(params[:id])
     @day = Attendance.find(params[:id])
+    @attendances = Attendance.all
     @attendance = Attendance.find(params[:id])
-    @attendance_2 = User.find(params[:id])
   end
   
   def update_notice_overwork_request
@@ -109,6 +113,14 @@ class UsersController < ApplicationController
     @users = User.all.includes(:attendances)
   end
   
+  def approval_application
+    @attendance = Attendance.find(params[:id])
+    @user = User.find(params[:id])
+  end
+  
+  def update_approval_application
+  end
+  
   private
 
     def user_params
@@ -118,8 +130,8 @@ class UsersController < ApplicationController
     end
     
     def overwork_request_params 
-      params.require(:attendance).permit(attendances: [:worked_on, :expected_end_time, :next_day, 
-                                                       :business_processing_contents, :instructor_confirmation])
+      params.require(:user).permit(:expected_end_time, :next_day, 
+                                   :business_processing_contents, :instructor_confirmation)
     end
     
     def basic_info_params

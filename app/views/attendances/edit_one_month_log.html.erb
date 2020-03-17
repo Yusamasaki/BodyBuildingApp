@@ -1,0 +1,30 @@
+<h1>勤怠ログ</h1>
+
+<div>
+  <table class="table table-bordered table-condensed table-hover" id="table-attendances">
+    <thead>
+      <tr>
+        <th>日付</th>
+        <th>変更前出社時間</th>
+        <th>変更前退社時間</th>
+        <th>変更前出社</th>
+        <th>変更前退社</th>
+        <th>支持者</th>
+        <th>承認日</th>
+      </tr>
+    </thead>
+    
+    <% @attendances.each do |attendance| %>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    <% end %>
+    </table>
+  </table>
+</div>

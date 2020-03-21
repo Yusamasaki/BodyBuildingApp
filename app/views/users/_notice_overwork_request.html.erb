@@ -34,7 +34,9 @@
             <td><%= $days_of_the_week[day.worked_on.wday] %></td>
             <td><%= format_basic_info(day.expected_end_time) if day.expected_end_time.present? %></td>
             <td><%= format_basic_info(day.designated_work_end_time) %></td>
-            <td><%= format("%.2f", @after_hours.to_f) %></td> 
+            <td>
+              <%= format("%.2f", @total_after_hours.to_f) %>
+            </td> 
             <td><%= day.business_processing_contents %></td>
             <td>
               <%= f.select :instructor_confirmation, 

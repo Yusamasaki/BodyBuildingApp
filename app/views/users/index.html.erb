@@ -19,7 +19,6 @@
       <tr>
         <% if current_user.admin? && !current_user?(user) %>
         <td><%= user.name%></br>  
-        <% end %>
           <%= link_to "削除", user, method: :delete,
             data: { confirm: "削除してよろしいですか？" },
             class: "btn btn-primary" %></br>
@@ -40,6 +39,7 @@
               </div>
             </div>
         </td>
+        <% end %>
       </tr>
     <% end %>
   </thead>

@@ -47,10 +47,18 @@
   margin-top: 10px;
 }
 
+.notice {
+  color :red;
+  font-size: 1.2em;
+  font-weight: bold;
+  border: solid 3px #FF0000;
+}
+
 /* ユーザー一覧ページ */
 
 #table-users {
   td {
     vertical-align: middle;
+    width: 1000px;
   }
 }

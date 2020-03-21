@@ -30,11 +30,21 @@
 
   
 <div>
-  <div><%= link_to "【所属長承認申請のお知らせ】", approval_application_user_path, remote: true, class: "btn" %></div>
+  <div>
+    
+    <%= link_to "【所属長承認申請のお知らせ】", approval_application_user_path, remote: true, class: "btn" %>
+    <font class="notice"><%= "件の通知があります" %></font>
+  </div>
   
-  <div><%= link_to "【勤怠変更申請のお知らせ】", attendances_notice_edit_one_month_user_path, remote: true, class: "btn" %></div>
+  <div>
+    <%= link_to "【勤怠変更申請のお知らせ】", attendances_notice_edit_one_month_user_path, remote: true, class: "btn" %>
+    <font class="notice"><%= "件の通知があります" %></font>
+  </div>
   
-  <div><%= link_to "【残業申請のお知らせ】", notice_overwork_request_user_path, remote: true, class: "btn" %></div>
+  <div>
+    <%= link_to "【残業申請のお知らせ】", notice_overwork_request_user_path, remote: true, class: "btn" %>
+    <font class="notice"><%= "件の通知があります" %></font>
+    </div>
 </div><br>
 
 <div class="btn-users-show">
@@ -81,7 +91,7 @@
       <% @attendances.each do |day| %>
         <tr>
           <td class="center"> 
-            <%= link_to "残業申請", edit_overwork_request_user_path(@user, params: {day: day.worked_on}), remote: true, class: "btn btn-primary" %>
+            <%= link_to "残業申請", edit_overwork_request_user_path(day), remote: true, class: "btn btn-primary" %>
           </td>
           <td><%= l(day.worked_on, format: :short) %></td>
           <td>
@@ -148,7 +158,7 @@
       <tr>
         <td colspan="2"><%= format_basic_info(@user.work_time).to_f * @worked_sum %></td>
         <td colspan="5"></td>
-        <td colspan="2"><%= format("%.2f", @total_working_times.to_f) %></td>
+          <td colspan="2"><%= format("%.2f", @total_working_times.to_f) %></td>
       </tr>
     </tfoot>
   </table>

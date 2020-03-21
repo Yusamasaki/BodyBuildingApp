@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   
   resources :users do
     collection {post :import}
-    member do
+    member do 
       get 'edit_basic_info'
       patch 'update_basic_info'
       get 'edit_base_info'

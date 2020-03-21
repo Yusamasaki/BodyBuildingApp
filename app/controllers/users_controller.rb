@@ -13,6 +13,15 @@ class UsersController < ApplicationController
     @user = User.new
   end
   
+  def index_update
+    if @user.update_attributes(user_params)
+      flash[:success] = "ユーザー情報を更新しました。"
+      redirect_to @user
+    else
+      render :edit
+    end
+  end
+  
   def import
     # fileはtmpに自動で一時保存される
     User.import(params[:file])
@@ -49,7 +58,7 @@ class UsersController < ApplicationController
       render :new
     end
   end
-  
+
   def edit
   end
   
@@ -82,10 +91,8 @@ class UsersController < ApplicationController
   
   def edit_overwork_request
     @user = User.find(params[:id])
-    @day = Date.parse(params[:day])
     @attendance = Attendance.find(params[:id])
     @attendances = Attendance.all
-    
   end
       
   def update_overwork_request
@@ -96,6 +103,7 @@ class UsersController < ApplicationController
   end
   
   def notice_overwork_request
+    @users = User.all
     @user = User.find(params[:id])
     @day = Attendance.find(params[:id])
     @attendances = Attendance.all
@@ -103,6 +111,7 @@ class UsersController < ApplicationController
   end
   
   def update_notice_overwork_request
+    @user = User.find(params[:id])
     @attendance = Attendance.find(params[:id])
     @attendance.update_attributes(overwork_request_params)
     flash[:info] = "変更内容を更新しました"
@@ -124,14 +133,14 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :department, :employee_number,
+      params.require(:user).permit(attendances: [:name, :email, :department, :employee_number,
                                    :uid, :password, :password_confirmation, :basic_time,
-                                   :designated_work_start_time, :designated_work_end_time)
+                                   :designated_work_start_time, :designated_work_end_time]  )
     end
     
     def overwork_request_params 
-      params.require(:user).permit(:expected_end_time, :next_day, 
-                                   :business_processing_contents, :instructor_confirmation)
+      params.require(:attendance).permit(:expected_end_time, :next_day, 
+                                         :business_processing_contents, :instructor_confirmation)
     end
     
     def basic_info_params

@@ -93,6 +93,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @attendance = Attendance.find(params[:id])
     @attendances = Attendance.all
+    @users = User.all
   end
       
   def update_overwork_request
@@ -103,9 +104,8 @@ class UsersController < ApplicationController
   end
   
   def notice_overwork_request
-    @users = User.all
+    @users = User.all 
     @user = User.find(params[:id])
-    @day = Attendance.find(params[:id])
     @attendances = Attendance.all
     @attendance = Attendance.find(params[:id])
   end
@@ -123,19 +123,24 @@ class UsersController < ApplicationController
   end
   
   def approval_application
+    @users = User.all
     @attendance = Attendance.find(params[:id])
     @user = User.find(params[:id])
   end
   
   def update_approval_application
+    @attendance = Attendance.find(params[:id])
+    @attendance.update_attributes(overwork_request_params)
+    flash[:info] = "変更内容を更新しました"
+    redirect_to @attendance
   end
   
   private
 
     def user_params
       params.require(:user).permit(attendances: [:name, :email, :department, :employee_number,
-                                   :uid, :password, :password_confirmation, :basic_time,
-                                   :designated_work_start_time, :designated_work_end_time]  )
+                                                 :uid, :password, :password_confirmation, :basic_time,
+                                                 :designated_work_start_time, :designated_work_end_time])
     end
     
     def overwork_request_params 

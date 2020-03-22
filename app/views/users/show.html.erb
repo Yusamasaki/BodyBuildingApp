@@ -41,11 +41,14 @@
     <font class="notice"><%= "件の通知があります" %></font>
   </div>
   
-  <div>
-    <%= link_to "【残業申請のお知らせ】", notice_overwork_request_user_path, remote: true, class: "btn" %>
-    <font class="notice"><%= "件の通知があります" %></font>
+  <% if @attendance.instructor_confirmation.present? %>
+    <div>
+      <%= link_to "【残業申請のお知らせ】", notice_overwork_request_user_path, remote: true, class: "btn" %>
+      <font class="notice"><%= "件の通知があります" %></font>
     </div>
+  <% end %>
 </div><br>
+
 
 <div class="btn-users-show">
   <div>
@@ -114,7 +117,7 @@
           <td><%= day.finished_at.hour if day.finished_at.present? %></td>
           <td><%= day.finished_at.floor_to(15.minutes).min if day.finished_at.present? %></td>
           <td>
-            <% if Date.current == day.worked_on && day.started_at.present? && day.finished_at.blank? %>
+                                                                                                                                                                                                <% if Date.current == day.worked_on && day.started_at.present? && day.finished_at.blank? %>
               <%= link_to "退社", user_attendance_path(@user, day), method: :patch, 
                   class: "btn btn-md btn-default btn-attendance" %>
             <% end %>
@@ -126,11 +129,18 @@
             <% end %>
           </td>
           <td><%= day.note %></td>
-          <td><%= day.expected_end_time.hour if day.expected_end_time.present? %></td>
-          <td><%= day.expected_end_time.min if day.expected_end_time.present? %></td>
-          <td><%= format("%.2f", @total_after_hours.to_f) %></td>
-          <td><%= day.business_processing_contents %></td>
-          <td></td>
+          
+          <td><%= day.expected_end_time.hour if day.expected_end_time.present? && day.instructor_confirmation_app.present? %></td>
+          <td><%= day.expected_end_time.min if day.expected_end_time.present? && day.instructor_confirmation_app.present? %></td>
+          <td><%= format("%.2f", @total_after_hours.to_f) if day.instructor_confirmation_app.present? %></td>
+          <td><%= day.business_processing_contents if day.instructor_confirmation_app.present? %></td>
+          <td>
+            <% if day.instructor_confirmation.present? %>
+              <%= "申請中" %>
+            <% elsif day.instructor_confirmation_app.present? %>
+              <%= "承認済" %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
@@ -148,7 +158,7 @@
         <td rowspan="2"></td>
         <td rowspan="2"></td>
         <td rowspan="2">
-          <%= form_with(model: @user, method: :patch) do |f| %>
+          <%= form_with(model: @attendance, url: approval_application_user_path, method: :patch) do |f| %>
             <div class="approval"><%= "所属長承認" %></div>
             <div class="approval"><%= f.select :superior, {include_blank: true} %></div>
             <div class="approval"><%= f.submit "申請", class: "btn btn-primary btn-block" %></div>

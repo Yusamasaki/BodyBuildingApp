@@ -6,9 +6,7 @@
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-      <h1 class="modal-title">【残業申請】</h1>
-    </div>
-    <div class="modal-body">
+      <h1 class="modal-title">【 残業申請 】</h1><br>
       <%= form_with(model: @attendance, url: update_overwork_request_user_path, local: true, method: :patch) do |f| %>
       <table class="table table-bordered table-overwork">
         <thead>
@@ -31,9 +29,9 @@
             <td><%= f.text_field :business_processing_contents, class: "form-control" %></td>
             <td>
               <%= f.select :instructor_confirmation, [
-                ["申請中", 0],
-                ["承認", 1],
-                ["否認", 2]
+                ["上長A", 0],
+                ["上長B", 1],
+                ["上長C", 2]
                 ]
               %>
             </td>

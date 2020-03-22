@@ -62,14 +62,6 @@ class User < ApplicationRecord
       user.save
     end
   end
-  
-  def instructor_confirmation 
-    [
-     ["申請中", 0],
-     ["承認", 1],
-     ["否認", 2]
-    ]
-  end
 
   # 更新を許可するカラムを定義
   def self.updatable_attributes

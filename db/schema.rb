@@ -20,12 +20,13 @@ ActiveRecord::Schema.define(version: 20200310215054) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "designated_work_start_time", default: "2020-03-15 01:00:00"
-    t.datetime "designated_work_end_time", default: "2020-03-15 10:00:00"
+    t.datetime "designated_work_start_time", default: "2020-03-23 01:00:00"
+    t.datetime "designated_work_end_time", default: "2020-03-23 10:00:00"
     t.datetime "expected_end_time"
     t.string "next_day"
     t.string "business_processing_contents"
     t.string "instructor_confirmation"
+    t.string "instructor_confirmation_app"
     t.string "change_digest"
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
@@ -47,8 +48,8 @@ ActiveRecord::Schema.define(version: 20200310215054) do
     t.string "remember_digest"
     t.boolean "admin", default: false
     t.string "department"
-    t.datetime "basic_time", default: "2020-03-14 23:00:00"
-    t.datetime "work_time", default: "2020-03-14 22:30:00"
+    t.datetime "basic_time", default: "2020-03-22 23:00:00"
+    t.datetime "work_time", default: "2020-03-22 22:30:00"
     t.boolean "superior"
     t.integer "uid"
     t.integer "employee_number"

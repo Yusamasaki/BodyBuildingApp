@@ -34,11 +34,10 @@
           </td>
           <td><%= attendance.text_field :note, class: "form-control" %></td>
           <td>
-            <%= attendance.select :instructor_confirmation, 
-              [
+            <%= attendance.select :one_month_instructor_confirmation, [
               ["上長A", 0],
               ["上長B", 1],
-              ["上長", 2]
+              ["上長C", 2]
               ] 
             %>
           </td>

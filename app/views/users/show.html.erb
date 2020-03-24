@@ -106,16 +106,16 @@
               <%= $days_of_the_week[day.worked_on.wday] %>
             <% end %>
           </td>
-          <td><%= day.started_at.hour if day.started_at.present? %></td>
-          <td><%= day.started_at.floor_to(15.minutes).min if day.started_at.present? %></td>
+          <td><%= day.started_at.hour if day.started_at.present? && day.one_month_instructor_confirmation.present? %></td>
+          <td><%= day.started_at.floor_to(15.minutes).min if day.started_at.present? && day.one_month_instructor_confirmation.present? %></td>
           <td>
             <% if Date.current == day.worked_on && day.started_at.nil? %>
               <%= link_to "出社", user_attendance_path(@user, day), method: :patch, 
                   class: "btn btn-md btn-default btn-attendance" %>
             <% end %>
           </td>
-          <td><%= day.finished_at.hour if day.finished_at.present? %></td>
-          <td><%= day.finished_at.floor_to(15.minutes).min if day.finished_at.present? %></td>
+          <td><%= day.finished_at.hour if day.finished_at.present? && day.one_month_instructor_confirmation.present? %></td>
+          <td><%= day.finished_at.floor_to(15.minutes).min if day.finished_at.present? && day.one_month_instructor_confirmation.present? %></td>
           <td>
                                                                                                                                                                                                 <% if Date.current == day.worked_on && day.started_at.present? && day.finished_at.blank? %>
               <%= link_to "退社", user_attendance_path(@user, day), method: :patch, 
@@ -158,9 +158,17 @@
         <td rowspan="2"></td>
         <td rowspan="2"></td>
         <td rowspan="2">
-          <%= form_with(model: @attendance, url: approval_application_user_path, method: :patch) do |f| %>
+          <%= form_with(model: @attendance, url: update_approval_application_user_path, method: :patch) do |f| %>
             <div class="approval"><%= "所属長承認" %></div>
-            <div class="approval"><%= f.select :superior, {include_blank: true} %></div>
+            <div class="approval">
+              <%= f.select :approval_application,
+                [
+                ["上長A", 0],
+                ["上長B", 1],
+                ["上長C", 2]
+                ]
+              %>
+            </div>
             <div class="approval"><%= f.submit "申請", class: "btn btn-primary btn-block" %></div>
           <% end %>
         </td>

@@ -66,11 +66,15 @@ class AttendancesController < ApplicationController
   
   def notice_edit_one_month
     @users = User.all
-    @attendance = Attendance.all
+    @attendances = Attendance.all
     @attendance = Attendance.find(params[:id])
   end
   
-  def update_notice_edit_month
+  def update_notice_one_month
+    @attendance = Attendance.find(params[:id])
+    @attendance.update_attributes(notice_attendances_params)
+    flash[:info] = "勤怠を変更しました"
+    redirect_to user_url
   end
   
   def edit_one_month_log
@@ -80,7 +84,11 @@ class AttendancesController < ApplicationController
   private
     # １ヶ月分の勤怠情報を扱います。
     def attendances_params
-          params.require(:user).permit(attendances: [:started_at, :finished_at, :note, :one_month_instructor_confirmation])[:attendances]
+      params.require(:user).permit(attendances: [:started_at, :finished_at, :note, :one_month_instructor_confirmation, :notice_one_month_instructor_confirmation])[:attendances]
+    end
+    
+    def notice_attendances_params
+      params.require(:attendance).permit(:started_at, :finished_at, :note, :notice_one_month_instructor_confirmation)
     end
     
     # 管理権限者、または現在ログインしているユーザーを許可します。

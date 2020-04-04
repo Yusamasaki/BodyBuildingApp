@@ -8,7 +8,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
         <h1 class="modal-title">【 <%= user.name %> からの1ヶ月分勤怠申請 】</h1><br>
-        <%= form_with(model: @attendance, url: update_approval_application_user_path, local: true, method: :patch) do |f| %>
+        <%= form_with(model: @attendance, url: update_notice_approval_application_user_path, local: true, method: :patch) do |f| %>
         <table class="table table-bordered table-overwork">
           <thead>
             <tr>
@@ -23,15 +23,16 @@
             <tr>
               <td><%= l(@attendance.worked_on, format: :super_short) %></td>
               <td>
-                <%= f.select :instructor_confirmation, 
+                <%= f.select :approval_confirmation, 
                 [
+                ["", ""],
                 ["申請中", 0],
                 ["承認", 1],
                 ["否認", 2]
                 ] 
                 %>
               </td>
-              <td><%= f.check_box :change_digest %></td>
+              <td><%= f.check_box :change_digest, {:checked => false}, checked_value = "0", unchecked_value = "1" %></td>
               <td><%= link_to "確認", user_path(user), class: "btn btn-primary" %></td>
             </tr>
           </tbody>

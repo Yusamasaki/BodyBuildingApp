@@ -9,7 +9,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
         <h1 class="modal-title">【 <%= user.name %>からの残業申請 】</h1><br>
-        <%= form_with(model: user, url: update_notice_overwork_request_user_path(user), local: true, method: :patch) do |f| %>
+        <%= form_with(model: @attendance, url: update_notice_overwork_request_user_path, local: true, method: :patch) do |f| %>
           <table class="table table-bordered table-overwork">
             <thead>
               <tr>
@@ -27,7 +27,6 @@
             
             <tbody>
               <% @attendances.each do |day| %>
-                <%= f.fields_for "attendances[]", day do |attendance| %>
                   <% if day.expected_end_time.present? %>
                   <tr>
                     <td><%= l(day.worked_on, format: :short) %></td>
@@ -35,23 +34,23 @@
                     <td><%= format_basic_info(day.expected_end_time) if day.expected_end_time.present? %></td>
                     <td><%= format_basic_info(day.designated_work_end_time) %></td>
                     <td>
-                      <%= format("%.2f", @total_after_hours.to_f) %>
+                      <%= after_hours(day.designated_work_end_time, day.expected_end_time) %>
                     </td> 
                     <td><%= day.business_processing_contents %></td>
                     <td>
-                      <%= attendance.select :instructor_confirmation_app, 
+                      <%= f.select :instructor_confirmation_app, 
                         [
+                        ["", ""],
                         ["申請中", 0],
                         ["承認", 1],
                         ["否認", 2]
                         ]
                       %> 
                     </td>
-                    <td><%= attendance.check_box :next_day %></td>
+                    <td><%= f.check_box :next_day %></td>
                     <td><%= link_to "確認", user_path(user), class: "btn btn-primary" %></td>
                   </tr>
                   <% end %>
-                <% end %>
               <% end %>
             </tbody>
           </table>
@@ -63,7 +62,7 @@
             </button>
           </div>
         </div>
-      <% end %>
+        <% end %>
     <% end %>
   </div>
 </div>

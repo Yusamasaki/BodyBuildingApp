@@ -7,7 +7,6 @@ User.create!( name: "Sample User",
               password_confirmation: "password",
               admin: true,
               employee_number: "employee_number",
-              superior: false,
               uid: 1
             )
 User.create!( name: "上長A",
@@ -16,7 +15,6 @@ User.create!( name: "上長A",
               password_confirmation: "password",
               admin: false,
               employee_number: "employee_number",
-              superior: true,
               uid: 2
             )
 User.create!( name: "上長B",
@@ -25,7 +23,6 @@ User.create!( name: "上長B",
               password_confirmation: "password",
               admin: false,
               employee_number: "employee_number",
-              superior: true,
               uid: 3
             )
 User.create!( name: "上長C",
@@ -34,7 +31,6 @@ User.create!( name: "上長C",
               password_confirmation: "password",
               admin: false,
               employee_number: "employee_number",
-              superior: true,
               uid: 4
             )
 User.create!( name: "一般A",
@@ -43,6 +39,5 @@ User.create!( name: "一般A",
               password_confirmation: "password",
               admin: false,
               employee_number: "employee_number",
-              superior: false,
               uid: 5
             )

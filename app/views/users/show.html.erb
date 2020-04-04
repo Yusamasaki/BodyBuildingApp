@@ -1,4 +1,5 @@
 <% provide(:title, @user.name) %>
+<% provide(:button_text, '申請する') %>
 <div>
   <table class="table table-bordered <t></t>able-condensed user-table">
     <tr>
@@ -20,7 +21,7 @@
     <tr>
       <td>所属：<%= @user.department.present? ? @user.department : "未所属" %></td>
       <td>名前：<%= @user.name %></td>
-      <td>コード：</td>
+      <td>コード：</td> 
       <td><%= @user.employee_number %></td>
       <td>出勤日数：<%= @worked_sum %>日</td>
       <td>締め：<%= l(@last_day, format: :short) %></td>
@@ -28,19 +29,22 @@
   </table>
 </div>
 
-  
+
 <div>
-  <div>
-    
-    <%= link_to "【所属長承認申請のお知らせ】", approval_application_user_path, remote: true, class: "btn" %>
-    <font class="notice"><%= "件の通知があります" %></font>
-  </div>
+  <% if @attendance.approval_application.present? %>
+    <div>
+      <%= link_to "【所属長承認申請のお知らせ】", notice_approval_application_user_path, remote: true, class: "btn" %>
+      <font class="notice"><%= "件の通知があります" %></font>
+    </div>
+  <% end %>
   
-  <div>
-    <%= link_to "【勤怠変更申請のお知らせ】", attendances_notice_edit_one_month_user_path, remote: true, class: "btn" %>
-    <font class="notice"><%= "件の通知があります" %></font>
-  </div>
-  
+  <% if @attendance.one_month_instructor_confirmation.present? %>
+    <div>
+      <%= link_to "【勤怠変更申請のお知らせ】", attendances_notice_edit_one_month_user_path, remote: true, class: "btn" %>
+      <font class="notice"><%= "件の通知があります" %></font>
+    </div>
+  <% end %>
+
   <% if @attendance.instructor_confirmation.present? %>
     <div>
       <%= link_to "【残業申請のお知らせ】", notice_overwork_request_user_path, remote: true, class: "btn" %>
@@ -94,7 +98,7 @@
       <% @attendances.each do |day| %>
         <tr>
           <td class="center"> 
-            <%= link_to "残業申請", edit_overwork_request_user_path(day), remote: true, class: "btn btn-primary" %>
+            <%= link_to "残業申請", edit_overwork_request_user_path(day, date: @first_day), remote: true, class: "btn btn-primary" %>
           </td>
           <td><%= l(day.worked_on, format: :short) %></td>
           <td>
@@ -106,16 +110,18 @@
               <%= $days_of_the_week[day.worked_on.wday] %>
             <% end %>
           </td>
-          <td><%= day.started_at.hour if day.started_at.present? && day.one_month_instructor_confirmation.present? %></td>
-          <td><%= day.started_at.floor_to(15.minutes).min if day.started_at.present? && day.one_month_instructor_confirmation.present? %></td>
+          <td>
+            <%= day.started_at.hour if day.started_at.present? && day.one_month_instructor_confirmation.present? && day.notice_one_month_instructor_confirmation == "1" %>
+          </td>
+          <td><%= day.started_at.floor_to(15.minutes).min if day.started_at.present? && day.notice_one_month_instructor_confirmation == "1" %></td>
           <td>
             <% if Date.current == day.worked_on && day.started_at.nil? %>
               <%= link_to "出社", user_attendance_path(@user, day), method: :patch, 
                   class: "btn btn-md btn-default btn-attendance" %>
             <% end %>
           </td>
-          <td><%= day.finished_at.hour if day.finished_at.present? && day.one_month_instructor_confirmation.present? %></td>
-          <td><%= day.finished_at.floor_to(15.minutes).min if day.finished_at.present? && day.one_month_instructor_confirmation.present? %></td>
+          <td><%= day.finished_at.hour if day.finished_at.present? && day.notice_one_month_instructor_confirmation == "1" %></td>
+          <td><%= day.finished_at.floor_to(15.minutes).min if day.finished_at.present? && day.notice_one_month_instructor_confirmation == "1" %></td>
           <td>
                                                                                                                                                                                                 <% if Date.current == day.worked_on && day.started_at.present? && day.finished_at.blank? %>
               <%= link_to "退社", user_attendance_path(@user, day), method: :patch, 
@@ -123,22 +129,30 @@
             <% end %>
           </td>
           <td>
-            <% if day.started_at.present? && day.finished_at.present? %>
+            <% if day.started_at.present? && day.finished_at.present? && day.notice_one_month_instructor_confirmation == "1" %>
               <%= str_times = working_times(day.started_at, day.finished_at) %>
               <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
             <% end %>
           </td>
-          <td><%= day.note %></td>
-          
-          <td><%= day.expected_end_time.hour if day.expected_end_time.present? && day.instructor_confirmation_app.present? %></td>
-          <td><%= day.expected_end_time.min if day.expected_end_time.present? && day.instructor_confirmation_app.present? %></td>
-          <td><%= format("%.2f", @total_after_hours.to_f) if day.instructor_confirmation_app.present? %></td>
-          <td><%= day.business_processing_contents if day.instructor_confirmation_app.present? %></td>
           <td>
-            <% if day.instructor_confirmation.present? %>
-              <%= "申請中" %>
-            <% elsif day.instructor_confirmation_app.present? %>
-              <%= "承認済" %>
+            <% if day.notice_one_month_instructor_confirmation == "1" %>
+              <%= day.note %>
+            <% end %>
+          </td>
+          
+          <td><%= day.expected_end_time.hour if day.expected_end_time.present? && day.instructor_confirmation_app == "1" && day.next_day == "1" %></td>
+          <td><%= day.expected_end_time.min if day.expected_end_time.present? && day.instructor_confirmation_app == "1" && day.next_day == "1" %></td>
+          <td><%= after_hours(day.designated_work_end_time, day.expected_end_time) if day.instructor_confirmation_app == "1" && day.next_day == "1" %></td>
+          <td><%= day.business_processing_contents if day.instructor_confirmation_app == "1" && day.next_day == "1" %></td>
+          <td>
+            <% if day.instructor_confirmation.present? && day.instructor_confirmation_app == "1" && day.next_day == "1" %>
+              <%= "残業承認" %>
+            <% elsif day.instructor_confirmation_app == "2" %>
+              <%= "残業否認" %>
+            <% elsif day.instructor_confirmation.present? %>
+              <%= "残業申請中" %>
+            <% else %>
+              <%= "" %>
             <% end %>
           </td>
         </tr>
@@ -158,25 +172,32 @@
         <td rowspan="2"></td>
         <td rowspan="2"></td>
         <td rowspan="2">
-          <%= form_with(model: @attendance, url: update_approval_application_user_path, method: :patch) do |f| %>
-            <div class="approval"><%= "所属長承認" %></div>
+          <%= form_with(model: @attendance, url: approval_application_user_path, local: true, method: :post) do |f| %>
+            <div class="approval">
+              <% if @attendance.approval_confirmation == "1" %>
+                <%= "所属長承認 から承認済み" %>
+              <% else %>
+                <%= "所属長承認" %>
+              <% end %>
+            </div>
             <div class="approval">
               <%= f.select :approval_application,
                 [
+                ["", ""],  
                 ["上長A", 0],
                 ["上長B", 1],
                 ["上長C", 2]
                 ]
               %>
             </div>
-            <div class="approval"><%= f.submit "申請", class: "btn btn-primary btn-block" %></div>
+            <div class="approval"><%= f.submit yield(:button_text), class: "btn btn-primary btn-block" %></div>
           <% end %>
         </td>
       </tr>
       <tr>
         <td colspan="2"><%= format_basic_info(@user.work_time).to_f * @worked_sum %></td>
         <td colspan="5"></td>
-          <td colspan="2"><%= format("%.2f", @total_working_times.to_f) %></td>
+        <td colspan="2"><%= format("%.2f", @total_working_times.to_f) %></td>
       </tr>
     </tfoot>
   </table>
@@ -186,4 +207,4 @@
 <div id="edit-overwork-request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="notice-overwork-request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="notice-edit-one-month" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
-<div id="approval-application" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="notice-approval-application" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

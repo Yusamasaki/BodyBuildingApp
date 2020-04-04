@@ -28,19 +28,23 @@
             <td><%= f.check_box :next_day %></td>
             <td><%= f.text_field :business_processing_contents, class: "form-control" %></td>
             <td>
-              <%= f.select :instructor_confirmation, [
-                ["上長A", 0],
-                ["上長B", 1],
-                ["上長C", 2]
+              <%= f.select :instructor_confirmation, 
+                [
+                ["", ""],
+                ["上長A", 1],
+                ["上長B", 2],
+                ["上長C", 3]
                 ]
               %>
             </td>
-      </tbody>
-    </table>
+          </tr>
+        </tbody>
+      </table>
     
-    <div class="center">
-      <%= f.submit yield(:button_text), class: "btn btn-primary" %>
-    </div>
+      <div class="center">
+            <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+      </div>
       <% end %>
+    </div>
   </div>
 </div>

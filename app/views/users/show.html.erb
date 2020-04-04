@@ -98,7 +98,7 @@
       <% @attendances.each do |day| %>
         <tr>
           <td class="center"> 
-            <%= link_to "残業申請", edit_overwork_request_user_path(day, date: @first_day), remote: true, class: "btn btn-primary" %>
+            <%= link_to "残業申請", edit_overwork_request_user_path(day), remote: true, class: "btn btn-primary" %>
           </td>
           <td><%= l(day.worked_on, format: :short) %></td>
           <td>

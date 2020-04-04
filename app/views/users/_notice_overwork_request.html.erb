@@ -27,6 +27,7 @@
             
             <tbody>
               <% @attendances.each do |day| %>
+                <%= f.fields_for "attendances[]", day do |attendance| %>
                   <% if day.expected_end_time.present? %>
                   <tr>
                     <td><%= l(day.worked_on, format: :short) %></td>
@@ -38,7 +39,7 @@
                     </td> 
                     <td><%= day.business_processing_contents %></td>
                     <td>
-                      <%= f.select :instructor_confirmation_app, 
+                      <%= attendance.select :instructor_confirmation_app, 
                         [
                         ["", ""],
                         ["申請中", 0],
@@ -47,10 +48,11 @@
                         ]
                       %> 
                     </td>
-                    <td><%= f.check_box :next_day %></td>
+                    <td><%= attendance.check_box :next_day %></td>
                     <td><%= link_to "確認", user_path(user), class: "btn btn-primary" %></td>
                   </tr>
                   <% end %>
+                <% end %>
               <% end %>
             </tbody>
           </table>

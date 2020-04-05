@@ -1,0 +1,2 @@
+class Overwork < ApplicationRecord
+end

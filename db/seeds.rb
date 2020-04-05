@@ -41,3 +41,11 @@ User.create!( name: "一般A",
               employee_number: "employee_number",
               uid: 5
             )
+User.create!( name: "一般B",
+              email: "generalB@email.com",
+              password: "password",
+              password_confirmation: "password",
+              admin: false,
+              employee_number: "employee_number",
+              uid: 6
+            )

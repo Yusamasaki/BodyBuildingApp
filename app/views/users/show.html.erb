@@ -46,8 +46,8 @@
   <% end %>
 
   <% if @attendance.instructor_confirmation.present? %>
-    <div>
-      <%= link_to "【残業申請のお知らせ】", notice_overwork_request_user_path, remote: true, class: "btn" %>
+    <div> 
+      <%= link_to "【残業申請のお知らせ】", notice_overwork_request_attendance_path, remote: true, class: "btn" %>
       <font class="notice"><%= "件の通知があります" %></font>
     </div>
   <% end %>
@@ -96,9 +96,10 @@
 
     <tbody>
       <% @attendances.each do |day| %>
+      <%= fields_for "attendances[]", day do |attendance| %>
         <tr>
-          <td class="center"> 
-            <%= link_to "残業申請", edit_overwork_request_user_path(day), remote: true, class: "btn btn-primary" %>
+          <td class="center">
+            <%= link_to "残業申請", edit_overwork_request_attendance_path(day), remote: true, class: "btn btn-primary" %>
           </td>
           <td><%= l(day.worked_on, format: :short) %></td>
           <td>
@@ -111,31 +112,31 @@
             <% end %>
           </td>
           <td>
-            <%= day.started_at.hour if day.started_at.present? && day.one_month_instructor_confirmation.present? && day.notice_one_month_instructor_confirmation == "1" %>
+            <%= day.started_at.hour if day.started_at.present? && day.one_month_instructor_confirmation.present? && day.notice_one_month_instructor_confirmation == "1" && day.change_digest == "1" %>
           </td>
-          <td><%= day.started_at.floor_to(15.minutes).min if day.started_at.present? && day.notice_one_month_instructor_confirmation == "1" %></td>
+          <td><%= day.started_at.floor_to(15.minutes).min if day.started_at.present? && day.notice_one_month_instructor_confirmation == "1" && day.change_digest == "1" %></td>
           <td>
             <% if Date.current == day.worked_on && day.started_at.nil? %>
               <%= link_to "出社", user_attendance_path(@user, day), method: :patch, 
                   class: "btn btn-md btn-default btn-attendance" %>
             <% end %>
           </td>
-          <td><%= day.finished_at.hour if day.finished_at.present? && day.notice_one_month_instructor_confirmation == "1" %></td>
-          <td><%= day.finished_at.floor_to(15.minutes).min if day.finished_at.present? && day.notice_one_month_instructor_confirmation == "1" %></td>
+          <td><%= day.finished_at.hour if day.finished_at.present? && day.notice_one_month_instructor_confirmation == "1" && day.change_digest == "1" %></td>
+          <td><%= day.finished_at.floor_to(15.minutes).min if day.finished_at.present? && day.notice_one_month_instructor_confirmation == "1" && day.change_digest == "1" %></td>
           <td>
-                                                                                                                                                                                                <% if Date.current == day.worked_on && day.started_at.present? && day.finished_at.blank? %>
+            <% if Date.current == day.worked_on && day.started_at.present? && day.finished_at.blank? %>
               <%= link_to "退社", user_attendance_path(@user, day), method: :patch, 
                   class: "btn btn-md btn-default btn-attendance" %>
             <% end %>
           </td>
           <td>
-            <% if day.started_at.present? && day.finished_at.present? && day.notice_one_month_instructor_confirmation == "1" %>
+            <% if day.started_at.present? && day.finished_at.present? && day.notice_one_month_instructor_confirmation == "1" && day.change_digest == "1" %>
               <%= str_times = working_times(day.started_at, day.finished_at) %>
               <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
             <% end %>
           </td>
           <td>
-            <% if day.notice_one_month_instructor_confirmation == "1" %>
+            <% if day.notice_one_month_instructor_confirmation == "1" && day.change_digest == "1" %>
               <%= day.note %>
             <% end %>
           </td>
@@ -157,6 +158,7 @@
           </td>
         </tr>
       <% end %>
+      <% end %>
     </tbody>
     
     <tfoot>
@@ -177,7 +179,7 @@
               <% if @attendance.approval_confirmation == "1" %>
                 <%= "所属長承認 から承認済み" %>
               <% else %>
-                <%= "所属長承認" %>
+                <%= "所��長承認" %>
               <% end %>
             </div>
             <div class="approval">

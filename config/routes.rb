@@ -22,10 +22,6 @@ Rails.application.routes.draw do
       get 'edit_base_info'
       patch 'update_base_info'
       get 'index_attendance'
-      get 'edit_overwork_request'
-      patch 'update_overwork_request'
-      get 'notice_overwork_request'
-      patch 'update_notice_overwork_request'
       post 'approval_application'
       get 'notice_approval_application'
       patch 'update_notice_approval_application'
@@ -39,6 +35,16 @@ Rails.application.routes.draw do
     resources :attendances do
     end
   end
+  
+  resources :attendances do
+    member do
+      get 'edit_overwork_request'
+      patch 'update_overwork_request'
+      get 'notice_overwork_request'
+      patch 'update_notice_overwork_request'
+    end
+  end
+  
   resources :bases do
     member do
       get 'edit_base'

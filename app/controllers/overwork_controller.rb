@@ -1,0 +1,2 @@
+class OverworkController < ApplicationController
+end

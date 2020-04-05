@@ -80,15 +80,56 @@ class AttendancesController < ApplicationController
   def edit_one_month_log
     @attendances = Attendance.all
   end
+  
+  def edit_overwork_request
+    @user = User.find(params[:id])
+    @users = User.all
+    @attendance = Attendance.find(params[:id])
+    @attendances = Attendance.all
+  end
+      
+  def update_overwork_request
+    @attendance = Attendance.find(params[:id])
+    @attendance.update_attributes(overwork_request_params)
+    flash[:info] = "残業申請を送信しました。"
+    redirect_to user_url
+  end
+  
+  def notice_overwork_request
+    @user = User.find(params[:id])
+    @users = User.all 
+    @attendances = Attendance.all
+    @attendance = Attendance.find(params[:id])
+  end
+  
+  def update_notice_overwork_request
+    @user = User.find(params[:id])
+    @attendance = Attendance.find(params[:id])
+    @attendance.update_attributes(notice_overwork_request_params)
+    flash[:info] = "変更内容を更新しました"
+    redirect_to user_url
+  end
     
   private
     # １ヶ月分の勤怠情報を扱います。
     def attendances_params
-      params.require(:user).permit(attendances: [:started_at, :finished_at, :note, :one_month_instructor_confirmation, :notice_one_month_instructor_confirmation])[:attendances]
+      params.require(:user).permit(attendances: [:started_at, :finished_at, :note,
+                                                 :one_month_instructor_confirmation, :notice_one_month_instructor_confirmation,
+                                                 :notice_one_month_instructor_confirmation, :change_digest])[:attendances]
+    end
+ 
+    def notice_attendances_params
+      params.require(:user).permit(attendances: [:notice_one_month_instructor_confirmation, :change_digest])[:attendances]
     end
     
-    def notice_attendances_params
-      params.require(:attendance).permit(:started_at, :finished_at, :note, :notice_one_month_instructor_confirmation)
+    def overwork_request_params 
+      params.require(:attendance).permit(:expected_end_time, :next_day, :approval_confirmation,
+                                         :business_processing_contents, :instructor_confirmation)
+    end
+    
+    def notice_overwork_request_params 
+      params.require(:attendance).permit( :expected_end_time, :next_day, :approval_confirmation,
+                                   :business_processing_contents, :instructor_confirmation_app)
     end
     
     # 管理権限者、または現在ログインしているユーザーを許可します。

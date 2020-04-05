@@ -9,7 +9,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
         <h1 class="modal-title">【 <%= user.name %>からの残業申請 】</h1><br>
-        <%= form_with(model: @attendance, url: update_notice_overwork_request_user_path, local: true, method: :patch) do |f| %>
+        <%= form_with(model: @attendance, url: update_notice_overwork_request_attendance_path, local: true, method: :patch) do |f| %>
           <table class="table table-bordered table-overwork">
             <thead>
               <tr>

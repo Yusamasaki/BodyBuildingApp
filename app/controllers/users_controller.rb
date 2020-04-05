@@ -33,9 +33,10 @@ class UsersController < ApplicationController
   end
   
   def show
+    @user = User.find(params[:id])
     @attendance = Attendance.find(params[:id])
+    @attendances_1 = Attendance.all
     @worked_sum = @attendances.where.not(started_at: nil).count
-    
   end
   
   def new
@@ -87,35 +88,6 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
   
-  def edit_overwork_request
-    @user = User.find(params[:id])
-    @users = User.all
-    @attendance = Attendance.find(params[:id])
-    @attendances = Attendance.all
-  end
-      
-  def update_overwork_request
-    @attendance = Attendance.find(params[:id])
-    @attendance.update_attributes(overwork_request_params)
-    flash[:info] = "残業申請を送信しました。"
-    redirect_to user_url
-  end
-  
-  def notice_overwork_request
-    @user = User.find(params[:id])
-    @users = User.all 
-    @attendances = Attendance.all
-    @attendance = Attendance.find(params[:id])
-  end
-  
-  def update_notice_overwork_request
-    @user = User.find(params[:id])
-    @attendance = Attendance.find(params[:id])
-    @attendance.update_attributes(notice_overwork_request_params)
-    flash[:info] = "変更内容を更新しました"
-    redirect_to user_url
-  end
-  
   def index_attendance
     @users = User.all.includes(:attendances)
   end
@@ -146,16 +118,6 @@ class UsersController < ApplicationController
       params.require(:user).permit(attendances: [:name, :email, :department, :employee_number,
                                                  :uid, :password, :password_confirmation, :basic_time,
                                                  :designated_work_start_time, :designated_work_end_time])
-    end
-    
-    def overwork_request_params 
-      params.require(:attendance).permit(:expected_end_time, :next_day, :approval_confirmation,
-                                         :business_processing_contents, :instructor_confirmation)
-    end
-    
-    def notice_overwork_request_params 
-      params.require(:attendance).permit( :expected_end_time, :next_day, :approval_confirmation,
-                                   :business_processing_contents, :instructor_confirmation_app)
     end
     
     def basic_info_params

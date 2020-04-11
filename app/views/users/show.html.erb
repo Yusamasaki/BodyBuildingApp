@@ -41,14 +41,14 @@
   <% if @attendance.one_month_instructor_confirmation.present? %>
     <div>
       <%= link_to "【勤怠変更申請のお知らせ】", attendances_notice_edit_one_month_user_path, remote: true, class: "btn" %>
-      <font class="notice"><%= "件の通知があります" %></font>
+      <font class="notice"><%= "#{@one_month}件の通知があります" %></font>
     </div>
   <% end %>
 
   <% if @attendance.instructor_confirmation.present? %>
     <div> 
-      <%= link_to "【残業申請のお知らせ】", notice_overwork_request_attendance_path, remote: true, class: "btn" %>
-      <font class="notice"><%= "件の通知があります" %></font>
+      <%= link_to "【残業申請のお知らせ】", attendances_notice_overwork_request_user_path, remote: true, class: "btn" %>
+      <font class="notice"><%= "#{@overwork}件の通知があります" %></font>
     </div>
   <% end %>
 </div><br>
@@ -99,7 +99,7 @@
       <%= fields_for "attendances[]", day do |attendance| %>
         <tr>
           <td class="center">
-            <%= link_to "残業申請", edit_overwork_request_attendance_path(day), remote: true, class: "btn btn-primary" %>
+            <%= link_to "残業申請", user_attendance_edit_overwork_request_path(@user, day), remote: true, class: "btn btn-primary" %>
           </td>
           <td><%= l(day.worked_on, format: :short) %></td>
           <td>
@@ -141,12 +141,12 @@
             <% end %>
           </td>
           
-          <td><%= day.expected_end_time.hour if day.expected_end_time.present? && day.instructor_confirmation_app == "1" && day.next_day == "1" %></td>
-          <td><%= day.expected_end_time.min if day.expected_end_time.present? && day.instructor_confirmation_app == "1" && day.next_day == "1" %></td>
-          <td><%= after_hours(day.designated_work_end_time, day.expected_end_time) if day.instructor_confirmation_app == "1" && day.next_day == "1" %></td>
-          <td><%= day.business_processing_contents if day.instructor_confirmation_app == "1" && day.next_day == "1" %></td>
+          <td><%= day.expected_end_time.hour if day.expected_end_time.present? && day.instructor_confirmation_app == "1" %></td>
+          <td><%= day.expected_end_time.min if day.expected_end_time.present? && day.instructor_confirmation_app == "1" %></td>
+          <td><%= after_hours(day.designated_work_end_time, day.expected_end_time) if day.instructor_confirmation_app == "1" %></td>
+          <td><%= day.business_processing_contents if day.instructor_confirmation_app == "1" %></td>
           <td>
-            <% if day.instructor_confirmation.present? && day.instructor_confirmation_app == "1" && day.next_day == "1" %>
+            <% if day.instructor_confirmation.present? && day.instructor_confirmation_app == "1" %>
               <%= "残業承認" %>
             <% elsif day.instructor_confirmation_app == "2" %>
               <%= "残業否認" %>
@@ -179,7 +179,7 @@
               <% if @attendance.approval_confirmation == "1" %>
                 <%= "所属長承認 から承認済み" %>
               <% else %>
-                <%= "所��長承認" %>
+                <%= "所属長承認" %>
               <% end %>
             </div>
             <div class="approval">

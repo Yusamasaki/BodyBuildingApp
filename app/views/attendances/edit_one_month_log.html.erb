@@ -14,9 +14,9 @@
       </tr>
     </thead>
     
-    <% @attendances.each do |attendance| %>
+    <% @attendances.each do |day| %>
       <tr>
-        <th></th>
+        <th><%= l(day.worked_on, format: :short) %></th>
         <th></th>
         <th></th>
         <th></th>

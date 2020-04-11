@@ -33,10 +33,10 @@ class UsersController < ApplicationController
   end
   
   def show
-    @user = User.find(params[:id])
     @attendance = Attendance.find(params[:id])
-    @attendances_1 = Attendance.all
     @worked_sum = @attendances.where.not(started_at: nil).count
+    @one_month = @attendances.where.not(one_month_instructor_confirmation: '').count
+    @overwork = @attendances.where.not(instructor_confirmation: nil).count
   end
   
   def new

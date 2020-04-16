@@ -7,7 +7,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
       <h1 class="modal-title">【 残業申請 】</h1><br>
-      <%= form_with(model: @user, url: update_overwork_request_user_attendance_path, local: true, method: :patch) do |f| %>
+      <%= form_with(model: @user, url: attendances_update_overwork_request_user_path, local: true, method: :patch) do |f| %>
       <table class="table table-bordered table-overwork">
         <thead>
           <tr>
@@ -21,23 +21,27 @@
         </thead>
         
         <tbody>
-          <tr>
-            <td><%= l(@attendance.worked_on, format: :short) %></td>
-            <td><%= $days_of_the_week[@attendance.worked_on.wday] %></td>
-            <td><%= f.time_field :expected_end_time, class: "form-control" %></td>
-            <td><%= f.check_box :next_day %></td>
-            <td><%= f.text_field :business_processing_contents, class: "form-control" %></td>
-            <td>
-              <%= f.select :instructor_confirmation, 
-                [
-                ["", ""],
-                ["上長A", 1],
-                ["上長B", 2],
-                ["上長C", 3]
-                ]
-              %>
-            </td>
-          </tr>
+          <% @attendances.each do |day| %>
+            <%= f.fields_for "attendances[]", day do |attendance| %>
+            <tr>
+              <td><%= l(day.worked_on, format: :short) %></td>
+              <td><%= $days_of_the_week[day.worked_on.wday] %></td>
+              <td><%= attendance.time_field :expected_end_time, class: "form-control" %></td>
+              <td><%= attendance.check_box :next_day %></td>
+              <td><%= attendance.text_field :business_processing_contents, class: "form-control" %></td>
+              <td>
+                <%= attendance.select :instructor_confirmation, 
+                  [
+                  ["", ""],
+                  ["上長A", 1],
+                  ["上長B", 2],
+                  ["上長C", 3]
+                  ]
+                %>
+              </td>
+            </tr>
+            <% end %>
+          <% end %>
         </tbody>
       </table>
     

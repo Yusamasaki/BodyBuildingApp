@@ -1,12 +1,13 @@
 class AttendancesController < ApplicationController
-  before_action :set_user, only: [:edit_one_month, :update_one_month,
+  before_action :set_user, only: [:edit_one_month, :update_one_month, :edit_overwork_request,
                                   :update_overwork_request, :notice_overwork_request, :update_notice_overwork_request,
                                   :notice_edit_one_month, :update_notice_overwork_request]
   before_action :logged_in_user, only: [:update, :edit_one_month, :notice_overwork_request,
                                   :update_overwork_request, :notice_overwork_request, :update_notice_overwork_request,
                                   :notice_edit_one_month, :update_notice_overwork_request]
   before_action :admin_or_correct_user, only: [:update, :edit_one_month, :update_one_month]
-  before_action :set_one_month, only: [:edit_one_month,:notice_overwork_request, :notice_edit_one_month]
+  before_action :set_one_month, only: [:edit_one_month,:notice_overwork_request, :notice_edit_one_month,
+                                       :edit_overwork_request, :notice_overwork_request]
   
   UPDATE_ERROR_MSG = "勤怠登録に失敗しました。やり直してください。"
 
@@ -81,7 +82,6 @@ class AttendancesController < ApplicationController
   end
   
   def edit_overwork_request
-    @user = User.find(params[:id])
     @attendance = Attendance.find(params[:id])
   end
       
@@ -96,10 +96,9 @@ class AttendancesController < ApplicationController
   
   
   def notice_overwork_request
-    @user = User.find(params[:id])
     @users = User.all 
-    @attendances = Attendance.all
     @attendance = Attendance.find(params[:id])
+    @attendancess = @users.attendances.all
   end
   
   def update_notice_overwork_request
@@ -126,11 +125,11 @@ class AttendancesController < ApplicationController
     
     def overwork_request_params 
       params.require(:user).permit(attendances: [:expected_end_time, :next_day, :approval_confirmation,
-                                   :business_processing_contents, :instructor_confirmation])[:attendances]
+                                                 :business_processing_contents, :instructor_confirmation])[:attendances]
     end
     
     def notice_overwork_request_params 
-      params.require(:user).permit(:instructor_confirmation_app)
+      params.require(:user).permit(attendances: [:instructor_confirmation_app])[:attendances]
     end
     
     # 管理権限者、または現在ログインしているユーザーを許可します。

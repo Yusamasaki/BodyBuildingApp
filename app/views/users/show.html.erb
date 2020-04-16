@@ -45,12 +45,19 @@
     </div>
   <% end %>
 
-  <% if @attendance.instructor_confirmation.present? %>
-    <div> 
-      <%= link_to "【残業申請のお知らせ】", attendances_notice_overwork_request_user_path, remote: true, class: "btn" %>
-      <font class="notice"><%= "#{@overwork}件の通知があります" %></font>
-    </div>
-  <% end %>
+  
+      <% if @attendance.instructor_confirmation.present? %>
+        <div> 
+          <%= link_to "【残業申請のお知らせ】", attendances_notice_overwork_request_user_path, remote: true, class: "btn" %>
+          <font class="notice"><%= "#{@overwork}件の通知があります" %></font>
+        </div>
+      <% else %>
+        <div> 
+          <%= "【残業申請のお知らせ】" %>
+        </div>
+      <% end %>
+  
+    
 </div><br>
 
 
@@ -99,7 +106,7 @@
       <%= fields_for "attendances[]", day do |attendance| %>
         <tr>
           <td class="center">
-            <%= link_to "残業申請", user_attendance_edit_overwork_request_path(@user, day), remote: true, class: "btn btn-primary" %>
+            <%= link_to "残業申請", attendances_edit_overwork_request_user_path(@user), remote: true, class: "btn btn-primary" %>
           </td>
           <td><%= l(day.worked_on, format: :short) %></td>
           <td>

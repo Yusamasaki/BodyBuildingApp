@@ -32,12 +32,12 @@ Rails.application.routes.draw do
       patch 'attendances/update_notice_one_month'
       get 'attendances/edit_one_month_log'
       
+      get 'attendances/edit_overwork_request'
+      patch 'attendances/update_overwork_request'
+      get 'attendances/notice_overwork_request'
+      patch 'attendances/update_notice_overwork_request'
     end
     resources :attendances do
-      get 'edit_overwork_request'
-      patch 'update_overwork_request'
-      get 'notice_overwork_request'
-      patch 'update_notice_overwork_request'
     end
   end
   

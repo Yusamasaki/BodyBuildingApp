@@ -35,14 +35,31 @@
           </td>
           <td><%= attendance.text_field :note,   class: "form-control" %></td>
           <td>
-              <%= attendance.select :one_month_instructor_confirmation,
-              [
-              ["", ""],
-              ["上長A", 0],
-              ["上長B", 1],
-              ["上長C", 2]
-              ] 
-            %>
+            <% if @user.superiorA? %>
+              <%= attendance.select :one_month_instructor_confirmation, 
+                [
+                ["", ""],
+                ["上長B", 2],
+                ["上長C", 3]
+                ]
+              %>
+            <% elsif @user.superiorB? %>
+              <%= attendance.select :one_month_instructor_confirmation, 
+                [
+                ["", ""],
+                ["上長A", 1],
+                ["上長C", 3]
+                ]
+              %>
+            <% elsif @user.superiorC %>
+              <%= attendance.select :one_month_instructor_confirmation, 
+                [
+                ["", ""],
+                ["上長A", 1],
+                ["上長B", 3]
+                ]
+              %>
+            <% end %>
           </td>
         </tr>
         <% end %>

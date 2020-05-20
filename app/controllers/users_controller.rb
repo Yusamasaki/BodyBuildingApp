@@ -4,41 +4,27 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy,
                                         :edit_basic_info, :update_basic_info]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:index, :search, :destroy, :edit_basic_info, :update_basic_info]
+  before_action :admin_user, only: [:index, :destroy, :edit_basic_info, :update_basic_info]
   before_action :set_one_month, only: :show
   before_action :admin_or_correct_user, only: :show
+  before_action :notice, only: :show
   
   def index
     @users = User.all
     @user = User.new
   end
   
-  def index_update
-    if @user.update_attributes(user_params)
-      flash[:success] = "ユーザー情報を更新しました。"
-      redirect_to @user
-    else
-      render :edit
-    end
-  end
-  
   def import
     # fileはtmpに自動で一時保存される
     User.import(params[:file])
+    flash[:success] = '新規作成に成功しました。'
     redirect_to users_url
   end
   
-  def search
-    @users = User.search(params[:search]).paginate(page: params[:page])
-  end
-  
   def show
-    @attendance = Attendance.find(params[:id])
     @users = User.all
+    @attendance = Attendance.find(params[:id])
     @worked_sum = @attendances.where.not(started_at: nil).count
-    @one_month = @attendances.where.not(one_month_instructor_confirmation: '').count
-    @overwork = @attendances.where.not(instructor_confirmation: '').count
-    @attendancess = Attendance.where(user_id: @user)
   end
   
   def new
@@ -117,13 +103,18 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(attendances: [:name, :email, :department, :employee_number,
-                                                 :uid, :password, :password_confirmation, :basic_time,
-                                                 :designated_work_start_time, :designated_work_end_time])
+      params.require(:user).permit(:name, :email, :department,
+                                   :password, :password_confirmation)
     end
     
     def basic_info_params
-      params.require(:user).permit(:department, :basic_time, :work_time)
+      params.require(:user).permit(:name, :email, :department, :basic_time,
+                                   :password, :password_confirmation, :uid, :employee_number)
+    end
+    
+    def basic_params
+      params.require(:user).permit(:name, :email, :department, :basic_time,
+                                   :password, :password_confirmation, :uid, :employee_number)
     end
     
     def approval_params

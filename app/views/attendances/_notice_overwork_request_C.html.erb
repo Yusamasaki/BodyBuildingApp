@@ -1,4 +1,4 @@
-<% provide(:class_text, 'notice-overwork-request') %>
+<% provide(:class_text, 'notice-overwork-request-C') %>
 <% provide(:button_text, '変更を送信する') %>
 
 <div class="modal-dialog modal-lg modal-dialog-center">
@@ -6,7 +6,7 @@
     <% @users.each do |user| %>
     <% @atten = Attendance.where(user_id: user.id) %>
     <% @atten.each do |at| %>
-    <% if at.instructor_confirmation.present? %>
+      <% if at.instructor_confirmation.present? %>
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>

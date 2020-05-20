@@ -14,9 +14,11 @@ Rails.application.routes.draw do
   post   '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   
+  patch '/index_update', to: 'users#index'
+  
   resources :users do
-    collection {post :import}
-    member do 
+    collection { post :import }
+    member do
       get 'edit_basic_info'
       patch 'update_basic_info'
       get 'edit_base_info'
@@ -36,6 +38,8 @@ Rails.application.routes.draw do
       patch 'attendances/update_overwork_request'
       get 'attendances/notice_overwork_request'
       patch 'attendances/update_notice_overwork_request'
+      get 'attendances/notice_overwork_request_B'
+      get 'attendances/notice_overwork_request_C'
     end
     resources :attendances do
     end

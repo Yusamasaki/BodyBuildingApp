@@ -30,14 +30,31 @@
               <td><%= attendance.check_box :next_day %></td>
               <td><%= attendance.text_field :business_processing_contents, class: "form-control" %></td>
               <td>
-                <%= attendance.select :instructor_confirmation, 
-                  [
-                  ["", ""],
-                  ["上長A", 1],
-                  ["上長B", 2],
-                  ["上長C", 3]
-                  ]
-                %>
+                <% if @user.superiorA? %>
+                  <%= attendance.select :instructor_confirmation, 
+                    [
+                    ["", ""],
+                    ["上長B", 2],
+                    ["上長C", 3]
+                    ]
+                  %>
+                <% elsif @user.superiorB? %>
+                  <%= attendance.select :instructor_confirmation, 
+                    [
+                    ["", ""],
+                    ["上長A", 1],
+                    ["上長C", 3]
+                    ]
+                  %>
+                <% elsif @user.superiorC? %>
+                  <%= attendance.select :instructor_confirmation, 
+                    [
+                    ["", ""],
+                    ["上長A", 1],
+                    ["上長B", 3]
+                    ]
+                  %>
+                <% end %>
               </td>
             </tr>
             <% end %>
@@ -46,7 +63,7 @@
       </table>
     
       <div class="center">
-            <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+        <%= f.submit yield(:button_text), class: "btn btn-primary" %>
       </div>
       <% end %>
     </div>

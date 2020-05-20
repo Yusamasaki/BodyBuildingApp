@@ -31,33 +31,68 @@
 
 
 <div>
-  <% if @attendance.approval_application.present? %>
+  <% if @at_app1.present? && @user.superiorA? %>
     <div>
       <%= link_to "【所属長承認申請のお知らせ】", notice_approval_application_user_path, remote: true, class: "btn" %>
-      <font class="notice"><%= "件の通知があります" %></font>
+      <font class="notice"><%= "#{@approval1 - @approval_1}件の通知があります" %></font>
+    </div>
+  <% elsif @at_app2.present? && @user.superiorB? %>
+    <div>
+      <%= link_to "【所属長承認申請のお知らせ】", notice_approval_application_user_path, remote: true, class: "btn" %>
+      <font class="notice"><%= "#{@approval2 - @approval_2}件の通知があります" %></font>
+    </div>
+  <% elsif @at_app2.present? && @user.superiorB? %>
+    <div>
+      <%= link_to "【所属長承認申請のお知らせ】", notice_approval_application_user_path, remote: true, class: "btn" %>
+      <font class="notice"><%= "#{@approval3 - @approval_3}件の通知があります" %></font>
+    </div>
+  <% else %>
+    <div>
+      <%= "【所属長承認申請のお知らせ】" %>
     </div>
   <% end %>
   
-  <% if @attendance.one_month_instructor_confirmation.present? %>
+  <% if @at_one_month1.present? && @user.superiorA? %>
     <div>
       <%= link_to "【勤怠変更申請のお知らせ】", attendances_notice_edit_one_month_user_path, remote: true, class: "btn" %>
-      <font class="notice"><%= "#{@one_month}件の通知があります" %></font>
+      <font class="notice"><%= "#{@one_month1 - @one_month_1}件の通知があります" %></font>
+    </div>
+  <% elsif @at_one_month2.present? && @user.superiorB? %>
+    <div>
+      <%= link_to "【勤怠変更申請のお知らせ】", attendances_notice_edit_one_month_user_path, remote: true, class: "btn" %>
+      <font class="notice"><%= "#{@one_month2 - @one_month_2}件の通知があります" %></font>
+    </div>
+  <% elsif @at_one_month3.present? && @user.superiorC? %>
+    <div>
+      <%= link_to "【勤怠変更申請のお知らせ】", attendances_notice_edit_one_month_user_path, remote: true, class: "btn" %>
+      <font class="notice"><%= "#{@one_month3 - @one_month_3}件の通知があります" %></font>
+    </div>
+  <% else %>
+    <div>
+      <%= "【勤怠変更申請のお知らせ】" %>
     </div>
   <% end %>
-
   
-      <% if @attendance.instructor_confirmation.present? %>
-        <div> 
-          <%= link_to "【残業申請のお知らせ】", attendances_notice_overwork_request_user_path, remote: true, class: "btn" %>
-          <font class="notice"><%= "#{@overwork}件の通知があります" %></font>
-        </div>
-      <% else %>
-        <div> 
-          <%= "【残業申請のお知らせ】" %>
-        </div>
-      <% end %>
-  
-    
+  <% if @at_over1.present? && @user.superiorA? %>
+    <div> 
+      <%= link_to "【残業申請のお知らせ】", attendances_notice_overwork_request_user_path(user_id: @user, id: @attendance.id), remote: true, class: "btn" %>
+      <font class="notice"><%= "#{@overwork1 - @overwork_1}件の通知があります" %></font>
+    </div>
+  <% elsif @at_over2.present? && @user.superiorB? %>
+    <div> 
+      <%= link_to "【残業申請のお知らせ】", attendances_notice_overwork_request_B_user_path(user_id: @user, id: @attendance.id), remote: true, class: "btn" %>
+      <font class="notice"><%= "#{@overwork2 - @overwork_2}件の通知があります" %></font>
+    </div>
+  <% elsif @at_over3.present? && @user.superiorC? %>
+    <div>   
+      <%= link_to "【残業申請のお知らせ】", attendances_notice_overwork_request_C_user_path(user_id: @user, id: @attendance.id), remote: true, class: "btn" %>
+      <font class="notice"><%= "#{@overwork3 - @overwork_3}件の通知があります" %></font>
+    </div>
+  <% else %>
+    <div>
+      <%= "【残業申請のお知らせ】" %>
+    </div>
+  <% end %>
 </div><br>
 
 
@@ -66,7 +101,7 @@
     <%= link_to "勤怠を編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-default btn-primary" %>
     <%= link_to "CSV出力", "#", class: "btn btn-default btn-primary" %>
   </div>
-  <div><%= link_to "勤怠修正ログ（承認済）", attendances_edit_one_month_log_user_path, class: "btn btn-default btn-primary" %></div>
+      <div><%= link_to "勤怠修正ログ（承認済）", attendances_edit_one_month_log_user_path, class: "btn btn-default btn-primary" %></div>
 </div>
 
 <div>
@@ -148,17 +183,28 @@
             <% end %>
           </td>
           
-          <td><%= day.expected_end_time.hour if day.expected_end_time.present? && day.instructor_confirmation_app == "1" %></td>
-          <td><%= day.expected_end_time.min if day.expected_end_time.present? && day.instructor_confirmation_app == "1" %></td>
-          <td><%= after_hours(day.designated_work_end_time, day.expected_end_time) if day.instructor_confirmation_app == "1" %></td>
-          <td><%= day.business_processing_contents if day.instructor_confirmation_app == "1" %></td>
+          <td><%= day.expected_end_time.hour if day.expected_end_time.present? && day.instructor_confirmation_app == "2" %></td>
+          <td><%= day.expected_end_time.min if day.expected_end_time.present? && day.instructor_confirmation_app == "2" %></td>
+          <td><%= after_hours(day.designated_work_end_time, day.expected_end_time) if day.instructor_confirmation_app == "2" %></td>
+          <td><%= day.business_processing_contents if day.instructor_confirmation_app == "2" %></td>
           <td>
-            <% if day.instructor_confirmation.present? && day.instructor_confirmation_app == "1" %>
+            <% if day.instructor_confirmation_app == "2" %>
               <%= "残業承認" %>
-            <% elsif day.instructor_confirmation_app == "2" %>
+            <% elsif day.instructor_confirmation_app == "3" %>
               <%= "残業否認" %>
-            <% elsif day.instructor_confirmation.present? %>
+            <% elsif day.instructor_confirmation == "1" && day.instructor_confirmation == "2" && day.instructor_confirmation == "3" %>
               <%= "残業申請中" %>
+            <% elsif day.one_month_instructor_confirmation.present? %>
+              <%= "勤怠申請中" %>
+            <% elsif day.one_month_instructor_confirmation == "2" %>
+              <%= "勤怠否認" %>
+            <% elsif day.notice_one_month_instructor_confirmation == "1" %>
+              <%= "勤怠承認" %>
+            <% elsif day.notice_one_month_instructor_confirmation == "1" && day.instructor_confirmation_app == "1" %>
+              <%= "勤怠承認" %><%= "残業承認" %>
+            <% elsif day.instructor_confirmation.present? && day.one_month_instructor_confirmation.present? %>
+              <%= "勤怠申請中" %><%= "残業申請中" %>
+              
             <% else %>
               <%= "" %>
             <% end %>
@@ -184,20 +230,37 @@
           <%= form_with(model: @attendance, url: approval_application_user_path, local: true, method: :post) do |f| %>
             <div class="approval">
               <% if @attendance.approval_confirmation == "1" %>
-                <%= "所属長承認 から承認済み" %>
+                <%= "所属長���認 から承認済み" %>
               <% else %>
                 <%= "所属長承認" %>
               <% end %>
             </div>
             <div class="approval">
-              <%= f.select :approval_application,
-                [
-                ["", ""],  
-                ["上長A", 0],
-                ["上長B", 1],
-                ["上長C", 2]
-                ]
-              %>
+              <% if @user.superiorA? %>
+                <%= f.select :approval_application,
+                  [
+                  ["", ""],
+                  ["上長B", 2],
+                  ["上長C", 3]
+                  ]
+                %>
+              <% elsif @user.superiorB? %>
+                <%= f.select :approval_application,
+                  [
+                  ["", ""],  
+                  ["上長A", 1],
+                  ["上長C", 3]
+                  ]
+                %>
+              <% elsif @user.superiorC? %>
+                <%= f.select :approval_application,
+                  [
+                  ["", ""],  
+                  ["上長A", 1],
+                  ["上長B", 2]
+                  ]
+                %>
+              <% end %>
             </div>
             <div class="approval"><%= f.submit yield(:button_text), class: "btn btn-primary btn-block" %></div>
           <% end %>
@@ -215,5 +278,7 @@
 
 <div id="edit-overwork-request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="notice-overwork-request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="notice-overwork-request-B" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="notice-overwork-request-C" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="notice-edit-one-month" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="notice-approval-application" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

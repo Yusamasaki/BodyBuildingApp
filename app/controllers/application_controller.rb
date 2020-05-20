@@ -62,4 +62,27 @@ class ApplicationController < ActionController::Base
     flash[:danger] = "ページ情報の取得に失敗しました、再アクセスしてください。"
     redirect_to root_url
   end
+  
+  def notice
+    @at_over1 = Attendance.where(instructor_confirmation: '1')
+    @at_over2 = Attendance.where(instructor_confirmation: '2')
+    @at_over3 = Attendance.where(instructor_confirmation: '3')
+    @overwork1 = @at_over1.count
+    @overwork2 = @at_over2.count
+    @overwork3 = @at_over3.count
+    
+    @at_one_month1 = Attendance.where(one_month_instructor_confirmation: '1')
+    @at_one_month2 = Attendance.where(one_month_instructor_confirmation: '2')
+    @at_one_month3 = Attendance.where(one_month_instructor_confirmation: '3')
+    @one_month1 = @at_one_month1.count
+    @one_month2 = @at_one_month2.count
+    @one_month3 = @at_one_month3.count
+    @one_month_1 = @at_one_month1.where(notice_one_month_instructor_confirmation: '1').count
+    @one_month_2 = @at_one_month2.where(notice_one_month_instructor_confirmation: '1').count
+    @one_month_3 = @at_one_month3.where(notice_one_month_instructor_confirmation: '1').count
+    
+    @at_app1 = Attendance.where(approval_application: '1')
+    @at_qpp2 = Attendance.where(approval_application: '2')
+    @at_qpp3 = Attendance.where(approval_application: '3')
+  end
 end

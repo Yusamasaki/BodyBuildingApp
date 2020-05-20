@@ -18,17 +18,23 @@ ActiveRecord::Schema.define(version: 20200404125103) do
     t.datetime "finished_at"
     t.string "note"
     t.string "one_month_instructor_confirmation"
+    t.string "one_month_instructor_confirmation_B"
+    t.string "one_month_instructor_confirmation_C"
     t.string "notice_one_month_instructor_confirmation"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "designated_work_start_time", default: "2020-04-17 01:00:00"
-    t.datetime "designated_work_end_time", default: "2020-04-17 10:00:00"
+    t.datetime "designated_work_start_time", default: "2020-05-21 01:00:00"
+    t.datetime "designated_work_end_time", default: "2020-05-21 10:00:00"
     t.datetime "expected_end_time"
     t.string "next_day"
     t.string "business_processing_contents"
     t.string "instructor_confirmation"
+    t.string "instructor_confirmation_B"
+    t.string "instructor_confirmation_C"
     t.string "instructor_confirmation_app"
+    t.string "instructor_confirmation_app_B"
+    t.string "instructor_confirmation_app_C"
     t.string "change_digest"
     t.string "approval_application"
     t.string "approval_confirmation"
@@ -57,9 +63,14 @@ ActiveRecord::Schema.define(version: 20200404125103) do
     t.string "remember_digest"
     t.boolean "admin", default: false
     t.string "department"
-    t.datetime "basic_time", default: "2020-04-16 23:00:00"
-    t.datetime "work_time", default: "2020-04-16 22:30:00"
-    t.string "superior"
+    t.datetime "basic_time", default: "2020-05-20 23:00:00"
+    t.datetime "work_time", default: "2020-05-20 22:30:00"
+    t.boolean "superior", default: false
+    t.boolean "superiorA", default: false
+    t.boolean "superiorB", default: false
+    t.boolean "superiorC", default: false
+    t.boolean "generalA", default: false
+    t.boolean "generalB", default: false
     t.integer "uid"
     t.integer "employee_number"
     t.index ["email"], name: "index_users_on_email", unique: true

@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
     @last_day = @first_day.end_of_month
     one_month = [*@first_day..@last_day]
     
-    @attendances = @user.attendances.where(worked_on: @first_day..@last_day).order(:worked_on)
+    @attendances = @user.attendances.where( worked_on: @first_day..@last_day).order(:worked_on)
     
     unless one_month.count == @attendances.count
       ActiveRecord::Base.transaction do
@@ -70,6 +70,10 @@ class ApplicationController < ActionController::Base
     @overwork1 = @at_over1.count
     @overwork2 = @at_over2.count
     @overwork3 = @at_over3.count
+    @overwork_1 = @at_over1.where(instructor_confirmation_app: '1').or(@at_over1.where(instructor_confirmation_app: '2')).or(@at_over1.where(instructor_confirmation_app: '3')).count
+    @overwork_2 = @at_over2.where(instructor_confirmation_app: '1').or(@at_over2.where(instructor_confirmation_app: '2')).or(@at_over2.where(instructor_confirmation_app: '3')).count
+    @overwork_3 = @at_over3.where(instructor_confirmation_app: '1').or(@at_over3.where(instructor_confirmation_app: '2')).or(@at_over3.where(instructor_confirmation_app: '3')).count
+    @overwork_1_1 = @overwork_1 == '0'
     
     @at_one_month1 = Attendance.where(one_month_instructor_confirmation: '1')
     @at_one_month2 = Attendance.where(one_month_instructor_confirmation: '2')
@@ -77,12 +81,35 @@ class ApplicationController < ActionController::Base
     @one_month1 = @at_one_month1.count
     @one_month2 = @at_one_month2.count
     @one_month3 = @at_one_month3.count
-    @one_month_1 = @at_one_month1.where(notice_one_month_instructor_confirmation: '1').count
-    @one_month_2 = @at_one_month2.where(notice_one_month_instructor_confirmation: '1').count
-    @one_month_3 = @at_one_month3.where(notice_one_month_instructor_confirmation: '1').count
+    @one_month_1 = @at_one_month1.where(notice_one_month_instructor_confirmation: '0').or(@at_one_month1.where(notice_one_month_instructor_confirmation: '1')).or(@at_one_month1.where(notice_one_month_instructor_confirmation: '2')).count
+    @one_month_2 = @at_one_month2.where(notice_one_month_instructor_confirmation: '0').or(@at_one_month2.where(notice_one_month_instructor_confirmation: '1')).or(@at_one_month2.where(notice_one_month_instructor_confirmation: '2')).count
+    @one_month_3 = @at_one_month3.where(notice_one_month_instructor_confirmation: '0').or(@at_one_month3.where(notice_one_month_instructor_confirmation: '1')).or(@at_one_month3.where(notice_one_month_instructor_confirmation: '2')).count
+    
+    
     
     @at_app1 = Attendance.where(approval_application: '1')
     @at_qpp2 = Attendance.where(approval_application: '2')
     @at_qpp3 = Attendance.where(approval_application: '3')
+    @approval1 = @at_app1.count
+    @approval2 = @at_qpp2.count
+    @approval3 = @at_qpp3.count
+    @approval_1 = Attendance.where(approval_application: '1').where(approval_confirmation: '0').or(Attendance.where(approval_confirmation: '1')).or(Attendance.where(approval_confirmation: '2')).count
+    @approval_2 = Attendance.where(approval_application: '2').where(approval_confirmation: '0').or(Attendance.where(approval_confirmation: '1')).or(Attendance.where(approval_confirmation: '2')).count
+    @approval_3 = Attendance.where(approval_application: '3').where(approval_confirmation: '0').or(Attendance.where(approval_confirmation: '1')).or(Attendance.where(approval_confirmation: '2')).count
   end
+  
+  def import_emails
+    # 登録処理前のレコード数
+    current_email_count = ::Email.count
+    emails = []
+    # windowsで作られたファイルに対応するので、encoding: "SJIS"を付けている
+    CSV.foreach(params[:emails_file].path, headers: true, encoding: "SJIS") do |row|
+      emails << ::Email.new({ name: row["name"], email: row["email"] })
+    end
+    # importメソッドでバルクインサートできる
+    ::Email.import(emails)
+    # 何レコード登録できたかを返す
+    ::Email.count - current_email_count
+  end
+  
 end

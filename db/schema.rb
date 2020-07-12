@@ -16,6 +16,8 @@ ActiveRecord::Schema.define(version: 20200404125103) do
     t.date "worked_on"
     t.datetime "started_at"
     t.datetime "finished_at"
+    t.datetime "started_at_before"
+    t.datetime "finished_at_before"
     t.string "note"
     t.string "one_month_instructor_confirmation"
     t.string "one_month_instructor_confirmation_B"
@@ -24,8 +26,8 @@ ActiveRecord::Schema.define(version: 20200404125103) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "designated_work_start_time", default: "2020-05-21 01:00:00"
-    t.datetime "designated_work_end_time", default: "2020-05-21 10:00:00"
+    t.datetime "designated_work_start_time", default: "2020-07-10 01:00:00"
+    t.datetime "designated_work_end_time", default: "2020-07-10 10:00:00"
     t.datetime "expected_end_time"
     t.string "next_day"
     t.string "business_processing_contents"
@@ -63,8 +65,8 @@ ActiveRecord::Schema.define(version: 20200404125103) do
     t.string "remember_digest"
     t.boolean "admin", default: false
     t.string "department"
-    t.datetime "basic_time", default: "2020-05-20 23:00:00"
-    t.datetime "work_time", default: "2020-05-20 22:30:00"
+    t.datetime "basic_time", default: "2020-07-09 23:00:00"
+    t.datetime "work_time", default: "2020-07-09 22:30:00"
     t.boolean "superior", default: false
     t.boolean "superiorA", default: false
     t.boolean "superiorB", default: false

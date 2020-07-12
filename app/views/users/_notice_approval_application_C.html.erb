@@ -5,7 +5,7 @@
     <% @users.each do |user| %>
     <% @atten = Attendance.where(user_id: user.id) %>
     <% @atten.each do |at| %>
-    <% if at.approval_application == '1' %>
+    <% if at.approval_application == '3' %>
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -25,9 +25,9 @@
           <tbody>
             <% @attendances = Attendance.where(user_id: user.id) %>
             <% @attendances.each do |day| %>
-            <% if day.approval_application == '1' %>
+            <% if day.approval_application.present? %>
             <tr>
-              <td><%= l(@day, format: :super_short) %></td>
+              <td><%= l(day.worked_on, format: :super_short) %></td>
               <td>
                 <%= f.select :approval_confirmation, 
                 [
@@ -50,7 +50,7 @@
         </div>
         <% end %>
       </div>
-      <% end %>
+    <% end %>
     <% end %>
     <% end %>
   </div>

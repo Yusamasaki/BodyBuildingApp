@@ -1,0 +1,4 @@
+name,email,department,password,employee_number,uid,basic_time,admin
+テスト1,sample1@gmail.com,フリーランス部,1234,100,password,8:00,FALSE
+テスト2,sample2@gmail.com,フリーランス部,5678,101,password,8:00,FALSE
+テスト3,sample3@gmail.com,営業部,910,102,password,11:00,FALSE

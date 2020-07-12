@@ -14,8 +14,6 @@ Rails.application.routes.draw do
   post   '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   
-  patch '/index_update', to: 'users#index'
-  
   resources :users do
     collection { post :import }
     member do
@@ -24,22 +22,30 @@ Rails.application.routes.draw do
       get 'edit_base_info'
       patch 'update_base_info'
       get 'index_attendance'
+      get 'edit_overwork_request'
+      patch 'update_overwork_request'
       post 'approval_application'
       get 'notice_approval_application'
-      patch 'update_notice_approval_application'
+      get 'notice_approval_application_B'
+      get 'notice_approval_application_C'
       
+      patch 'attendances/update_notice_approval_application'
       get 'attendances/edit_one_month'
       patch 'attendances/update_one_month'
       get 'attendances/notice_edit_one_month'
+      get 'attendances/notice_edit_one_month_B'
+      get 'attendances/notice_edit_one_month_C'
       patch 'attendances/update_notice_one_month'
+      patch 'attendances/update_notice_one_month_B'
+      patch 'attendances/update_notice_one_month_C'
+      
       get 'attendances/edit_one_month_log'
       
-      get 'attendances/edit_overwork_request'
-      patch 'attendances/update_overwork_request'
       get 'attendances/notice_overwork_request'
-      patch 'attendances/update_notice_overwork_request'
       get 'attendances/notice_overwork_request_B'
       get 'attendances/notice_overwork_request_C'
+      patch 'attendances/update_notice_overwork_request'
+      
     end
     resources :attendances do
     end

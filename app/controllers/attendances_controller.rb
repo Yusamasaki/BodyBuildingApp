@@ -1,14 +1,14 @@
 class AttendancesController < ApplicationController
-  before_action :set_user, only: [:edit_one_month, :update_one_month, :edit_overwork_request,
+  before_action :set_user, only: [:edit_one_month, :update_one_month,
                                   :update_overwork_request, :notice_overwork_request, :notice_overwork_request_B, 
                                   :notice_overwork_request_C, :update_notice_overwork_request,
-                                  :notice_edit_one_month, :update_notice_overwork_request]
+                                  :notice_edit_one_month, :update_notice_overwork_request, :update_notice_one_month_B]
   before_action :logged_in_user, only: [:update, :edit_one_month, :notice_overwork_request,
                                         :update_overwork_request_B, :notice_overwork_request_C, :update_notice_overwork_request,
                                         :notice_edit_one_month, :update_notice_overwork_request]
   before_action :admin_or_correct_user, only: [:update, :edit_one_month, :update_one_month]
   before_action :set_one_month, only: [:edit_one_month,:notice_overwork_request, :notice_edit_one_month,
-                                       :edit_overwork_request, :notice_overwork_request, :notice_overwork_request_B, :notice_overwork_request_C]
+                                       :notice_overwork_request, :notice_overwork_request_B, :notice_overwork_request_C]
   
   UPDATE_ERROR_MSG = "勤怠登録に失敗しました。やり直してください。"
 
@@ -67,34 +67,23 @@ class AttendancesController < ApplicationController
   end
   
   def notice_edit_one_month
-    @users = User.all
+    @users = User.where.not(uid: 1).where.not(uid: 2)
     @attendance = Attendance.find(params[:id])
   end
   
-  def update_notice_one_month
+  def notice_edit_one_month_B
+    @users = User.where.not(uid: 1).where.not(uid: 3)
     @attendance = Attendance.find(params[:id])
-    @attendance.update_attributes(notice_attendances_params)
-    flash[:info] = "勤怠を変更しました"
-    redirect_to user_url
+  end
+  
+  def notice_edit_one_month_C
+    @users = User.where.not(uid: 1).where.not(uid: 4) 
+    @attendance = Attendance.find(params[:id])
   end
   
   def edit_one_month_log
     @attendances = Attendance.all
   end
-  
-  def edit_overwork_request
-    @attendance = Attendance.find(params[:id])
-  end
-      
-  def update_overwork_request
-    overwork_request_params.each do |id, item|
-      attendance = Attendance.find(id)
-      attendance.update_attributes!(item)
-    end
-    flash[:success] = "1ヶ月分の勤怠情報を更新しました。"
-    redirect_to user_url(date: params[:date])
-  end
-  
   
   def notice_overwork_request
     @users = User.where.not(uid: 1).where.not(uid: 2)
@@ -120,28 +109,20 @@ class AttendancesController < ApplicationController
     redirect_to user_url(date: params[:date])
   end
   
+  
+  
     
   private
     # １ヶ月分の勤怠情報を扱います。
     def attendances_params
-      params.require(:user).permit(attendances: [:started_at, :finished_at, :note,
-                                                 :one_month_instructor_confirmation, :notice_one_month_instructor_confirmation,
-                                                 :notice_one_month_instructor_confirmation, :change_digest])[:attendances]
-    end
- 
-    def notice_attendances_params
-      params.require(:user).permit(attendances: [:notice_one_month_instructor_confirmation, :change_digest])[:attendances]
-    end
-    
-    def overwork_request_params 
-      params.require(:user).permit(attendances: [:expected_end_time, :next_day, :approval_confirmation,
-                                                 :business_processing_contents, :instructor_confirmation])[:attendances]
+      params.require(:user).permit(attendances: [:started_at, :finished_at, :started_at_before, :finished_at_before, :note,
+                                                 :one_month_instructor_confirmation,
+                                                 :notice_one_month_instructor_confirmation,:change_digest])[:attendances]
     end
     
     def notice_overwork_request_params 
-      params.require(:user).permit(attendances: [:instructor_confirmation])[:attendances]
+      params.require(:user).permit(attendances: [:instructor_confirmation_app])[:attendances]
     end
-    
     # 管理権限者、または現在ログインしているユーザーを許可します。
     def admin_or_correct_user
         @user = User.find(params[:user_id]) if @user.blank?

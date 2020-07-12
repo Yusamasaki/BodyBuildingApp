@@ -4,6 +4,8 @@ class CreateAttendances < ActiveRecord::Migration[5.1]
       t.date :worked_on
       t.datetime :started_at
       t.datetime :finished_at
+      t.datetime :started_at_before
+      t.datetime :finished_at_before
       t.string :note
       t.string :one_month_instructor_confirmation
       t.string :one_month_instructor_confirmation_B

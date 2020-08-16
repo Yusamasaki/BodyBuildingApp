@@ -32,7 +32,7 @@
                   <div>
                     <div id="collapse<%= user.id %>" class="panel-collapse collapse">
                       <ul class="list-group">
-                        <%= render 'user' %>
+                        <%= render partial: 'user', locals: {user: @user} %>
                       </ul>
                     </div>
                   </div>

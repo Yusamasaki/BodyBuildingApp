@@ -1,14 +1,10 @@
 class AttendancesController < ApplicationController
-  before_action :set_user, only: [:edit_one_month, :update_one_month,
-                                  :update_overwork_request, :notice_overwork_request, :notice_overwork_request_B, 
-                                  :notice_overwork_request_C, :update_notice_overwork_request,
-                                  :notice_edit_one_month, :update_notice_overwork_request, :update_notice_one_month_B]
-  before_action :logged_in_user, only: [:update, :edit_one_month, :notice_overwork_request,
-                                        :update_overwork_request_B, :notice_overwork_request_C, :update_notice_overwork_request,
-                                        :notice_edit_one_month, :update_notice_overwork_request]
-  before_action :admin_or_correct_user, only: [:update, :edit_one_month, :update_one_month]
-  before_action :set_one_month, only: [:edit_one_month,:notice_overwork_request, :notice_edit_one_month,
-                                       :notice_overwork_request, :notice_overwork_request_B, :notice_overwork_request_C]
+  before_action :set_user, only: [:edit_one_month, :update_one_month, :update_overwork_request,
+                                  :notice_approval_application, :update_notice_approval_application, :edit_one_month_log]
+  before_action :logged_in_user, only: [:update, :edit_one_month, :notice_edit_one_month]
+  before_action :admin_or_correct_user, only: [:update, :edit_one_month, :update_one_month, :edit_one_month_log]
+  before_action :set_one_month, only: [:edit_one_month, :notice_approval_application, :update_notice_approval_application,
+                                       :edit_one_month_log]  
   
   UPDATE_ERROR_MSG = "勤怠登録に失敗しました。やり直してください。"
 
@@ -81,8 +77,22 @@ class AttendancesController < ApplicationController
     @attendance = Attendance.find(params[:id])
   end
   
+  def update_notice_one_month
+    @user = User.find(params[:id])
+    if notice_one_month_invalid?
+      notice_edit_params.each do |id, item|
+        attendance = Attendance.find(id)
+        attendance.update_attributes!(item)
+      end
+        flash[:success] = "勤怠申請変更のお知らせを更新しました。"
+        redirect_to user_url(date: params[:date])
+    else
+      flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+      redirect_to user_url(date: params[:date])
+    end
+  end
+  
   def edit_one_month_log
-    @attendances = Attendance.all
   end
   
   def notice_overwork_request
@@ -101,28 +111,73 @@ class AttendancesController < ApplicationController
   end
   
   def update_notice_overwork_request
-    notice_overwork_request_params.each do |id, item|
-      attendance = Attendance.find(id)
-      attendance.update_attributes!(item)
+    @user = User.find(params[:id])
+    notice_overwork_params.each do |id, item|
+      attendance = Attendance.find(id) 
+      if attendance.overwork_change == '1' && attendance.instructor_confirmation_app.present?
+        attendance.update_attributes!(item)
+        flash[:success] = "残業申請を更新しました。"
+        redirect_to user_url(date: params[:date])
+      else
+        flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました"
+        redirect_to user_url(date: params[:date])
+      end
     end
-    flash[:success] = "1ヶ月分の勤怠情報を更新しました。"
-    redirect_to user_url(date: params[:date])
+    
   end
   
+  def notice_approval_application
+    @users = User.where.not(uid: 1).where.not(uid: 2)
+    @attendance = @user.attendances.find_by(worked_on: @first_day)
+    @user = User.find(params[:id])
+  end
   
+  def notice_approval_application_B
+    @users = User.where.not(uid: 1).where.not(uid: 3)
+    @attendance = Attendance.find(params[:id])
+    @user = User.find(params[:id])
+  end
+  
+  def notice_approval_application_C
+    @users = User.where.not(uid: 1).where.not(uid: 4)
+    @attendance = Attendance.find(params[:id])
+    @user = User.find(params[:id])
+  end
+  
+  def update_notice_approval_application
+    if notice_approval_invalid?
+      notice_approval_params.each do |id, item|
+        attendance = Attendance.find(id)
+        attendance.update_attributes!(item)
+      end
+      flash[:info] = "所属長承認申請のお知らせを更新しました"
+      redirect_to user_url
+    else
+      flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました"
+      redirect_to user_url
+    end
+  end
   
     
   private
     # １ヶ月分の勤怠情報を扱います。
     def attendances_params
       params.require(:user).permit(attendances: [:started_at, :finished_at, :started_at_before, :finished_at_before, :note,
-                                                 :one_month_instructor_confirmation,
-                                                 :notice_one_month_instructor_confirmation,:change_digest])[:attendances]
+                                                 :one_month_instructor_confirmation])[:attendances]
     end
     
-    def notice_overwork_request_params 
-      params.require(:user).permit(attendances: [:instructor_confirmation_app])[:attendances]
+    def notice_edit_params
+      params.require(:user).permit(attendances: [:notice_one_month_instructor_confirmation, :change_digest])[:attendances]
     end
+    
+    def notice_overwork_params 
+      params.require(:user).permit(attendances: [:instructor_confirmation_app, :overwork_change])[:attendances]
+    end
+    
+    def notice_approval_params
+      params.require(:user).permit(attendances: [:approval_confirmation, :approval_change])[:attendances]
+    end
+    
     # 管理権限者、または現在ログインしているユーザーを許可します。
     def admin_or_correct_user
         @user = User.find(params[:user_id]) if @user.blank?

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200404125103) do
+ActiveRecord::Schema.define(version: 20200229193421) do
 
   create_table "attendances", force: :cascade do |t|
     t.date "worked_on"
@@ -23,11 +23,16 @@ ActiveRecord::Schema.define(version: 20200404125103) do
     t.string "one_month_instructor_confirmation_B"
     t.string "one_month_instructor_confirmation_C"
     t.string "notice_one_month_instructor_confirmation"
+    t.string "change_digest"
+    t.string "overwork_change"
+    t.string "approval_change"
+    t.string "approval_confirmation"
+    t.string "approval_application"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "designated_work_start_time", default: "2020-07-10 01:00:00"
-    t.datetime "designated_work_end_time", default: "2020-07-10 10:00:00"
+    t.datetime "designated_work_start_time", default: "2020-08-16 01:00:00"
+    t.datetime "designated_work_end_time", default: "2020-08-16 10:00:00"
     t.datetime "expected_end_time"
     t.string "next_day"
     t.string "business_processing_contents"
@@ -37,9 +42,6 @@ ActiveRecord::Schema.define(version: 20200404125103) do
     t.string "instructor_confirmation_app"
     t.string "instructor_confirmation_app_B"
     t.string "instructor_confirmation_app_C"
-    t.string "change_digest"
-    t.string "approval_application"
-    t.string "approval_confirmation"
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
@@ -47,11 +49,6 @@ ActiveRecord::Schema.define(version: 20200404125103) do
     t.string "basename"
     t.string "basenumber"
     t.string "baseinfo"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "overworks", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -65,8 +62,8 @@ ActiveRecord::Schema.define(version: 20200404125103) do
     t.string "remember_digest"
     t.boolean "admin", default: false
     t.string "department"
-    t.datetime "basic_time", default: "2020-07-09 23:00:00"
-    t.datetime "work_time", default: "2020-07-09 22:30:00"
+    t.datetime "basic_time", default: "2020-08-15 23:00:00"
+    t.datetime "work_time", default: "2020-08-15 22:30:00"
     t.boolean "superior", default: false
     t.boolean "superiorA", default: false
     t.boolean "superiorB", default: false

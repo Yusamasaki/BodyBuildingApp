@@ -42,6 +42,58 @@ module AttendancesHelper
     return attendances
   end
   
+  def notice_one_month_invalid?
+    notice_one_month = true
+    notice_edit_params.each do |id, item|
+      if item[:notice_one_month_instructor_confirmation].blank? && item[:change_digest] == '0'  
+        notice_one_month = false
+        next
+      elsif item[:notice_one_month_instructor_confirmation].blank? || item[:change_digest] == '0'
+        notice_one_month = false
+      end
+    end
+    return notice_one_month
+  end
+  
+  def notice_overwork_invalid?
+    notice_overwork = true
+    notice_overwork_params.each do |id, item|
+      if  item[:instructor_confirmation_app].blank? && item[:overwork_change] == '0'  
+        notice_overwork = false
+        next
+      elsif item[:instructor_confirmation_app].blank? || item[:overwork_change] == '0'
+        notice_overwork = false
+      end
+    end
+    return notice_overwork
+  end
+  
+  def approval_invalid?
+    approval = true
+    approval_params.each do |id, item|
+      if item[:approval_application].blank?
+        approval = false
+        next
+      elsif item[:approval_application].blank?
+        approval = false
+      end
+    end
+    return approval
+  end
+  
+  def notice_approval_invalid?
+    notice_approval = true
+    notice_approval_params.each do |id, item|
+      if item[:approval_confirmation].blank? && item[:approval_change] == '0'  
+        notice_approval = false
+        next
+      elsif item[:approval_confirmation].blank? || item[:approval_change] == '0'
+        notice_approval = false
+      end
+    end
+    return notice_approval
+  end
+  
   def user_attendances_month_date
     @user.attendances.where('worked_on >= ? and worked_on <= ?', @first_day, @last_day).order('worked_on')
   end

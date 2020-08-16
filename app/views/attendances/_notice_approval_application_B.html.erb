@@ -5,12 +5,12 @@
     <% @users.each do |user| %>
     <% @atten = Attendance.where(user_id: user.id) %>
     <% @atten.each do |at| %>
-    <% if at.approval_application == '2' %>
+    <% if at.approval_application == '2' && at.approval_confirmation.blank? %>
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h1   class="modal-title">【 <%= user.name %> からの1ヶ月分勤怠申請 】</h1><br>
+        <h1 class="modal-title">【 <%= user.name %> からの1ヶ月分勤怠申請 】</h1><br>
         <%= form_with(model: user, url: attendances_update_notice_approval_application_user_path, local: true, method: :patch) do |f| %>
         <table class="table table-bordered table-overwork">
           <thead>
@@ -22,14 +22,12 @@
             </tr> 
           </thead>
           
+          <%= f.fields_for "attendances[]", at do |attendance| %>
           <tbody>
-            <% @attendances = Attendance.where(user_id: user.id) %>
-            <% @attendances.each do |day| %>
-            <% if day.approval_application.present? %>
             <tr>
-              <td><%= l(day.worked_on, format: :super_short) %></td>
+              <td><%= l(at.worked_on, format: :super_short) %></td>
               <td>
-                <%= f.select :approval_confirmation, 
+                <%= attendance.select :approval_confirmation, 
                 [
                 ["", ""],
                 ["申請中", 0],
@@ -38,16 +36,15 @@
                 ] 
                 %>
               </td>
-              <td><%= f.check_box :change_digest, {:checked => false}, checked_value = "0", unchecked_value = "1" %></td>
-              <td><%= link_to "確認", user_path(user), class: "btn btn-primary" %></td>
+              <td><%= attendance.check_box :approval_change %></td>
+              <td><%= link_to "確認", show_Confirmation_user_path(user), class: "btn btn-primary" %></td>
             </tr>
-            <% end %>
-            <% end %>
           </tbody>
         </table>
         <div class="center">
-          <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+          <%= attendance.submit yield(:button_text), class: "btn btn-primary" %>
         </div>
+        <% end %>
         <% end %>
       </div>
       <% end %>

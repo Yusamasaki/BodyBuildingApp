@@ -3,13 +3,7 @@
 <div>
   <table class="table table-bordered user-table">
     <tr>
-      <td>
-        <h5>
-          <%= link_to "←", user_path(date: @first_day.prev_month), class: "btn btn-default btn-primary" %>
-          <%= l(@first_day, format: :middle) %>時間管理表
-          <%= link_to "→", user_path(date: @first_day.next_month), class: "btn btn-default btn-primary" %>
-        </h5>
-      </td>
+      <td><h5><%= l(@first_day, format: :middle) %>時間管理表</h5></td>
       <td>
         <h5>指定勤務開始時間：<%= format_basic_info(@attendance.designated_work_start_time) %></h5>
         <h5>指定勤務終了時間：<%= format_basic_info(@attendance.designated_work_end_time) %></h5>
@@ -27,69 +21,6 @@
       <td>締め：<%= l(@last_day, format: :short) %></td>
     </tr>
   </table>
-</div>
-
-
-<div>
-  <% if @user.superiorA? %>
-    <div>
-      <%= link_to "【所属長承認申請のお知らせ】", attendances_notice_approval_application_user_path, remote: true, class: "btn" %>
-      <font class="notice"><%= "#{@approval1 - @approval_1}件の通知があります" %></font>
-    </div>
-  <% elsif @user.superiorB? %>
-    <div>
-      <%= link_to "【所属長承認申請のお知らせ】", attendances_notice_approval_application_B_user_path, remote: true, class: "btn" %>
-      <font class="notice"><%= "#{@approval2 - @approval_2}件の通知があります" %></font>
-    </div>
-  <% elsif @user.superiorC? %>
-    <div>
-      <%= link_to "【所属長承認申請のお知らせ】", attendances_notice_approval_application_C_user_path, remote: true, class: "btn" %>
-      <font class="notice"><%= "#{@approval3 - @approval_3}件の通知があります" %></font>
-    </div>
-  <% end %>
-  
-  <% if @user.superiorA? %>
-    <div>
-      <%= link_to "【勤怠変更申請のお知らせ】", attendances_notice_edit_one_month_user_path, remote: true, class: "btn" %>
-      <font class="notice"><%= "#{@one_month1 - @one_month_1}件の通知があります" %></font>
-    </div>
-  <% elsif @user.superiorB? %>
-    <div>
-      <%= link_to "【勤怠変更申請のお知らせ】", attendances_notice_edit_one_month_B_user_path, remote: true, class: "btn" %>
-      <font class="notice"><%= "#{@one_month2 - @one_month_2}件の通知があります" %></font>
-    </div>
-  <% elsif @user.superiorC? %>
-    <div>
-      <%= link_to "【勤怠変更申請のお知らせ】", attendances_notice_edit_one_month_C_user_path, remote: true, class: "btn" %>
-      <font class="notice"><%= "#{@one_month3 - @one_month_3}件の通知があります" %></font>
-    </div>
-  <% end %>
-  
-  <% if @user.superiorA? %>
-    <div> 
-      <%= link_to "【残業申請のお知らせ】", attendances_notice_overwork_request_user_path, remote: true, class: "btn" %>
-      <font class="notice"><%= "#{@overwork1 - @overwork_1}件の通知があります" %></font>
-    </div>
-  <% elsif @user.superiorB? %>
-    <div> 
-      <%= link_to "【残業申請のお知らせ】", attendances_notice_overwork_request_B_user_path, remote: true, class: "btn" %>
-      <font class="notice"><%= "#{@overwork2 - @overwork_2}件の通知があります" %></font>
-    </div>
-  <% elsif @user.superiorC? %>
-    <div>   
-      <%= link_to "【残業申請のお知らせ】", attendances_notice_overwork_request_C_user_path, remote: true, class: "btn" %>
-      <font class="notice"><%= "#{@overwork3 - @overwork_3}件の通知があります" %></font>
-    </div>
-  <% end %>
-</div><br>
-
-
-<div class="btn-users-show">
-  <div> 
-    <%= link_to "勤怠を編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-default btn-primary" %>
-    <%= link_to "CSV出力", user_path(format: :csv), class: "btn btn-default btn-primary" %>
-  </div>
-      <div><%= link_to "勤怠修正ログ（承認済）", attendances_edit_one_month_log_user_path, class: "btn btn-default btn-primary" %></div>
 </div>
 
 <div>
@@ -128,9 +59,7 @@
       <% @attendances.each do |day| %>
       <%= fields_for "attendances[]", day do |attendance| %>
         <tr>
-          <td class="center">
-            <%= link_to "残業申請", edit_overwork_request_user_path(@user, day: day.worked_on), remote: true, class: "btn btn-primary" %>
-          </td>
+          <td></td>
           <td><%= l(day.worked_on, format: :short) %></td>
           <td>
             <% if day.worked_on.wday == 6 %>
@@ -142,45 +71,35 @@
             <% end %>
           </td>
           <td>
-            <% if day.one_month_instructor_confirmation.blank? %>
+            <% if day.one_month_instructor_confirmation.nil? || day.notice_one_month_instructor_confirmation.present? %>
               <%= day.started_at.hour if day.started_at.present? %>
             <% elsif day.one_month_instructor_confirmation.present? %>
-              <%= day.started_at_before.hour if day.started_at_before.present? && day.notice_one_month_instructor_confirmation == "1" %>
+              <%= day.started_at_before.hour if day.started_at.present? && day.notice_one_month_instructor_confirmation == "1" && day.change_digest == "1" %>
             <% end %>
           </td>
           <td>
-            <% if day.one_month_instructor_confirmation.blank? %>
+            <% if day.one_month_instructor_confirmation.nil? || day.notice_one_month_instructor_confirmation.present? %>
               <%= day.started_at.floor_to(15.minutes).min if day.started_at.present? %>
-            <% elsif day.notice_one_month_instructor_confirmation.present? %>
-              <%= day.started_at_before.floor_to(15.minutes).min if day.started_at_before.present? && day.notice_one_month_instructor_confirmation == "1" %>
+            <% elsif day.one_month_instructor_confirmation.present? %>
+              <%= day.started_at_before.floor_to(15.minutes).min if day.started_at.present? && day.notice_one_month_instructor_confirmation == "1" && day.change_digest == "1" %>
             <% end %>
           </td>
+          <td></td>
           <td>
-            <% if Date.current == day.worked_on && day.started_at.nil? %>
-              <%= link_to "出社", user_attendance_path(@user, day), method: :patch, 
-                  class: "btn btn-md btn-default btn-attendance" %>
-            <% end %>
-          </td>
-          <td>
-            <% if day.one_month_instructor_confirmation.blank? %>
+            <% if day.one_month_instructor_confirmation.nil? || day.notice_one_month_instructor_confirmation.present? %>
               <%= day.finished_at.hour if day.finished_at.present? %>
             <% elsif day.one_month_instructor_confirmation.present? %>
-              <%= day.finished_at_before.hour if day.finished_at_before.present? && day.notice_one_month_instructor_confirmation == "1" %>
+              <%= day.finished_at_before.hour if day.finished_at.present? && day.notice_one_month_instructor_confirmation == "1" && day.change_digest == "1" %>
             <% end %>
           </td>
           <td>
-            <% if day.one_month_instructor_confirmation.blank? %>
+            <% if day.one_month_instructor_confirmation.nil? || day.notice_one_month_instructor_confirmation.present? %>
               <%= day.finished_at.floor_to(15.minutes).min if day.finished_at.present? %>
             <% elsif day.one_month_instructor_confirmation.present? %>
-              <%= day.finished_at_before.floor_to(15.minutes).min if day.finished_at_before.present? && day.notice_one_month_instructor_confirmation == "1" %>
+              <%= day.finished_at_before.floor_to(15.minutes).min if day.finished_at.present? && day.notice_one_month_instructor_confirmation == "1" && day.change_digest == "1" %>
             <% end %>
           </td>
-          <td>
-            <% if Date.current == day.worked_on && day.started_at.present? && day.finished_at.blank? %>
-              <%= link_to "退社", user_attendance_path(@user, day), method: :patch, 
-                  class: "btn btn-md btn-default btn-attendance" %>
-            <% end %>
-          </td>
+          <td></td>
           <td>
             <% if day.started_at.present? && day.finished_at.present? && day.notice_one_month_instructor_confirmation == "1" && day.change_digest == "1" %>
               <%= str_times = working_times(day.started_at, day.finished_at) %>
@@ -248,66 +167,24 @@
         <td rowspan="2"></td>
         <td rowspan="2"></td>
         <td rowspan="2">
-          <% @attendances.each do |at| %>
-          <%= form_with(model: @user, url: approval_application_user_path, local: true, method: :post) do |f| %>
-            <%= f.fields_for "attendances[]", at do |attendance| %>
+          <%= form_with(model: @attendance, url: approval_application_user_path(date: @first_day), local: true, method: :post) do |f| %>
             <div class="approval">
-              <% if at.approval_application == '1' && at.approval_confirmation == "1" %>
+              <% if @attendance.approval_application == '1' && @attendance.approval_confirmation == "1" %>
                 <%= "所属長承認 上長Aから承認済み" %>
-              <% elsif at.approval_application == '2' && at.approval_confirmation == "1" %>
+              <% elsif @attendance.approval_application == '2' && @attendance.approval_confirmation == "1" %>
                 <%= "所属長承認 上長Bから承認済み" %>
-              <% elsif at.approval_application == '3' && at.approval_confirmation == "1" %>
+              <% elsif @attendance.approval_application == '3' && @attendance.approval_confirmation == "1" %>
                 <%= "所属長承認 上長Cから承認済み" %>
-              <% elsif at.approval_application == '1' %>
+              <% elsif @attendance.approval_application == '1' %>
                 <%= "所属長承認　上長Aへ申請中" %>
-              <% elsif at.approval_application == '2' %>
+              <% elsif @attendance.approval_application == '2' %>
                 <%= "所属長承認　上長Bへ申請中" %>
-              <% elsif at.approval_application == '3' %>
+              <% elsif @attendance.approval_application == '3' %>
                 <%= "所属長承認　上長Cへ申請中" %>
               <% else %>
                 <%= "所属長承認" %>
               <% end %>
             </div>
-            <div class="approval">
-              <% if @user.superiorA? %>
-                <%= attendance.select :approval_application,
-                  [
-                  ["", ""],
-                  ["上長B", 2],
-                  ["上長C", 3]
-                  ]
-                %>
-              <% elsif @user.superiorB? %>
-                <%= attendance.select :approval_application,
-                  [
-                  ["", ""],  
-                  ["上長A", 1],
-                  ["上長C", 3]
-                  ]
-                %>
-              <% elsif @user.superiorC? %>
-              <%= attendance.select :approval_application,
-                  [
-                  ["", ""],  
-                  ["上長A", 1],
-                  ["上長B", 2]
-                  ]
-                %>
-              <% else %>
-               <%= attendance.select :approval_application,
-                  [ 
-                  ["", ""],
-                  ["上長A", 1],
-                  ["上長B", 2],
-                  ["上長C", 3]
-                  ]
-                %>
-              <% end %>
-            </div>
-            <div class="approval"><%= attendance.submit yield(:button_text), class: "btn btn-primary btn-block" %></div>
-            <% end %>
-          <% end %>
-          <% break %>
           <% end %>
         </td>
       </tr>

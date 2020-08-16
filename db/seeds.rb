@@ -9,8 +9,7 @@ User.create!( name: "Sample User",
               employee_number: 1,
               uid: 1,
               basic_time: Time.current.change(hour: 8, min: 0, sec: 0),
-              admin: true,
-              
+              admin: true
             )
 User.create!( name: "上長A",
               email: "superiorA@email.com",

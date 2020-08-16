@@ -11,6 +11,11 @@ class CreateAttendances < ActiveRecord::Migration[5.1]
       t.string :one_month_instructor_confirmation_B
       t.string :one_month_instructor_confirmation_C
       t.string :notice_one_month_instructor_confirmation
+      t.string :change_digest
+      t.string :overwork_change
+      t.string :approval_change
+      t.string :approval_confirmation
+      t.string :approval_application
       t.references :user, foreign_key: true
 
       t.timestamps

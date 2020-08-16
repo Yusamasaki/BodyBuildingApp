@@ -1,14 +1,15 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy,
+  before_action :set_user, only: [:show, :show_Confirmation, :edit, :update, :destroy,
                                   :edit_basic_info, :update_basic_info, :edit_overwork_request, :update_overwork_request,
                                   :approval_application]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy,
                                         :edit_basic_info, :update_basic_info, :edit_overwork_request, :update_overwork_request]
   before_action :correct_user, only: [:edit, :update, :edit_overwork_request, :update_overwork_request]
   before_action :admin_user, only: [:index, :destroy, :edit_basic_info, :update_basic_info]
-  before_action :set_one_month, only: [:show, :edit_overwork_request, :update_overwork_request, :approval_application]
+  before_action :set_one_month, only: [:show, :show_Confirmation, :edit_overwork_request, :update_overwork_request, :approval_application]
   before_action :admin_or_correct_user, only: :show
   before_action :notice, only: :show  
+  before_action :admin_false, only: :show  
   
   def index
     @users = User.all
@@ -33,6 +34,17 @@ class UsersController < ApplicationController
     end
   end
   
+  def show_Confirmation
+    @users = User.all
+    @attendance = @user.attendances.find_by(worked_on: @first_day)
+    @worked_sum = @attendances.where.not(started_at: nil).count
+    
+    respond_to do |format|
+      format.html
+      format.csv
+    end
+  end
+  
   def new
     if logged_in? && !current_user.admin?
       flash[:info] = 'すでにログインしています。'
@@ -42,13 +54,16 @@ class UsersController < ApplicationController
   end
   
   def create
-    @user = User.new(user_params)
-    if @user.save
+    if current_user.new_record? && logged_in?
+      @user = User.new(user_params)
+      @user.save
       log_in @user
       flash[:success] = '新規作成に成功しました。'
       redirect_to @user
     else
-      render :new
+      @user.update_attributes(user_params)
+      flash[:success] = "ユーザー情報を更新しました。"
+      redirect_to @user
     end
   end
 
@@ -60,7 +75,7 @@ class UsersController < ApplicationController
       flash[:success] = "ユーザー情報を更新しました。"
       redirect_to @user
     else
-      render :edit
+      render :edit  
     end
   end
   
@@ -75,7 +90,7 @@ class UsersController < ApplicationController
   
   def update_basic_info
     if @user.update_attributes(basic_info_params)
-      flash[:success] = "#{@user.name}の基本情報を更新しました。"
+      flash[:success] = "#{@user.name}の基本情報を更新しました。" 
     else
       flash[:danger] = "#{@user.name}の更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
     end
@@ -87,10 +102,17 @@ class UsersController < ApplicationController
   end
   
   def approval_application
-    @attendance = @user.attendances.find_by(worked_on: @first_day)
-    @attendance.update_attributes(approval_params)
-    flash[:info] = "申請しました"
-    redirect_to user_url
+    if approval_invalid?
+      approval_params.each do |id, item|
+        attendance = Attendance.find(id)
+        attendance.update_attributes!(item)
+      end
+      flash[:info] = "上長へ申請しました"
+      redirect_to user_url
+    else
+      flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました"
+      redirect_to user_url
+    end
   end
   
   def edit_overwork_request
@@ -102,37 +124,12 @@ class UsersController < ApplicationController
     @day = Date.parse(params[:day])
     @attendance = @user.attendances.find_by(worked_on: @day)
     if @attendance.update_attributes(overwork_request_params)
-      flash[:success] = "勤怠情報を更新しました。"
+      flash[:success] = "残業申請のお知らせを更新しました。"
       redirect_to user_url(date: params[:date])
     else
-      flash[:danger] = "勤怠情報は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
+      flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+      redirect_to user_url(date: params[:date])
     end
-  end
-  
-  def notice_approval_application
-    @day = Date.parse(params[:date])
-    @users = User.where.not(uid: 1).where.not(uid: 2)
-    @attendance = Attendance.find(params[:id])
-    @user = User.find(params[:id])
-  end
-  
-  def notice_approval_application_B
-    @users = User.where.not(uid: 1).where.not(uid: 3)
-    @attendance = Attendance.find(params[:id])
-    @user = User.find(params[:id])
-  end
-  
-  def notice_approval_application_C
-    @users = User.where.not(uid: 1).where.not(uid: 4)
-    @attendance = Attendance.find(params[:id])
-    @user = User.find(params[:id])
-  end
-  
-  def update_notice_approval_application
-    @attendance = Attendance.find(params[:id])
-    @attendance.update_attributes(approval_params)
-    flash[:info] = "変更しました"
-    redirect_to user_url
   end
   
   private
@@ -154,7 +151,7 @@ class UsersController < ApplicationController
     end
     
     def approval_params
-      params.require(:attendance).permit(:approval_application, :approval_confirmation)
+      params.require(:user).permit(attendances: [:approval_application])[:attendances]
     end
     
     def overwork_request_params 

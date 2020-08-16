@@ -25,11 +25,12 @@ Rails.application.routes.draw do
       get 'edit_overwork_request'
       patch 'update_overwork_request'
       post 'approval_application'
-      get 'notice_approval_application'
-      get 'notice_approval_application_B'
-      get 'notice_approval_application_C'
-      
+      get 'show_Confirmation'
+      get 'attendances/notice_approval_application'
+      get 'attendances/notice_approval_application_B'
+      get 'attendances/notice_approval_application_C'
       patch 'attendances/update_notice_approval_application'
+      
       get 'attendances/edit_one_month'
       patch 'attendances/update_one_month'
       get 'attendances/notice_edit_one_month'
@@ -45,7 +46,6 @@ Rails.application.routes.draw do
       get 'attendances/notice_overwork_request_B'
       get 'attendances/notice_overwork_request_C'
       patch 'attendances/update_notice_overwork_request'
-      
     end
     resources :attendances do
     end

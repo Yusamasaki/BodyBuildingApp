@@ -4,3 +4,4 @@ class AddDesignatedWorkTimeToAttendances < ActiveRecord::Migration[5.1]
     add_column :attendances, :designated_work_end_time, :datetime, default: Time.current.change(hour: 19, min: 0, sec: 0)
   end
 end
+  

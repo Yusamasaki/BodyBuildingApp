@@ -17,10 +17,14 @@
       <% if day.notice_one_month_instructor_confirmation.present? %>
       <tr>
         <th><%= l(day.worked_on, format: :short) %></th>
-        <th><%= l(day.started_at, format: :time) if day.started_at.present? %></th>
-        <th><%= l(day.finished_at, format: :time) if day.finished_at.present? %></th>
-        <th><%= l(day.started_at_before, format: :time) if day.started_at_before.present? %></th>
-        <th><%= l(day.finished_at_before, format: :time) if day.finished_at_before.present? %></th>
+        <!-- 1回目 -->
+        <% if day.notice_one_month_instructor_confirmation.present? %>
+          <th><%= l(day.started_at, format: :time) if day.started_at.present? %></th>
+          <th><%= l(day.finished_at, format: :time) if day.finished_at.present? %></th>
+          <th><%= l(day.started_at_before, format: :time) if day.started_at_before.present? %></th>
+          <th><%= l(day.finished_at_before, format: :time) if day.finished_at_before.present? %></th>
+        <% end %>
+        
         <th>
           <% if day.notice_one_month_instructor_confirmation == '1' %>
             <%= "上長A" %>
@@ -32,7 +36,55 @@
             <%= "" %>
           <% end %>
         </th>
-      </tr> 
+      </tr>
+      <% end %>
+      <% if day.notice_one_month_instructor_confirmation_2.present? %>
+      <tr>
+        <th><%= l(day.worked_on, format: :short) %></th>
+        <!-- 1回目 -->
+        <% if day.notice_one_month_instructor_confirmation.present? %>
+          <th><%= l(day.started_at_before, format: :time) if day.started_at_before.present? %></th>
+          <th><%= l(day.finished_at_before, format: :time) if day.finished_at_before.present? %></th>
+          <th><%= l(day.started_at_before_2, format: :time) if day.started_at_before_2.present? %></th>
+          <th><%= l(day.finished_at_before_2, format: :time) if day.finished_at_before_2.present? %></th>
+        <% end %>
+        
+        <th>
+          <% if day.notice_one_month_instructor_confirmation_2 == '1' %>
+            <%= "上長A" %>
+          <% elsif day.notice_one_month_instructor_confirmation_2 == '2' %>
+            <%= "上長B" %>
+          <% elsif day.notice_one_month_instructor_confirmation_2 == '3' %>
+            <%= "上長C" %>
+          <% else %>
+            <%= "" %>
+          <% end %>
+        </th>
+      </tr>
+      <% end %>
+      <% if day.notice_one_month_instructor_confirmation_3.present? %>
+      <tr>
+        <th><%= l(day.worked_on, format: :short) %></th>
+        <!-- 1回目 -->
+        <% if day.notice_one_month_instructor_confirmation.present? %>
+          <th><%= l(day.started_at_before_2, format: :time) if day.started_at_before_2.present? %></th>
+          <th><%= l(day.finished_at_before_2, format: :time) if day.finished_at_before_2.present? %></th>
+          <th><%= l(day.started_at_before_3, format: :time) if day.started_at_before_3.present? %></th>
+          <th><%= l(day.finished_at_before_3, format: :time) if day.finished_at_before_3.present? %></th>
+        <% end %>
+        
+        <th>
+          <% if day.notice_one_month_instructor_confirmation_3 == '1' %>
+            <%= "上長A" %>
+          <% elsif day.notice_one_month_instructor_confirmation_3 == '2' %>
+            <%= "上長B" %>
+          <% elsif day.notice_one_month_instructor_confirmation_3 == '3' %>
+            <%= "上長C" %>
+          <% else %>
+            <%= "" %>
+          <% end %>
+        </th>
+      </tr>
       <% end %>
     <% end %>
     </table>

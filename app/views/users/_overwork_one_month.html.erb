@@ -1,0 +1,52 @@
+
+<% if day.notice_one_month_instructor_confirmation == "1" && day.instructor_confirmation.present? %>
+  <%= "勤怠承認" %>、<%= "残業申請中" %>
+<% elsif day.one_month_instructor_confirmation.present? && day.instructor_confirmation_app == "1" %>
+  <%= "勤怠申請中" %>、<%= "残業承認" %>
+<% elsif day.notice_one_month_instructor_confirmation == "1" && day.instructor_confirmation_app == "1" %>
+  <%= "勤怠承認" %>、<%= "残業承認" %>
+<% elsif day.instructor_confirmation.present? && day.one_month_instructor_confirmation.present? %>
+  <%= "勤怠申請中" %>、<%= "残業申請中" %>
+  
+  
+  
+<% elsif day.instructor_confirmation_3.present? && day.instructor_confirmation_app_3.blank? || day.instructor_confirmation_app_3 == '1' %>
+  <%= "残業申請中" %>
+<% elsif day.instructor_confirmation_2.present? && day.instructor_confirmation_app_2.blank? || day.instructor_confirmation_app_2 == '1' %>
+  <%= "残業申請中" %>
+<% elsif day.instructor_confirmation.present? && day.instructor_confirmation_app.blank? || day.instructor_confirmation_app == '1' %>
+  <%= "残業申請中" %>
+<% elsif day.instructor_confirmation_app_3 == "2" %>
+  <%= "残業承認" %>
+<% elsif day.instructor_confirmation_app_2 == "2" %>
+  <%= "残業承認" %>
+<% elsif day.instructor_confirmation_app == "2" %>
+  <%= "残業承認" %>
+<% elsif day.instructor_confirmation_app_3 == "3" %>
+  <%= "残業否認" %>
+<% elsif day.instructor_confirmation_app_2 == "3" %>
+  <%= "残業否認" %>
+<% elsif day.instructor_confirmation_app == "3" %>
+  <%= "残業否認" %>
+  
+  
+<% elsif day.one_month_instructor_confirmation_3.present? && day.notice_one_month_instructor_confirmation_3.blank? || day.notice_one_month_instructor_confirmation_3 == "1" %>
+  <%= "勤怠申請中" %>
+<% elsif day.one_month_instructor_confirmation_2.present? && day.notice_one_month_instructor_confirmation_2.blank? || day.notice_one_month_instructor_confirmation_2 == "1" %>
+  <%= "勤怠申請中" %>
+<% elsif day.one_month_instructor_confirmation.present? && day.notice_one_month_instructor_confirmation.blank? || day.notice_one_month_instructor_confirmation == "1" %>
+  <%= "勤怠申請中" %>
+<% elsif day.notice_one_month_instructor_confirmation_3 == "2" %>
+  <%= "勤怠承認" %>
+<% elsif day.notice_one_month_instructor_confirmation_2 == "2" %>
+  <%= "勤怠承認" %>
+<% elsif day.notice_one_month_instructor_confirmation == "2" %>
+  <%= "勤怠承認" %>
+<% elsif day.notice_one_month_instructor_confirmation_3 == "2" %>
+  <%= "勤怠否認" %>
+<% elsif day.notice_one_month_instructor_confirmation_2 == "2" %>
+  <%= "勤怠否認" %>
+<% elsif day.notice_one_month_instructor_confirmation == "2" %>
+  <%= "勤怠否認" %>
+
+<% end %>

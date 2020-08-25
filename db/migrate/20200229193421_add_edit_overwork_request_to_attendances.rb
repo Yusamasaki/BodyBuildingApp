@@ -4,10 +4,10 @@ class AddEditOverworkRequestToAttendances < ActiveRecord::Migration[5.1]
     add_column  :attendances, :next_day, :string
     add_column  :attendances, :business_processing_contents, :string
     add_column  :attendances, :instructor_confirmation, :string
-    add_column  :attendances, :instructor_confirmation_B, :string
-    add_column  :attendances, :instructor_confirmation_C, :string
+    add_column  :attendances, :instructor_confirmation_2, :string
+    add_column  :attendances, :instructor_confirmation_3, :string
     add_column  :attendances, :instructor_confirmation_app, :string
-    add_column  :attendances, :instructor_confirmation_app_B, :string
-    add_column  :attendances, :instructor_confirmation_app_C, :string
+    add_column  :attendances, :instructor_confirmation_app_2, :string
+    add_column  :attendances, :instructor_confirmation_app_3, :string
   end
 end

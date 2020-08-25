@@ -6,7 +6,8 @@
     <% @users.each do |user| %>
     <% @atten = Attendance.where(user_id: user.id) %>
     <% @atten.each do |at| %>
-      <% if at.instructor_confirmation == '3' || at.instructor_confirmation == '3' && at.overwork_change.blank? %>
+      <% if at.instructor_confirmation == '3' || at.instructor_confirmation == '3' || at.instructor_confirmation_2 == '3' && at.instructor_confirmation_app_2.blank? || 
+          at.instructor_confirmation_3 == '3' && at.instructor_confirmation_app_3.blank? %>
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -31,7 +32,8 @@
               <tbody>
                 <% @attendances = Attendance.where(user_id: user.id) %>
                 <% @attendances.each do |day| %>
-                <% if day.instructor_confirmation == '3' && day.instructor_confirmation_app.nil? && day.overwork_change.blank? %>
+                <% if day.instructor_confirmation == '3' && day.instructor_confirmation_app.nil? || day.instructor_confirmation_2 == '3' && day.instructor_confirmation_app_2.blank? || 
+                      day.instructor_confirmation_3 == '3' && day.instructor_confirmation_app_3.blank? %>
                 <%= f.fields_for "attendances[]", day do |attendance| %>
                   <tr>
                     <td><%= l(day.worked_on, format: :short) %></td>
@@ -43,16 +45,29 @@
                     </td> 
                     <td><%= day.business_processing_contents %></td>
                     <td>
-                      <%= attendance.select :instructor_confirmation_app, 
-                        [
-                        ["", ''],
-                        ["申請中", '1'],
-                        ["承認", '2'],
-                        ["否認", '3']
-                        ]
-                       %> 
+                      <% if day.instructor_confirmation_app.blank? %>
+                        <%= attendance.select :instructor_confirmation_app, 
+                          { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
+                         %> 
+                       <% elsif day.instructor_confirmation_app,present? %>
+                         <%= attendance.select :instructor_confirmation_app_2, 
+                          { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
+                         %> 
+                       <% elsif day.instructor_confirmation_app_2.present? %>
+                         <%= attendance.select :instructor_confirmation_app_3, 
+                          { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
+                         %>
+                       <% end %> 
                     </td>
-                    <td><%= attendance.check_box :overwork_change %></td>
+                    <td>
+                      <% if day.overwork_change.blank? %>
+                        <%= attendance.check_box :overwork_change %>
+                      <% elsif day.overwork_change.present? %>
+                        <%= attendance.check_box :overwork_change_2 %>
+                      <% elsif day.overwork_change_2.present? %>
+                        <%= attendance.check_box :overwork_change_3 %>
+                      <% end %>
+                    </td>
                     <td><%= link_to "確認", show_Confirmation_user_path(user), class: "btn btn-primary" %></td>
                   </tr>
                 <% end %>

@@ -27,16 +27,41 @@
             <tr>
               <td><%= l(at.worked_on, format: :super_short) %></td>
               <td>
-                <%= attendance.select :approval_confirmation, 
-                [
-                ["", ""],
-                ["申請中", 0],
-                ["承認", 1],
-                ["否認", 2]
-                ] 
-                %>
+                <% if at.approval_confirmation.blank? %>
+                  <%= attendance.select :approval_confirmation, 
+                    { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
+                  %>
+                <% elsif at.approval_confirmation_2.blank? %>
+                  <%= attendance.select :approval_confirmation_2, 
+                    { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
+                  %>
+                <% elsif at.approval_confirmation_3.blank? %>
+                  <%= attendance.select :approval_confirmation_3, 
+                    { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
+                  %>
+                <% elsif at.approval_confirmation_4.blank? %>
+                  <%= attendance.select :approval_confirmation_4, 
+                    { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
+                  %>
+                <% else %>
+                  <%= attendance.select :approval_confirmation_5, 
+                    { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
+                  %>
+                <% end %>
               </td>
-              <td><%= attendance.check_box :approval_change %></td>
+              <td>
+                <% if at.approval_confirmation.blank? %>
+                  <%= attendance.check_box :approval_change %>
+                <% elsif at.approval_confirmation_2.blank? %>
+                  <%= attendance.check_box :approval_change_2 %>
+                <% elsif at.approval_confirmation_3.blank? %>
+                  <%= attendance.check_box :approval_change_3 %>
+                <% elsif at.approval_confirmation_4.blank? %>
+                  <%= attendance.check_box :approval_change_4 %>
+                <% elsif at.approval_confirmation_5.blank? %>
+                  <%= attendance.check_box :approval_change_5 %>
+                <% end %>
+              </td>
               <td><%= link_to "確認", show_Confirmation_user_path(user), class: "btn btn-primary" %></td>
             </tr>
           </tbody>

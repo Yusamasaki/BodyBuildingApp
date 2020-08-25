@@ -1,0 +1,103 @@
+
+<% if at.approval_application == '1' && at.approval_confirmation.blank? || at.approval_confirmation == '1' %>
+  <%= "所属長承認　上長Aへ申請中" %>
+<% elsif at.approval_application_2 == '1' && at.approval_confirmation_2.blank? || at.approval_confirmation_2 == '1' %>
+  <%= "所属長承認　上長Aへ申請中" %>
+<% elsif at.approval_application_3 == '1' && at.approval_confirmation_3.blank? || at.approval_confirmation_3 == '1' %>
+  <%= "所属長承認　上長Aへ申請中" %>
+<% elsif at.approval_application_4 == '1' && at.approval_confirmation_4.blank? || at.approval_confirmation_4 == '1' %>
+  <%= "所属長承認　上長Aへ申請中" %>
+<% elsif at.approval_application_5 == '1' && at.approval_confirmation_5.blank? || at.approval_confirmation_5 == '1' %>
+  <%= "所属長承認　上長Aへ申請中" %>
+  
+<% elsif at.approval_application == '2' && at.approval_confirmation.blank? || at.approval_confirmation == '1' %>
+  <%= "所属長承認　上長Bへ申請中" %>
+<% elsif at.approval_application_2 == '2' && at.approval_confirmation_2.blank? || at.approval_confirmation_2 == '1' %>
+  <%= "所属長承認　上長Bへ申請中" %>
+<% elsif at.approval_application_3 == '2' && at.approval_confirmation_3.blank? || at.approval_confirmation_3 == '1' %>
+  <%= "所属長承認　上長Bへ申請中" %>
+<% elsif at.approval_application_4 == '2' && at.approval_confirmation_4.blank? || at.approval_confirmation_4 == '1' %>
+  <%= "所属長承認　上長Bへ申請中" %>
+<% elsif at.approval_application_5 == '2' && at.approval_confirmation_5.blank? || at.approval_confirmation_5 == '1' %>
+  <%= "所属長承認　上長bへ申請中" %>
+  
+<% elsif at.approval_application == '3' && at.approval_confirmation.blank? || at.approval_confirmation == '1' %>
+  <%= "所属長承認　上長Cへ申請中" %>
+<% elsif at.approval_application_2 == '3' && at.approval_confirmation_2.blank? || at.approval_confirmation_2 == '1' %>
+  <%= "所属長承認　上長Cへ申請中" %>
+<% elsif at.approval_application_3 == '3' && at.approval_confirmation_3.blank? || at.approval_confirmation_3 == '1' %>
+  <%= "所属長承認　上長Cへ申請中" %>
+<% elsif at.approval_application_4 == '3' && at.approval_confirmation_4.blank? || at.approval_confirmation_4 == '1' %>
+  <%= "所属長承認　上長Cへ申請中" %>
+<% elsif at.approval_application_5 == '3' && at.approval_confirmation_5.blank? || at.approval_confirmation_5 == '1' %>
+  <%= "所属長承認　上長Cへ申請中" %>
+  
+<% elsif at.approval_application == '1' && at.approval_confirmation == '2' ||! at.approval_confirmation == '3' %>
+  <%= "所属長承認 上長Aから承認済み" %>
+<% elsif at.approval_application_2 == '1' && at.approval_confirmation_2 == '2' ||! at.approval_confirmation == '3' %>
+  <%= "所属長承認 上長Aから承認済み" %>
+<% elsif at.approval_application_3 == '1' && at.approval_confirmation_3 == '2' ||! at.approval_confirmation == '3' %>
+  <%= "所属長承認 上長Aから承認済み" %>
+<% elsif at.approval_application_4 == '1' && at.approval_confirmation_4 == '2' ||! at.approval_confirmation == '3' %>
+  <%= "所属長承認 上長Aから承認済み" %>
+<% elsif at.approval_application_5 == '1' && at.approval_confirmation_5 == '2' ||! at.approval_confirmation == '3' %>
+  <%= "所属長承認 上長Aから承認済み" %>
+  
+<% elsif at.approval_application == '2' && at.approval_confirmation == '2' ||! at.approval_confirmation == '3' %>
+  <%= "所属長承認 上長Bから承認済み" %>
+<% elsif at.approval_application_2 == '2' && at.approval_confirmation_2 == '2' ||! at.approval_confirmation_2 == '3' %>
+  <%= "所属長承認 上長Bから承認済み" %>
+<% elsif at.approval_application_3 == '2' && at.approval_confirmation_3 == '2' ||! at.approval_confirmation_3 == '3' %>
+  <%= "所属長承認 上長Bから承認済み" %>
+<% elsif at.approval_application_4 == '2' && at.approval_confirmation_4 == '2' ||! at.approval_confirmation_4 == '3' %>
+  <%= "所属長承認 上長Bから承認済み" %>
+<% elsif at.approval_application_5 == '2' && at.approval_confirmation_5 == '2' ||! at.approval_confirmation_5 == '3' %>
+  <%= "所属長承認 上長Bから承認済み" %>
+  
+<% elsif at.approval_application == '3' && at.approval_confirmation == '2' ||! at.approval_confirmation == '3' %>
+  <%= "所属長承認 上長Cから承認済み" %>
+<% elsif at.approval_application_2 == '3' && at.approval_confirmation_2 == '2' ||! at.approval_confirmation == '3' %>
+  <%= "所属長承認 上長Cから承認済み" %>
+<% elsif at.approval_application_3 == '3' && at.approval_confirmation_3 == '2' ||! at.approval_confirmation == '3' %>
+  <%= "所属長承認 上長Cから承認済み" %>
+<% elsif at.approval_application_4 == '3' && at.approval_confirmation_4 == '2' ||! at.approval_confirmation == '3' %>
+  <%= "所属長承認 上長Cから承認済み" %>
+<% elsif at.approval_application_5 == '3' && at.approval_confirmation_5 == '2' ||! at.approval_confirmation == '3' %>
+  <%= "所属長承認 上長Cから承認済み" %>
+  
+<% elsif at.approval_application == '1' && at.approval_confirmation == '3' %>
+  <%= "所属長承認 上長Aから否認されました" %>
+<% elsif at.approval_application_2 == '1' && at.approval_confirmation_2 == '3' %>
+  <%= "所属長承認 上長Aから否認されました" %>
+<% elsif at.approval_application_3 == '1' && at.approval_confirmation_3 == '3' %>
+  <%= "所属長承認 上長Aから否認されました" %>
+<% elsif at.approval_application_4 == '1' && at.approval_confirmation_4 == '3' %>
+  <%= "所属長承認 上長Aから否認されました" %>
+<% elsif at.approval_application_5 == '1' && at.approval_confirmation_5 == '3' %>
+  <%= "所属長承認 上長Aから否認されました" %>
+
+<% elsif at.approval_application == '2' && at.approval_confirmation == '3' %>
+  <%= "所属長承認 上長Bから否認されました" %>
+<% elsif at.approval_application_2 == '2' && at.approval_confirmation_2 == '3' %>
+  <%= "所属長承認 上長Bから否認されました" %>
+<% elsif at.approval_application_3 == '2' && at.approval_confirmation_3 == '3' %>
+  <%= "所属長承認 上長Bから否認されました" %>
+<% elsif at.approval_application_4 == '2' && at.approval_confirmation_4 == '3' %>
+  <%= "所属長承認 上長Bから否認されました" %>
+<% elsif at.approval_application_5 == '2' && at.approval_confirmation_5 == '3' %>
+  <%= "所属長承認 上長Bから否認されました" %>
+  
+<% elsif at.approval_application == '3' && at.approval_confirmation == '3' %>
+  <%= "所属長承認 上長Cから否認されました" %>
+<% elsif at.approval_application_2 == '3' && at.approval_confirmation_2 == '3' %>
+  <%= "所属長承認 上長Cから否認されました" %>
+<% elsif at.approval_application_3 == '3' && at.approval_confirmation_3 == '3' %>
+  <%= "所属長承認 上長Cから否認されました" %>
+<% elsif at.approval_application_4 == '3' && at.approval_confirmation_4 == '3' %>
+  <%= "所属長承認 上長Cから否認されました" %>
+<% elsif at.approval_application_5 == '3' && at.approval_confirmation_5 == '3' %>
+  <%= "所属長承認 上長Cから否認されました" %>
+  
+<% else %>
+  <%= "所属長承認" %>
+<% end %>

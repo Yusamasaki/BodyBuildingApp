@@ -84,7 +84,7 @@ class AttendancesController < ApplicationController
         attendance = Attendance.find(id)
         attendance.update_attributes!(item)
       end
-        flash[:success] = "勤怠申請変更のお知らせを更新しました。"
+        flash[:success] = "【勤怠申請変更のお知らせ】を更新しました。"
         redirect_to user_url(date: params[:date])
     else
       flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
@@ -112,18 +112,17 @@ class AttendancesController < ApplicationController
   
   def update_notice_overwork_request
     @user = User.find(params[:id])
-    notice_overwork_params.each do |id, item|
-      attendance = Attendance.find(id) 
-      if attendance.overwork_change == '1' && attendance.instructor_confirmation_app.present?
+      if notice_overwork_invalid?
+        notice_overwork_params.each do |id, item|
+        attendance = Attendance.find(id) 
         attendance.update_attributes!(item)
-        flash[:success] = "残業申請を更新しました。"
+        end
+        flash[:success] = "【残業申請のお知らせ】を更新しました。"
         redirect_to user_url(date: params[:date])
       else
         flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました"
         redirect_to user_url(date: params[:date])
       end
-    end
-    
   end
   
   def notice_approval_application
@@ -145,12 +144,12 @@ class AttendancesController < ApplicationController
   end
   
   def update_notice_approval_application
-    if notice_approval_invalid?
+    if notice_approval_invalid? || notice_approval_invalid_2? || notice_approval_invalid_3? || notice_approval_invalid_4? || notice_approval_invalid_5?
       notice_approval_params.each do |id, item|
         attendance = Attendance.find(id)
         attendance.update_attributes!(item)
       end
-      flash[:info] = "所属長承認申請のお知らせを更新しました"
+      flash[:info] = "【所属長承認申請のお知らせ】を更新しました"
       redirect_to user_url
     else
       flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました"
@@ -162,20 +161,24 @@ class AttendancesController < ApplicationController
   private
     # １ヶ月分の勤怠情報を扱います。
     def attendances_params
-      params.require(:user).permit(attendances: [:started_at, :finished_at, :started_at_before, :finished_at_before, :note,
-                                                 :one_month_instructor_confirmation])[:attendances]
+      params.require(:user).permit(attendances: [:started_at, :finished_at, :started_at_before, :finished_at_before, :started_at_before_2, :finished_at_before_2,
+                                                 :started_at_before_3, :finished_at_before_3, :note, :one_month_instructor_confirmation, 
+                                                 :one_month_instructor_confirmation_2, :one_month_instructor_confirmation_3])[:attendances]
     end
     
     def notice_edit_params
-      params.require(:user).permit(attendances: [:notice_one_month_instructor_confirmation, :change_digest])[:attendances]
+      params.require(:user).permit(attendances: [:notice_one_month_instructor_confirmation, :notice_one_month_instructor_confirmation_2, :notice_one_month_instructor_confirmation_3,
+                                                 :change_digest, :change_digest_2, :change_digest_3,])[:attendances]
     end
     
     def notice_overwork_params 
-      params.require(:user).permit(attendances: [:instructor_confirmation_app, :overwork_change])[:attendances]
+      params.require(:user).permit(attendances: [:instructor_confirmation_app, :instructor_confirmation_app_2, :instructor_confirmation_app_3, 
+                                                 :overwork_change, :overwork_change_2, :overwork_change_3])[:attendances]
     end
     
     def notice_approval_params
-      params.require(:user).permit(attendances: [:approval_confirmation, :approval_change])[:attendances]
+      params.require(:user).permit(attendances: [:approval_confirmation, :approval_confirmation_2, :approval_confirmation_3, :approval_confirmation_4, :approval_confirmation_5, 
+                                                 :approval_change, :approval_change_2, :approval_change_3, :approval_change_4, :approval_change_5])[:attendances]
     end
     
     # 管理権限者、または現在ログインしているユーザーを許可します。

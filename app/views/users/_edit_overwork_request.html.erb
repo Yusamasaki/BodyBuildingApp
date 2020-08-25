@@ -31,38 +31,61 @@
               <td><%= f.text_field :business_processing_contents, class: "form-control" %></td>
               <td>
                 <% if @user.superiorA? %>
-                  <%= f.select :instructor_confirmation, 
-                    [
-                    ["", ""],
-                    ["上長B", '2'],
-                    ["上長C", '3']
-                    ]
-                  %>
+                  <% if day.instructor_confirmation_app.blank? %>
+                    <%= f.select :instructor_confirmation, 
+                      { "上長B": 2, "上長C": 3 },{ include_blank: '' }
+                    %>
+                  <% elsif day.instructor_confirmation_3.blank? && day.instructor_confirmation_2.blank? && day.instructor_confirmation.present? && day.instructor_confirmation_app.present? %>
+                    <%= f.select :instructor_confirmation_2, 
+                      { "上長B": 2, "上長C": 3 },{ include_blank: '' }
+                    %>
+                  <% elsif day.instructor_confirmation_2.present? && day.instructor_confirmation_app_2.present? %>
+                    <%= f.select :instructor_confirmation_3, 
+                      { "上長B": 2, "上長C": 3 },{ include_blank: '' }
+                    %>
+                  <% end %>
                 <% elsif @user.superiorB? %>
-                  <%= f.select :instructor_confirmation, 
-                    [
-                    ["", ""],
-                    ["上長A", '1'],
-                    ["上長C", '3']
-                    ]
-                  %>
+                  <% if day.instructor_confirmation_app.blank? %>
+                    <%= f.select :instructor_confirmation, 
+                      { "上長A": 1, "上長C": 3 },{ include_blank: '' }
+                    %>
+                  <% elsif day.instructor_confirmation_3.blank? && day.instructor_confirmation.present? && day.instructor_confirmation_app.present? %>
+                    <%= f.select :instructor_confirmation_2, 
+                      { "上長A": 1, "上長C": 3 },{ include_blank: '' }
+                    %>
+                  <% elsif day.instructor_confirmation_2.present? && day.instructor_confirmation_app_2.present? %>
+                    <%= f.select :instructor_confirmation_3, 
+                      { "上長A": 1, "上長C": 3 },{ include_blank: '' }
+                    %>
+                  <% end %>
                 <% elsif @user.superiorC? %>
-                  <%= f.select :instructor_confirmation, 
-                    [
-                    ["", ""],
-                    ["上長A", '1'],
-                    ["上長B", '2']
-                    ]
-                  %>
+                  <% if day.instructor_confirmation_app.blank? %>
+                    <%= f.select :instructor_confirmation, 
+                      { "上長A": 1, "上長B": 2 },{ include_blank: '' }
+                    %>
+                  <% elsif day.instructor_confirmation_3.blank? && day.instructor_confirmation.present? && day.instructor_confirmation_app.present? %>
+                    <%= f.select :instructor_confirmation_2, 
+                      { "上長A": 1, "上長B": 2 },{ include_blank: '' }
+                    %>
+                  <% elsif day.instructor_confirmation_2.present? && day.instructor_confirmation_app_2.present? %>
+                    <%= f.select :instructor_confirmation_3, 
+                      { "上長A": 1, "上長B": 2 },{ include_blank: '' }
+                    %>
+                  <% end %>
                 <% else %>
-                  <%= f.select :instructor_confirmation, 
-                    [
-                    ["", ""],
-                    ["上長A", '1'],
-                    ["上長B", '2'],
-                    ["上長C", '3']
-                    ]
-                  %>
+                  <% if day.instructor_confirmation_app.blank? %>
+                    <%= f.select :instructor_confirmation, 
+                      { "上長A": 1, "上長B": 2, "上長C": 3 },{ include_blank: '' }
+                    %>
+                  <% elsif day.instructor_confirmation_2.blank? && day.instructor_confirmation.present? %>
+                    <%= f.select :instructor_confirmation_2, 
+                      { "上長A": 1, "上長B": 2, "上長C": 3 },{ include_blank: '' }
+                    %>
+                  <% elsif day.instructor_confirmation_2.present? %>
+                    <%= f.select :instructor_confirmation_3, 
+                      { "上長A": 1, "上長B": 2, "上長C": 3 },{ include_blank: '' }
+                    %>
+                  <% end %>
                 <% end %>
               </td>
             </tr>

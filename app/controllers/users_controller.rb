@@ -4,7 +4,7 @@ class UsersController < ApplicationController
                                   :approval_application]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy,
                                         :edit_basic_info, :update_basic_info, :edit_overwork_request, :update_overwork_request]
-  before_action :correct_user, only: [:edit, :update, :edit_overwork_request, :update_overwork_request]
+  before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:index, :destroy, :edit_basic_info, :update_basic_info]
   before_action :set_one_month, only: [:show, :show_Confirmation, :edit_overwork_request, :update_overwork_request, :approval_application]
   before_action :admin_or_correct_user, only: :show
@@ -54,16 +54,19 @@ class UsersController < ApplicationController
   end
   
   def create
-    if current_user.new_record? && logged_in?
+    if current_user.new_record?
       @user = User.new(user_params)
       @user.save
       log_in @user
       flash[:success] = '新規作成に成功しました。'
       redirect_to @user
     else
-      @user.update_attributes(user_params)
-      flash[:success] = "ユーザー情報を更新しました。"
-      redirect_to @user
+      @users = User.all
+      @users.each do |user|
+        user = User.find(user_id)
+        user.update_attributes!()
+        flash[:success] = "ユーザー情報を更新しました。"
+      end
     end
   end
 
@@ -102,7 +105,7 @@ class UsersController < ApplicationController
   end
   
   def approval_application
-    if approval_invalid?
+    if approval_invalid? || approval_invalid_2? || approval_invalid_3? || approval_invalid_4? || approval_invalid_5?
       approval_params.each do |id, item|
         attendance = Attendance.find(id)
         attendance.update_attributes!(item)
@@ -151,11 +154,12 @@ class UsersController < ApplicationController
     end
     
     def approval_params
-      params.require(:user).permit(attendances: [:approval_application])[:attendances]
+      params.require(:user).permit(attendances: [:approval_application, :approval_application_2, :approval_application_3, :approval_application_4, :approval_application_5])[:attendances]
     end
     
     def overwork_request_params 
       params.require(:attendance).permit(:expected_end_time, :next_day,
-                                         :business_processing_contents, :instructor_confirmation)
+                                         :business_processing_contents, :instructor_confirmation,
+                                         :instructor_confirmation_2, :instructor_confirmation_3)
     end
 end

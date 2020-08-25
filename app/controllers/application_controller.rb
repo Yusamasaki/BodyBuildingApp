@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     
     # アクセスしたユーザーが現在ログインしているユーザーか確認します。
     def correct_user
-      redirect_to(root_url) unless current_user?(@user)
+      redirect_to(users_url) unless current_user?(@user) || current_user.admin?
     end
     
     # システム管理権限所有かどうか判定します。
@@ -70,36 +70,95 @@ class ApplicationController < ActionController::Base
   end
   
   def notice
-    @at_over1 = Attendance.where(instructor_confirmation: '1')
-    @at_over2 = Attendance.where(instructor_confirmation: '2')
-    @at_over3 = Attendance.where(instructor_confirmation: '3')
-    @overwork1 = @at_over1.count
-    @overwork2 = @at_over2.count
-    @overwork3 = @at_over3.count
-    @overwork_1 = @at_over1.where(instructor_confirmation_app: '1').or(@at_over1.where(instructor_confirmation_app: '2')).or(@at_over1.where(instructor_confirmation_app: '3')).count
-    @overwork_2 = @at_over2.where(instructor_confirmation_app: '1').or(@at_over2.where(instructor_confirmation_app: '2')).or(@at_over2.where(instructor_confirmation_app: '3')).count
-    @overwork_3 = @at_over3.where(instructor_confirmation_app: '1').or(@at_over3.where(instructor_confirmation_app: '2')).or(@at_over3.where(instructor_confirmation_app: '3')).count
-    @overwork_1_1 = @overwork_1 == '0'
+    #残業申請count#
+    @at_over1 = Attendance.where(instructor_confirmation: '1').count
+    @at_over11 = Attendance.where(instructor_confirmation_2: '1').count
+    @at_over111 = Attendance.where(instructor_confirmation_3: '1').count
+    @at_over2 = Attendance.where(instructor_confirmation: '2').count
+    @at_over22 = Attendance.where(instructor_confirmation_2: '2').count
+    @at_over222 = Attendance.where(instructor_confirmation_3: '2').count
+    @at_over3 = Attendance.where(instructor_confirmation: '3').count
+    @at_over33 = Attendance.where(instructor_confirmation_2: '3').count
+    @at_over333 = Attendance.where(instructor_confirmation_3: '3').count
+    @at_1 = @at_over1 + @at_over11 + @at_over111
+    @at_2 = @at_over2 + @at_over22 + @at_over222
+    @at_3 = @at_over3 + @at_over33 + @at_over333
+    #残業申請のお知らせcount#
+    @overwork1 = Attendance.where(instructor_confirmation_app: '1').count
+    @overwork11 = Attendance.where(instructor_confirmation_app: '2').count
+    @overwork111 = Attendance.where(instructor_confirmation_app: '3').count
+    @overwork2 = Attendance.where(instructor_confirmation_app_2: '1').count
+    @overwork22 = Attendance.where(instructor_confirmation_app_2: '2').count
+    @overwork222 = Attendance.where(instructor_confirmation_app_2: '3').count
+    @overwork3 = Attendance.where(instructor_confirmation_app_3: '1').count
+    @overwork33 = Attendance.where(instructor_confirmation_app_3: '2').count
+    @overwork333 = Attendance.where(instructor_confirmation_app_3: '3').count
+    @overwork = @overwork1 + @overwork11 + @overwork111 + @overwork2 + @overwork22 + @overwork222 + @overwork3 + @overwork33 + @overwork333
+    #end#
     
-    @at_one_month1 = Attendance.where(one_month_instructor_confirmation: '1')
-    @at_one_month2 = Attendance.where(one_month_instructor_confirmation: '2')
-    @at_one_month3 = Attendance.where(one_month_instructor_confirmation: '3')
-    @one_month1 = @at_one_month1.count
-    @one_month2 = @at_one_month2.count
-    @one_month3 = @at_one_month3.count
-    @one_month_1 = @at_one_month1.where(notice_one_month_instructor_confirmation: '0').or(@at_one_month1.where(notice_one_month_instructor_confirmation: '1')).or(@at_one_month1.where(notice_one_month_instructor_confirmation: '2')).count
-    @one_month_2 = @at_one_month2.where(notice_one_month_instructor_confirmation: '0').or(@at_one_month2.where(notice_one_month_instructor_confirmation: '1')).or(@at_one_month2.where(notice_one_month_instructor_confirmation: '2')).count
-    @one_month_3 = @at_one_month3.where(notice_one_month_instructor_confirmation: '0').or(@at_one_month3.where(notice_one_month_instructor_confirmation: '1')).or(@at_one_month3.where(notice_one_month_instructor_confirmation: '2')).count
+    #勤怠申請count#
+    @at_one_month1 = Attendance.where(one_month_instructor_confirmation: '1').count
+    @at_one_month11 = Attendance.where(one_month_instructor_confirmation_2: '1').count
+    @at_one_month111 = Attendance.where(one_month_instructor_confirmation_3: '1').count
+    @at_one_month2 = Attendance.where(one_month_instructor_confirmation: '2').count
+    @at_one_month22 = Attendance.where(one_month_instructor_confirmation_2: '2').count
+    @at_one_month222 = Attendance.where(one_month_instructor_confirmation_3: '2').count
+    @at_one_month3 = Attendance.where(one_month_instructor_confirmation: '3').count
+    @at_one_month33 = Attendance.where(one_month_instructor_confirmation_2: '3').count
+    @at_one_month333 = Attendance.where(one_month_instructor_confirmation_3: '3').count
+    @at_month1 = @at_one_month1 + @at_one_month11 + @at_one_month111
+    @at_month2 = @at_one_month2 + @at_one_month22 + @at_one_month222
+    @at_month3 = @at_one_month3 + @at_one_month33 + @at_one_month333
+    #勤怠申請のお知らせcount#
+    @one_month_1 = Attendance.where(notice_one_month_instructor_confirmation: '1').count
+    @one_month_11 = Attendance.where(notice_one_month_instructor_confirmation_2: '1').count
+    @one_month_111 = Attendance.where(notice_one_month_instructor_confirmation_3: '1').count
+    @one_month_2 = Attendance.where(notice_one_month_instructor_confirmation: '2').count
+    @one_month_22 = Attendance.where(notice_one_month_instructor_confirmation_2: '2').count
+    @one_month_222 = Attendance.where(notice_one_month_instructor_confirmation_3: '2').count
+    @one_month_3 = Attendance.where(notice_one_month_instructor_confirmation: '3').count
+    @one_month_33 = Attendance.where(notice_one_month_instructor_confirmation_2: '3').count
+    @one_month_333 = Attendance.where(notice_one_month_instructor_confirmation_3: '3').count
+    @month = @one_month_1 + @one_month_11 + @one_month_111 + @one_month_2 + @one_month_22 + @one_month_222 + @one_month_3 + @one_month_33 + @one_month_333
+    #end#
     
-    @at_app1 = Attendance.where(approval_application: '1')
-    @at_qpp2 = Attendance.where(approval_application: '2')
-    @at_qpp3 = Attendance.where(approval_application: '3')
-    @approval1 = @at_app1.count
-    @approval2 = @at_qpp2.count
-    @approval3 = @at_qpp3.count
-    @approval_1 = @at_app1.where(approval_confirmation: '0').or(@at_app1.where(approval_confirmation: '1')).or(@at_app1.where(approval_confirmation: '2')).count
-    @approval_2 = @at_qpp2.where(approval_confirmation: '0').or(@at_qpp2.where(approval_confirmation: '1')).or(@at_qpp2.where(approval_confirmation: '2')).count
-    @approval_3 = @at_qpp3.where(approval_confirmation: '0').or(@at_qpp3.where(approval_confirmation: '1')).or(@at_qpp3.where(approval_confirmation: '2')).count
+    @at_app_1 = Attendance.where(approval_application: '1').count
+    @at_app_11 = Attendance.where(approval_application_2: '1').count
+    @at_app_111 = Attendance.where(approval_application_3: '1').count
+    @at_app_1111 = Attendance.where(approval_application_4: '1').count
+    @at_app_11111 = Attendance.where(approval_application_5: '1').count
+    @at_app_2 = Attendance.where(approval_application: '2').count
+    @at_app_22 = Attendance.where(approval_application_2: '2').count
+    @at_app_222 = Attendance.where(approval_application_3: '2').count
+    @at_app_2222 = Attendance.where(approval_application_4: '2').count
+    @at_app_22222 = Attendance.where(approval_application_5: '2').count
+    @at_app_3 = Attendance.where(approval_application: '3').count
+    @at_app_33 = Attendance.where(approval_application_2: '3').count
+    @at_app_333 = Attendance.where(approval_application_3: '3').count
+    @at_app_3333 = Attendance.where(approval_application_4: '3').count
+    @at_app_33333 = Attendance.where(approval_application_5: '3').count
+    @app_1 = @at_app_1 + @at_app_11 + @at_app_111 + @at_app_1111 + @at_app_11111
+    @app_2 = @at_app_2 + @at_app_22 + @at_app_222 + @at_app_2222 + @at_app_22222
+    @app_3 = @at_app_3 + @at_app_33 + @at_app_333 + @at_app_3333 + @at_app_33333
+    
+    @approval_1 = Attendance.where(approval_confirmation: '1').count
+    @approval_11 = Attendance.where(approval_confirmation_2: '1').count
+    @approval_111 = Attendance.where(approval_confirmation_3: '1').count
+    @approval_1111 = Attendance.where(approval_confirmation_4: '1').count
+    @approval_11111 = Attendance.where(approval_confirmation_5: '1').count
+    @approval_2 = Attendance.where(approval_confirmation: '2').count
+    @approval_22 = Attendance.where(approval_confirmation_2: '2').count
+    @approval_222 = Attendance.where(approval_confirmation_3: '2').count
+    @approval_2222 = Attendance.where(approval_confirmation_4: '2').count
+    @approval_22222 = Attendance.where(approval_confirmation_5: '2').count
+    @approval_3 = Attendance.where(approval_confirmation: '3').count
+    @approval_33 = Attendance.where(approval_confirmation_2: '3').count
+    @approval_333 = Attendance.where(approval_confirmation_3: '3').count
+    @approval_3333 = Attendance.where(approval_confirmation_4: '3').count
+    @approval_33333 = Attendance.where(approval_confirmation_5: '3').count
+    @approval = @approval_1 + @approval_11 + @approval_111 + @approval_1111 + @approval_11111 +
+                @approval_2 + @approval_22 + @approval_222 + @approval_2222 + @approval_22222 + 
+                @approval_3 + @approval_33 + @approval_333 + @approval_3333 + @approval_33333
   end
   
   def import_emails

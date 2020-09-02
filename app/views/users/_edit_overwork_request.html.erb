@@ -35,26 +35,43 @@
                     <%= f.select :instructor_confirmation, 
                       { "上長B": 2, "上長C": 3 },{ include_blank: '' }
                     %>
-                  <% elsif day.instructor_confirmation_3.blank? && day.instructor_confirmation_2.blank? && day.instructor_confirmation.present? && day.instructor_confirmation_app.present? %>
+                  <% elsif day.instructor_confirmation_app_2.blank? %>
                     <%= f.select :instructor_confirmation_2, 
                       { "上長B": 2, "上長C": 3 },{ include_blank: '' }
                     %>
-                  <% elsif day.instructor_confirmation_2.present? && day.instructor_confirmation_app_2.present? %>
+                  <% elsif day.instructor_confirmation_app_3.blank? %>
                     <%= f.select :instructor_confirmation_3, 
                       { "上長B": 2, "上長C": 3 },{ include_blank: '' }
                     %>
+                  <% elsif day.instructor_confirmation_app_4.blank? %>
+                    <%= f.select :instructor_confirmation_4, 
+                      { "上長B": 2, "上長C": 3 },{ include_blank: '' }
+                    %>
+                  <% else %>
+                    <%= f.select :instructor_confirmation_5, 
+                      { "上長B": 2, "上長C": 3 },{ include_blank: '' }
+                    %>
                   <% end %>
+                  
                 <% elsif @user.superiorB? %>
                   <% if day.instructor_confirmation_app.blank? %>
                     <%= f.select :instructor_confirmation, 
                       { "上長A": 1, "上長C": 3 },{ include_blank: '' }
                     %>
-                  <% elsif day.instructor_confirmation_3.blank? && day.instructor_confirmation.present? && day.instructor_confirmation_app.present? %>
+                  <% elsif day.instructor_confirmation_app_2.blank? %>
                     <%= f.select :instructor_confirmation_2, 
                       { "上長A": 1, "上長C": 3 },{ include_blank: '' }
                     %>
-                  <% elsif day.instructor_confirmation_2.present? && day.instructor_confirmation_app_2.present? %>
+                  <% elsif day.instructor_confirmation_app_3.blank? %>
                     <%= f.select :instructor_confirmation_3, 
+                      { "上長A": 1, "上長C": 3 },{ include_blank: '' }
+                    %>
+                  <% elsif day.instructor_confirmation_app_4.blank? %>
+                    <%= f.select :instructor_confirmation_4, 
+                      { "上長A": 1, "上長C": 3 },{ include_blank: '' }
+                    %>
+                  <% else %>
+                    <%= f.select :instructor_confirmation_5, 
                       { "上長A": 1, "上長C": 3 },{ include_blank: '' }
                     %>
                   <% end %>
@@ -63,12 +80,20 @@
                     <%= f.select :instructor_confirmation, 
                       { "上長A": 1, "上長B": 2 },{ include_blank: '' }
                     %>
-                  <% elsif day.instructor_confirmation_3.blank? && day.instructor_confirmation.present? && day.instructor_confirmation_app.present? %>
+                  <% elsif day.instructor_confirmation_app_2.blank? %>
                     <%= f.select :instructor_confirmation_2, 
                       { "上長A": 1, "上長B": 2 },{ include_blank: '' }
                     %>
-                  <% elsif day.instructor_confirmation_2.present? && day.instructor_confirmation_app_2.present? %>
+                  <% elsif day.instructor_confirmation_app_3.blank? %>
                     <%= f.select :instructor_confirmation_3, 
+                      { "上長A": 1, "上長B": 2 },{ include_blank: '' }
+                    %>
+                  <% elsif day.instructor_confirmation_app_4.blank? %>
+                    <%= f.select :instructor_confirmation_4, 
+                      { "上長A": 1, "上長B": 2 },{ include_blank: '' }
+                    %>
+                  <% else %>
+                    <%= f.select :instructor_confirmation_5, 
                       { "上長A": 1, "上長B": 2 },{ include_blank: '' }
                     %>
                   <% end %>
@@ -77,12 +102,20 @@
                     <%= f.select :instructor_confirmation, 
                       { "上長A": 1, "上長B": 2, "上長C": 3 },{ include_blank: '' }
                     %>
-                  <% elsif day.instructor_confirmation_2.blank? && day.instructor_confirmation.present? %>
+                  <% elsif day.instructor_confirmation_app_2.blank? %>
                     <%= f.select :instructor_confirmation_2, 
                       { "上長A": 1, "上長B": 2, "上長C": 3 },{ include_blank: '' }
                     %>
-                  <% elsif day.instructor_confirmation_2.present? %>
+                  <% elsif day.instructor_confirmation_app_3.blank? %>
                     <%= f.select :instructor_confirmation_3, 
+                      { "上長A": 1, "上長B": 2, "上長C": 3 },{ include_blank: '' }
+                    %>
+                  <% elsif day.instructor_confirmation_app_4.blank? %>
+                    <%= f.select :instructor_confirmation_4, 
+                      { "上長A": 1, "上長B": 2, "上長C": 3 },{ include_blank: '' }
+                    %>
+                  <% else %>
+                    <%= f.select :instructor_confirmation_5, 
                       { "上長A": 1, "上長B": 2, "上長C": 3 },{ include_blank: '' }
                     %>
                   <% end %>

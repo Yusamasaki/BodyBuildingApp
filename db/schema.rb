@@ -65,17 +65,21 @@ ActiveRecord::Schema.define(version: 20200229193421) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "designated_work_start_time", default: "2020-08-26 01:00:00"
-    t.datetime "designated_work_end_time", default: "2020-08-26 10:00:00"
+    t.datetime "designated_work_start_time", default: "2020-09-02 01:00:00"
+    t.datetime "designated_work_end_time", default: "2020-09-02 10:00:00"
     t.datetime "expected_end_time"
     t.string "next_day"
     t.string "business_processing_contents"
     t.string "instructor_confirmation"
     t.string "instructor_confirmation_2"
     t.string "instructor_confirmation_3"
+    t.string "instructor_confirmation_4"
+    t.string "instructor_confirmation_5"
     t.string "instructor_confirmation_app"
     t.string "instructor_confirmation_app_2"
     t.string "instructor_confirmation_app_3"
+    t.string "instructor_confirmation_app_4"
+    t.string "instructor_confirmation_app_5"
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
@@ -96,8 +100,8 @@ ActiveRecord::Schema.define(version: 20200229193421) do
     t.string "remember_digest"
     t.boolean "admin", default: false
     t.string "department"
-    t.datetime "basic_time", default: "2020-08-25 23:00:00"
-    t.datetime "work_time", default: "2020-08-25 22:30:00"
+    t.datetime "basic_time", default: "2020-09-01 23:00:00"
+    t.datetime "work_time", default: "2020-09-01 22:30:00"
     t.boolean "superior", default: false
     t.boolean "superiorA", default: false
     t.boolean "superiorB", default: false

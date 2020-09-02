@@ -32,75 +32,75 @@
 <div>
   <% if @user.superiorA? %>
     <div>
-      <% if "#{@app_1 - @approval}" >= "1" %>
+      <% if "#{@app_1 - @approval_A}" >= "1" %>
         <%= link_to "【所属長承認申請のお知らせ】", attendances_notice_approval_application_user_path, remote: true, class: "btn" %>
-        <font class="notice"><%= "#{@app_1 - @approval}件の通知があります" %></font>
+        <font class="notice"><%= "#{@app_1 - @approval_A}件の通知があります" %></font>
       <% else %>
         <%= link_to "【所属長承認申請のお知らせ】", "#", class: "btn" %>
       <% end %>
     </div>
     <div>
-      <% if "#{@at_month1 - @month}" >= "1" %>
+      <% if "#{@at_month1 - @month_A}" >= "1" %>
         <%= link_to "【勤怠変更申請のお知らせ】", attendances_notice_edit_one_month_user_path, remote: true, class: "btn" %>
-        <font class="notice"><%= "#{@at_month1 - @month}件の通知があります" %></font>
+        <font class="notice"><%= "#{@at_month1 - @month_A}件の通知があります" %></font>
       <% else %>
         <%= link_to "【勤怠変更申請のお知らせ】", "#", class: "btn" %>
       <% end %>
     </div>
     <div>
-      <% if "#{@at_1 - @overwork}" >= "1" %>
+      <% if "#{@at_1 - @overwork_A}" >= "1" %>
         <%= link_to "【残業申請のお知らせ】", attendances_notice_overwork_request_user_path, remote: true, class: "btn" %>
-        <font class="notice"><%= "#{@at_1 - @overwork}件の通知があります" %></font>
+        <font class="notice"><%= "#{@at_1 - @overwork_A}件の通知があります" %></font>
       <% else %>
         <%= link_to "【残業申請のお知らせ】", "#", class: "btn" %>
       <% end %>
     </div>
   <% elsif @user.superiorB? %>
     <div>
-      <% if "#{@app_2 - @approval}" >= "1" %>
+      <% if "#{@app_2 - @approval_B}" >= "1" %>
         <%= link_to "【所属長承認申請のお知らせ】", attendances_notice_approval_application_B_user_path, remote: true, class: "btn" %>
-        <font class="notice"><%= "#{@app_2 - @approval}件の通知があります" %></font>
+        <font class="notice"><%= "#{@app_2 - @approval_B}件の通知があります" %></font>
       <% else %>
         <%= link_to "【所属長承認申請のお知らせ】", "#", class: "btn" %>
       <% end %>
     </div>
     <div>
-      <% if "#{@at_month2 - @month}" >= "1" %>
+      <% if "#{@at_month2 - @month_B}" >= "1" %>
         <%= link_to "【勤怠変更申請のお知らせ】", attendances_notice_edit_one_month_B_user_path, remote: true, class: "btn" %>
-        <font class="notice"><%= "#{@at_month2 - @month}件の通知があります" %></font>
+        <font class="notice"><%= "#{@at_month2 - @month_B}件の通知があります" %></font>
       <% else %>
         <%= link_to "【勤怠変更申請のお知らせ】", "#", class: "btn" %>
       <% end %>
     </div>
     <div> 
-      <% if "#{@at_2 - @overwork}" >= "1" %>
+      <% if "#{@at_2 - @overwork_B}" >= "1" %>
         <%= link_to "【残業申請のお知らせ】", attendances_notice_overwork_request_B_user_path, remote: true, class: "btn" %>
-        <font class="notice"><%= "#{@at_2 - @overwork}件の通知があります" %></font>
+        <font class="notice"><%= "#{@at_2 - @overwork_B}件の通知があります" %></font>
       <% else %>
         <%= link_to "【残業申請のお知らせ】", "#", class: "btn" %>
       <% end %>
     </div>
   <% elsif @user.superiorC? %>
     <div>
-      <% if "#{@app_3 - @approval}" >= "1" %>
+      <% if "#{@app_3 - @approval_C}" >= "1" %>
         <%= link_to "【所属長承認申請のお知らせ】", attendances_notice_approval_application_C_user_path, remote: true, class: "btn" %>
-        <font class="notice"><%= "#{@app_3 - @approval}件の通知があります" %></font>
+        <font class="notice"><%= "#{@app_3 - @approval_C}件の通知があります" %></font>
       <% else %>
         <%= link_to "【所属長承認申請のお知らせ】", "#", class: "btn" %>
       <% end %>
     </div>
     <div>
-      <% if "#{@at_month3 - @month}" >= "1"  %>
+      <% if "#{@at_month3 - @month_C}" >= "1"  %>
         <%= link_to "【勤怠変更申請のお知らせ】", attendances_notice_edit_one_month_C_user_path, remote: true, class: "btn" %>
-        <font class="notice"><%= "#{@at_month3 - @month}件の通知があります" %></font>
+        <font class="notice"><%= "#{@at_month3 - @month_C}件の通知があります" %></font>
       <% else %>
         <%= link_to "【勤怠変更申請のお知らせ】", "#", class: "btn" %>
       <% end %>
     </div>
     <div>   
-      <% if "#{@at_3 - @overwork}" >= "1" %>
+      <% if "#{@at_3 - @overwork_C}" >= "1" %>
         <%= link_to "【残業申請のお知らせ】", attendances_notice_overwork_request_C_user_path, remote: true, class: "btn" %>
-        <font class="notice"><%= "#{@at_3 - @overwork}件の通知があります" %></font>
+        <font class="notice"><%= "#{@at_3 - @overwork_C}件の通知があります" %></font>
       <% else %>
         <%= link_to "【残業申請のお知らせ】", "#", class: "btn" %>
       <% end %>
@@ -125,7 +125,7 @@
       　<th rowspan = "3">日付</th>
         <th rowspan = "3">曜日</th>
         <th colspan = "8">実績</th>
-        <th colspan = "5">所定外勤務</th>
+        <th colspan = "6">所定外勤務</th>
       </tr>
       <tr> <!--rowspan:縦結合、colspan：横結合-->
         <th colspan = "3">出社</th>
@@ -135,7 +135,7 @@
         <th colspan = "2">終了予定時間</th>
         <th rowspan = "2">時間外時間</th>
         <th rowspan = "2">業務処理内容</th>
-        <th rowspan = "2">指示者確認印</th>
+        <th colspan = "2">指示者確認印</th>
       </tr>
       <tr>
         <th>時</th>
@@ -146,6 +146,8 @@
         <th></th>
         <th>時</th>
         <th>分</th>
+        <th>勤怠</th>
+        <th>残業</th>
       </tr>
     </thead>
 
@@ -168,21 +170,29 @@
           </td>
           <!-- 1回目 -->
           <!-- 変更申請が無 -->
-          <% if day.one_month_instructor_confirmation.blank? && day.one_month_instructor_confirmation_2.blank? %>
+          <% if day.one_month_instructor_confirmation.blank? && day.notice_one_month_instructor_confirmation.blank? %>
             <td><%= day.started_at.hour if day.started_at.present? %></td>
             <td><%= day.started_at.floor_to(15.minutes).min if day.started_at.present? %></td>
           <!-- 変更申請が有 -->
-          <% elsif day.one_month_instructor_confirmation.present? && day.one_month_instructor_confirmation_2.blank? %>
+          <% elsif day.notice_one_month_instructor_confirmation.present? && day.one_month_instructor_confirmation_2.blank? %>
             <td><%= day.started_at_before.hour if day.started_at_before.present? && day.notice_one_month_instructor_confirmation == "2" %></td>
             <td><%= day.started_at_before.floor_to(15.minutes).min if day.started_at_before.present? && day.notice_one_month_instructor_confirmation == "2" %></td>
           <!-- 2回目勤怠変更有り -->
-          <% elsif day.one_month_instructor_confirmation_2.present? && day.one_month_instructor_confirmation_3.blank? %>
+          <% elsif day.notice_one_month_instructor_confirmation_2.present? && day.one_month_instructor_confirmation_3.blank? %>
             <td><%= day.started_at_before_2.hour if day.started_at_before_2.present? && day.notice_one_month_instructor_confirmation_2 == "2" %></td>
             <td><%= day.started_at_before_2.floor_to(15.minutes).min if day.started_at_before_2.present? && day.notice_one_month_instructor_confirmation_2 == "2" %></td>
           <!-- 3回目勤怠変更有り -->
-          <% elsif day.one_month_instructor_confirmation_3.present? %>
+          <% elsif day.notice_one_month_instructor_confirmation_3.present? && day.one_month_instructor_confirmation_4.blank? %>
             <td><%= day.started_at_before_3.hour if day.started_at_before_3.present? && day.notice_one_month_instructor_confirmation_3 == "2" %></td>
             <td><%= day.started_at_before_3.floor_to(15.minutes).min if day.started_at_before_3.present? && day.notice_one_month_instructor_confirmation_3 == "2" %></td>
+          <!-- 4回目勤怠変更有り -->
+          <% elsif day.notice_one_month_instructor_confirmation_4.present? && day.one_month_instructor_confirmation_5.blank? %>
+            <td><%= day.started_at_before_4.hour if day.started_at_before_4.present? && day.notice_one_month_instructor_confirmation_4 == "2" %></td>
+            <td><%= day.started_at_before_4.floor_to(15.minutes).min if day.started_at_before_4.present? && day.notice_one_month_instructor_confirmation_4 == "2" %></td>
+          <% else %>
+          <!-- 5回目勤怠変更有り -->
+            <td><%= day.started_at_before_5.hour if day.started_at_before_5.present? && day.notice_one_month_instructor_confirmation_5 == "2" %></td>
+            <td><%= day.started_at_before_5.floor_to(15.minutes).min if day.started_at_before_5.present? && day.notice_one_month_instructor_confirmation_5 == "2" %></td>
           <% end %>
           <td>
             <% if Date.current == day.worked_on && day.started_at.nil? %>
@@ -192,21 +202,29 @@
           </td>
           <!-- 1回目 -->
           <!-- 変更申請が無 -->
-          <% if day.one_month_instructor_confirmation.blank? && day.one_month_instructor_confirmation_2.blank? %>
+          <% if day.one_month_instructor_confirmation.blank? && day.notice_one_month_instructor_confirmation.blank? %>
             <td><%= day.finished_at.hour if day.finished_at.present? %></td>
             <td><%= day.finished_at.floor_to(15.minutes).min if day.finished_at.present? %></td>
           <!-- 変更申請が有 -->
-          <% elsif day.one_month_instructor_confirmation.present? && day.one_month_instructor_confirmation_2.blank? %>
+          <% elsif day.notice_one_month_instructor_confirmation.present? && day.one_month_instructor_confirmation_2.blank? %>
             <td><%= day.finished_at_before.hour if day.finished_at_before.present? && day.notice_one_month_instructor_confirmation == "2" %></td>
             <td><%= day.finished_at_before.floor_to(15.minutes).min if day.finished_at_before.present? && day.notice_one_month_instructor_confirmation == "2" %></td>
           <!-- 2回目勤怠変更有り -->
-          <% elsif day.one_month_instructor_confirmation_2.present? && day.one_month_instructor_confirmation_3.blank? %>
+          <% elsif day.notice_one_month_instructor_confirmation_2.present? && day.one_month_instructor_confirmation_3.blank? %>
             <td><%= day.finished_at_before_2.hour if day.finished_at_before_2.present? && day.notice_one_month_instructor_confirmation_2 == "2" %></td>
             <td><%= day.finished_at_before_2.floor_to(15.minutes).min if day.finished_at_before_2.present? && day.notice_one_month_instructor_confirmation_2 == "2" %></td>
           <!-- 3回目勤怠変更有り -->
-          <% elsif day.one_month_instructor_confirmation_3.present? %>
+          <% elsif day.notice_one_month_instructor_confirmation_3.present? && day.one_month_instructor_confirmation_4.blank? %>
             <td><%= day.finished_at_before_3.hour if day.finished_at_before_3.present? && day.notice_one_month_instructor_confirmation_3 == "2" %></td>
             <td><%= day.finished_at_before_3.floor_to(15.minutes).min if day.finished_at_before_3.present? && day.notice_one_month_instructor_confirmation_3 == "2" %></td>
+          <!-- 4回目勤怠変更有り -->
+          <% elsif day.notice_one_month_instructor_confirmation_4.present? && day.one_month_instructor_confirmation_5.blank? %>
+            <td><%= day.finished_at_before_4.hour if day.finished_at_before_4.present? && day.notice_one_month_instructor_confirmation_4 == "2" %></td>
+            <td><%= day.finished_at_before_4.floor_to(15.minutes).min if day.finished_at_before_4.present? && day.notice_one_month_instructor_confirmation_4 == "2" %></td>
+          <!-- 5回目勤怠変更有り -->
+          <% else %>
+            <td><%= day.finished_at_before_5.hour if day.finished_at_before_5.present? && day.notice_one_month_instructor_confirmation_5 == "2" %></td>
+            <td><%= day.finished_at_before_5.floor_to(15.minutes).min if day.finished_at_before_5.present? && day.notice_one_month_instructor_confirmation_5 == "2" %></td>
           <% end %>
           <td>
             <% if Date.current == day.worked_on && day.started_at.present? && day.finished_at.blank? %>
@@ -215,56 +233,111 @@
             <% end %>
           </td>
           <td>
-            <% if day.started_at.present? && day.finished_at.present? && day.notice_one_month_instructor_confirmation == "1" && day.change_digest == "1" %>
-              <%= str_times = working_times(day.started_at, day.finished_at) %>
+            <% if day.one_month_instructor_confirmation.blank? && day.notice_one_month_instructor_confirmation.blank? %>
+              <%= str_times = working_times(day.started_at, day.finished_at) if day.started_at.present? && day.finished_at.present? %>
+              <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
+            <% elsif day.notice_one_month_instructor_confirmation == '2' && day.one_month_instructor_confirmation_2.blank? %>
+              <%= str_times = working_times(day.started_at_before, day.finished_at_before) if day.started_at_before.present? && day.finished_at_before.present? %>
+              <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
+            <% elsif day.notice_one_month_instructor_confirmation_2 == "2" && day.one_month_instructor_confirmation_3.blank? %>
+              <%= str_times = working_times(day.started_at_before_2, day.finished_at_before_2) if day.started_at_before_2.present? && day.finished_at_before_2.present? %>
+              <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
+            <% elsif day.notice_one_month_instructor_confirmation_3 == "2" && day.one_month_instructor_confirmation_4.blank? %>
+              <%= str_times = working_times(day.started_at_before_3, day.finished_at_before_3) if day.started_at_before_3.present? && day.finished_at_before_3.present? %>
+              <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
+            <% elsif day.notice_one_month_instructor_confirmation_4 == "2" && day.one_month_instructor_confirmation_5.blank? %>
+              <%= str_times = working_times(day.started_at_before_4, day.finished_at_before_4) if day.started_at_before_4.present? && day.finished_at_before_4.present? %>
+              <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
+            <% elsif day.notice_one_month_instructor_confirmation_5 == "2" %>
+              <%= str_times = working_times(day.started_at_before_5, day.finished_at_before_5) if day.started_at_before_5.present? && day.finished_at_before_5.present? %>
               <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
             <% end %>
           </td>
           <td>
-            <% if day.notice_one_month_instructor_confirmation == "1" && day.change_digest == "1" %>
+            <% if day.notice_one_month_instructor_confirmation == "2" %>
               <%= day.note %>
             <% end %>
           </td>
           
+          <!-- 残業実績 -->
           <td>
-            <% if day.instructor_confirmation_app_3 == "2" %>
-              <%= day.expected_end_time.hour if day.expected_end_time.present? %>
-            <% elsif day.instructor_confirmation_app_2 == "2" && day.instructor_confirmation_app.blank? && day.instructor_confirmation_app_3.blank? %>
-              <%= day.expected_end_time.hour if day.expected_end_time.present? %>
-            <% elsif day.instructor_confirmation_app == "2" && day.instructor_confirmation_app_2.blank? && day.instructor_confirmation_app_3.blank? %>
-              <%= day.expected_end_time.hour if day.expected_end_time.present? %>
+            <% if day.instructor_confirmation.present? && day.instructor_confirmation_2.blank?  %>
+              <%= day.expected_end_time.hour if day.expected_end_time.present? && day.instructor_confirmation_app =="2" %>
+            <% elsif day.instructor_confirmation_2.present? && day.instructor_confirmation_3.blank? %>
+              <%= day.expected_end_time.hour if day.expected_end_time.present? && day.instructor_confirmation_app_2 =="2" %>
+            <% elsif day.instructor_confirmation_3.present? && day.instructor_confirmation_4.blank? %>
+              <%= day.expected_end_time.hour if day.expected_end_time.present? && day.instructor_confirmation_app_3 =="2" %>
+            <% elsif day.instructor_confirmation_4.present? && day.instructor_confirmation_5.blank? %>
+              <%= day.expected_end_time.hour if day.expected_end_time.present? && day.instructor_confirmation_app_4 =="2" %>
+            <% else %>
+              <%= day.expected_end_time.hour if day.expected_end_time.present? && day.instructor_confirmation_app_5 =="2" %>
             <% end %>
           </td>
           <td>
-            <% if day.instructor_confirmation_app_3 == "2" %>
-              <%= day.expected_end_time.min if day.expected_end_time.present? %>
-            <% elsif day.instructor_confirmation_app_2 == "2" && day.instructor_confirmation_app.blank? && day.instructor_confirmation_app_3.blank? %>
-              <%= day.expected_end_time.min if day.expected_end_time.present? %>
-            <% elsif day.instructor_confirmation_app == "2" && day.instructor_confirmation_app_2.blank? && day.instructor_confirmation_app_3.blank? %>
-              <%= day.expected_end_time.min if day.expected_end_time.present? %>
+            <% if day.instructor_confirmation.present? && day.instructor_confirmation_2.blank?  %>
+              <%= day.expected_end_time.min if day.expected_end_time.present? && day.instructor_confirmation_app =="2" %>
+            <% elsif day.instructor_confirmation_2.present? && day.instructor_confirmation_3.blank? %>
+              <%= day.expected_end_time.min if day.expected_end_time.present? && day.instructor_confirmation_app_2 =="2" %>
+            <% elsif day.instructor_confirmation_3.present? && day.instructor_confirmation_4.blank? %>
+              <%= day.expected_end_time.min if day.expected_end_time.present? && day.instructor_confirmation_app_3 =="2" %>
+            <% elsif day.instructor_confirmation_4.present? && day.instructor_confirmation_5.blank? %>
+              <%= day.expected_end_time.min if day.expected_end_time.present? && day.instructor_confirmation_app_4 =="2" %>
+            <% else %>
+              <%= day.expected_end_time.min if day.expected_end_time.present? && day.instructor_confirmation_app_5 =="2" %>
             <% end %>
           </td>
           <td>
-            <% if day.instructor_confirmation_app_3 == "2" %>
-              <%= after_hours(day.designated_work_end_time, day.expected_end_time) %>
-            <% elsif day.instructor_confirmation_app_2 == "2" && day.instructor_confirmation_app.blank? && day.instructor_confirmation_app_3.blank? %>
-              <%= after_hours(day.designated_work_end_time, day.expected_end_time) %>
-            <% elsif day.instructor_confirmation_app == "2" && day.instructor_confirmation_app_2.blank? && day.instructor_confirmation_app_3.blank? %>
-              <%= day.expected_end_time.min if day.expected_end_time.present? %>
+            <% if day.instructor_confirmation.present? && day.instructor_confirmation_2.blank? %>
+              <% if day.next_day.present? && day.expected_end_time <= day.designated_work_end_time %>
+                <%= working_times(day.designated_work_end_time, day.expected_end_time.tomorrow) if day.expected_end_time.present? && day.instructor_confirmation_app =="2" %>
+              <% else %>
+                <%= working_times(day.designated_work_end_time, day.expected_end_time) if day.expected_end_time.present? && day.instructor_confirmation_app =="2" %>
+              <% end %>
+              
+            <% elsif day.instructor_confirmation_2.present? && day.instructor_confirmation_3.blank? %>
+              <% if day.next_day.present? && day.expected_end_time <= day.designated_work_end_time %>
+                <%= working_times(day.designated_work_end_time, day.expected_end_time.tomorrow) if day.expected_end_time.present? && day.instructor_confirmation_app_2 =="2" %>
+              <% else %>
+                <%= working_times(day.designated_work_end_time, day.expected_end_time) if day.expected_end_time.present? && day.instructor_confirmation_app_2 =="2" %>
+              <% end %>
+              
+            <% elsif day.instructor_confirmation_3.present? && day.instructor_confirmation_4.blank? %>
+              <% if day.next_day.present? && day.expected_end_time <= day.designated_work_end_time %>
+                <%= working_times(day.designated_work_end_time, day.expected_end_time.tomorrow) if day.expected_end_time.present? && day.instructor_confirmation_app_3 =="2" %>
+              <% else %>
+                <%= working_times(day.designated_work_end_time, day.expected_end_time) if day.expected_end_time.present? && day.instructor_confirmation_app_3 =="2" %>
+              <% end %>
+              
+            <% elsif day.instructor_confirmation_4.present? && day.instructor_confirmation_app_5.blank? %>
+              <% if day.next_day.present? && day.expected_end_time <= day.designated_work_end_time %>
+                <%= working_times(day.designated_work_end_time, day.expected_end_time.tomorrow) if day.expected_end_time.present? && day.instructor_confirmation_app_4 =="2" %>
+              <% else %>
+                <%= working_times(day.designated_work_end_time, day.expected_end_time) if day.expected_end_time.present? && day.instructor_confirmation_app_4 =="2" %>
+              <% end %>
+              
+            <% else %>
+              <% if day.next_day.present? && day.expected_end_time <= day.designated_work_end_time %>
+                <%= working_times(day.designated_work_end_time, day.expected_end_time.tomorrow) if day.expected_end_time.present? && day.instructor_confirmation_app_5 =="2" %>
+              <% else %>
+                <%= working_times(day.designated_work_end_time, day.expected_end_time) if day.expected_end_time.present? && day.instructor_confirmation_app_5 =="2"  %>
+              <% end %>
             <% end %>
           </td>
           <td>
-            <% if day.instructor_confirmation_app_3 == "2" %>
-              <%= day.business_processing_contents %>
-            <% elsif day.instructor_confirmation_app_2 == "2" && day.instructor_confirmation_app.blank? && day.instructor_confirmation_app_3.blank? %>
-              <%= day.business_processing_contents %>
-            <% elsif day.instructor_confirmation_app == "2" && day.instructor_confirmation_app_2.blank? && day.instructor_confirmation_app_3.blank? %>
-              <%= day.business_processing_contents %>
+            <% if day.instructor_confirmation.present? && day.instructor_confirmation_2.blank?  %>
+              <%= day.business_processing_contents if day.instructor_confirmation_app.present? %>
+            <% elsif day.instructor_confirmation_2.present? && day.instructor_confirmation_3.blank? %>
+              <%= day.business_processing_contents if day.instructor_confirmation_app_2.present? %>
+            <% elsif day.instructor_confirmation_3.present? && day.instructor_confirmation_4.blank? %>
+              <%= day.business_processing_contents if day.instructor_confirmation_app_3.present? %>
+            <% elsif day.instructor_confirmation_4.present? && day.instructor_confirmation_app_5.blank? %>
+              <%= day.business_processing_contents if day.instructor_confirmation_app_4.present? %>
+            <% else %>
+              <%= day.business_processing_contents if day.instructor_confirmation_app_5.present? %>
             <% end %>
           </td>
-          <td>
-            <%= render partial: 'overwork_one_month', locals: { day: day } %>
-          </td>
+          <td><%= render partial: 'month', locals: { day: day } %></td>
+          <td><%= render partial: 'overwork', locals: { day: day } %></td>
         </tr>
       <% end %>
       <% end %>
@@ -276,6 +349,7 @@
         <td colspan="2">総合勤務時間</td>
         <td colspan="5"></td>
         <td colspan="2">累計在社時間</td>
+        <td rowspan="2"></td>
         <td rowspan="2"></td>
         <td rowspan="2"></td>
         <td rowspan="2"></td>

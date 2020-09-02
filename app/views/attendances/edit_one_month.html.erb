@@ -25,77 +25,123 @@
               <td><%= attendance.time_field :started_at_before, readonly: true, class: "form-control" %></td>
               <td><%= attendance.time_field :finished_at_before, readonly: true, class: "form-control" %></td>
           <% else %>
-            <% if day.one_month_instructor_confirmation_2 == '2' %>
-              <td><%= attendance.time_field :started_at_before_3, class: "form-control" %></td>
-              <td><%= attendance.time_field :finished_at_before_3, class: "form-control" %></td>
-            <% elsif day.one_month_instructor_confirmation == '2' %>
-              <td><%= attendance.time_field :started_at_before_2, class: "form-control" %></td>
-              <td><%= attendance.time_field :finished_at_before_2, class: "form-control" %></td>
-            <% else %>
+            <% if day.notice_one_month_instructor_confirmation.blank? %>
               <td><%= attendance.time_field :started_at_before, class: "form-control" %></td>
               <td><%= attendance.time_field :finished_at_before, class: "form-control" %></td>
+            <% elsif day.notice_one_month_instructor_confirmation_2.blank? %>
+              <td><%= attendance.time_field :started_at_before_2, class: "form-control" %></td>
+              <td><%= attendance.time_field :finished_at_before_2, class: "form-control" %></td>
+            <% elsif day.notice_one_month_instructor_confirmation_3.blank? %>
+              <td><%= attendance.time_field :started_at_before_3, class: "form-control" %></td>
+              <td><%= attendance.time_field :finished_at_before_3, class: "form-control" %></td>
+            <% elsif day.notice_one_month_instructor_confirmation_4.blank? %>
+              <td><%= attendance.time_field :started_at_before_4, class: "form-control" %></td>
+              <td><%= attendance.time_field :finished_at_before_4, class: "form-control" %></td>
+            <% else %>
+              <td><%= attendance.time_field :started_at_before_5, class: "form-control" %></td>
+              <td><%= attendance.time_field :finished_at_before_5, class: "form-control" %></td>
             <% end %>
           <% end %>
             <td>
-            <% if day.started_at.present? && day.finished_at.present? %>
-              <%= working_times(day.started_at, day.finished_at) %>
+            <% if day.notice_one_month_instructor_confirmation.blank? %>
+              <%= working_times(day.started_at_before, day.finished_at_before) if day.started_at_before.present? && day.finished_at_before.present? %>
+            <% elsif day.notice_one_month_instructor_confirmation_2.blank? %>
+              <%= working_times(day.started_at_before_2, day.finished_at_before_2) if day.started_at_before_2.present? && day.finished_at_before_2.present? %>
+            <% elsif day.notice_one_month_instructor_confirmation_3.blank? %>
+              <%= working_times(day.started_at_before_3, day.finished_at_before_3) if day.started_at_before_3.present? && day.finished_at_before_3.present? %>
+            <% elsif day.notice_one_month_instructor_confirmation_4.blank? %>
+              <%= working_times(day.started_at_before_4, day.finished_at_before_4) if day.started_at_before_4.present? && day.finished_at_before_4.present? %>
+            <% else %>
+              <%= working_times(day.started_at_before_5, day.finished_at_before_5) if day.started_at_before_5.present? && day.finished_at_before._5present? %>
             <% end %>
           </td>
           <td><%= attendance.text_field :note, class: "form-control" %></td>
           <td>
             <% if @user.superiorA? %>
-              <% if day.one_month_instructor_confirmation.blank? %>
+             <% if day.notice_one_month_instructor_confirmation.blank? %>
                 <%= attendance.select :one_month_instructor_confirmation, 
                   {"上長B": 2, "上長C": 3}, { include_blank: ''}
                 %>
-              <% elsif day.one_month_instructor_confirmation.present? && day.one_month_instructor_confirmation_2.blank? %>
+              <% elsif day.notice_one_month_instructor_confirmation_2.blank? %>
                 <%= attendance.select :one_month_instructor_confirmation_2, 
                   {"上長B": 2, "上長C": 3}, { include_blank: ''}
                 %>
-              <% elsif day.one_month_instructor_confirmation_2.present? %>
+              <% elsif day.notice_one_month_instructor_confirmation_3.blank? %>
                 <%= attendance.select :one_month_instructor_confirmation_3, 
+                  {"上長B": 2, "上長C": 3}, { include_blank: ''}
+                %>
+              <% elsif day.notice_one_month_instructor_confirmation_4.blank? %>
+                <%= attendance.select :one_month_instructor_confirmation_4, 
+                  {"上長B": 2, "上長C": 3}, { include_blank: ''}
+                %>
+              <% else %>
+                <%= attendance.select :one_month_instructor_confirmation_5, 
                   {"上長B": 2, "上長C": 3}, { include_blank: ''}
                 %>
               <% end %>
             <% elsif @user.superiorB? %>
-              <% if day.one_month_instructor_confirmation.blank? %>
+              <% if day.notice_one_month_instructor_confirmation.blank? %>
                 <%= attendance.select :one_month_instructor_confirmation, 
                   {"上長A": 1, "上長C": 3}, { include_blank: ''}
                 %>
-              <% elsif day.one_month_instructor_confirmation.present? && day.one_month_instructor_confirmation_2.blank? %>
+              <% elsif day.notice_one_month_instructor_confirmation_2.blank? %>
                 <%= attendance.select :one_month_instructor_confirmation_2, 
                   {"上長A": 1, "上長C": 3}, { include_blank: ''}
                 %>
-              <% elsif day.one_month_instructor_confirmation_2.present? %>
+              <% elsif day.notice_one_month_instructor_confirmation_3.blank? %>
                 <%= attendance.select :one_month_instructor_confirmation_3, 
+                  {"上長A": 1, "上長C": 3}, { include_blank: ''}
+                %>
+              <% elsif day.notice_one_month_instructor_confirmation_4.blank? %>
+                <%= attendance.select :one_month_instructor_confirmation_4, 
+                  {"上長A": 1, "上長C": 3}, { include_blank: ''}
+                %>
+              <% else %>
+                <%= attendance.select :one_month_instructor_confirmation_5, 
                   {"上長A": 1, "上長C": 3}, { include_blank: ''}
                 %>
               <% end %>
             <% elsif @user.superiorC? %>
-              <% if day.one_month_instructor_confirmation.blank? %>
+              <% if day.notice_one_month_instructor_confirmation.blank? %>
                 <%= attendance.select :one_month_instructor_confirmation, 
                   {"上長A": 1, "上長B": 2}, { include_blank: ''}
                 %>
-              <% elsif day.one_month_instructor_confirmation.present? && day.one_month_instructor_confirmation_2.blank? %>
+              <% elsif day.notice_one_month_instructor_confirmation_2.blank? %>
                 <%= attendance.select :one_month_instructor_confirmation_2, 
                   {"上長A": 1, "上長B": 2}, { include_blank: ''}
                 %>
-              <% elsif day.one_month_instructor_confirmation_2.present? %>
+              <% elsif day.notice_one_month_instructor_confirmation_3.blank? %>
                 <%= attendance.select :one_month_instructor_confirmation_3, 
                   {"上長A": 1, "上長B": 2}, { include_blank: ''}
+                %>
+              <% elsif day.notice_one_month_instructor_confirmation_4.blank? %>
+                <%= attendance.select :one_month_instructor_confirmation_4, 
+                  {"上長A": 1, "上長B": 2}, { include_blank: ''}
+                %>
+              <% else %>
+                <%= attendance.select :one_month_instructor_confirmation_5, 
+                  {"上長B": 1, "上長B": 2}, { include_blank: ''}
                 %>
               <% end %>
             <% else %>
-              <% if day.one_month_instructor_confirmation.blank? %>
+              <% if day.notice_one_month_instructor_confirmation.blank? %>
                 <%= attendance.select :one_month_instructor_confirmation, 
                   {"上長A": 1, "上長B": 2, "上長C": 3}, { include_blank: ''}
                 %>
-              <% elsif day.one_month_instructor_confirmation.present? && day.one_month_instructor_confirmation_2.blank? %>
+              <% elsif day.notice_one_month_instructor_confirmation_2.blank? %>
                 <%= attendance.select :one_month_instructor_confirmation_2, 
                   {"上長A": 1, "上長B": 2, "上長C": 3}, { include_blank: ''}
                 %>
-              <% elsif day.one_month_instructor_confirmation_2.present? %>
+              <% elsif day.notice_one_month_instructor_confirmation_3.blank? %>
                 <%= attendance.select :one_month_instructor_confirmation_3, 
+                  {"上長A": 1, "上長B": 2, "上長C": 3}, { include_blank: ''}
+                %>
+              <% elsif day.notice_one_month_instructor_confirmation_4.blank? %>
+                <%= attendance.select :one_month_instructor_confirmation_4, 
+                  {"上長A": 1, "上長B": 2, "上長C": 3}, { include_blank: ''}
+                %>
+              <% else %>
+                <%= attendance.select :one_month_instructor_confirmation_5, 
                   {"上長A": 1, "上長B": 2, "上長C": 3}, { include_blank: ''}
                 %>
               <% end %>

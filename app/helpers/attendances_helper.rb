@@ -15,6 +15,10 @@ module AttendancesHelper
     format("%.2f", (((finish - start) / 60) / 60.0))  
   end
   
+  def working_times_over(expected, designated)
+    format("%.2f", (((designated - expected) / 60) / 60.0))  
+  end
+  
   def current_time
     Time.new(
       Time.now.year,
@@ -29,12 +33,12 @@ module AttendancesHelper
   def attendances_invalid?
     attendances = true
     attendances_params.each do |id, item|
-      if item[:started_at].blank? && item[:finished_at].blank?
+      if item[:started_at_before].blank? && item[:finished_at_before].blank? && item[:one_month_instructor_confirmation].blank?
         next
-      elsif item[:started_at].blank? || item[:finished_at].blank?
+      elsif item[:started_at_before].blank? || item[:finished_at_before].blank? || item[:one_month_instructor_confirmation].blank?
         attendances = false
         break
-      elsif item[:started_at] > item[:finished_at]
+      elsif item[:started_at_before] > item[:finished_at_before]
         attendances = false
         break
       end
@@ -42,15 +46,66 @@ module AttendancesHelper
     return attendances
   end
   
+  #勤怠お知らせ1回目#
   def notice_one_month_invalid?
     notice_one_month = true
     notice_edit_params.each do |id, item|
-      if item[:notice_one_month_instructor_confirmation].blank? && item[:notice_one_month_instructor_confirmation_2].blank? && item[:notice_one_month_instructor_confirmation_3].blank? && 
-         item[:change_digest] == '0' && item[:change_digest_2] == '0' && item[:change_digest_3] == '0' 
-        notice_one_month = false
+      if item[:notice_one_month_instructor_confirmation].blank? && item[:change_digest] == '0'
         next
-      elsif item[:notice_one_month_instructor_confirmation].blank? && item[:notice_one_month_instructor_confirmation_2].blank? && item[:notice_one_month_instructor_confirmation_3].blank? ||
-            item[:change_digest] == '0' && item[:change_digest_2] == '0' && item[:change_digest_3] == '0' 
+      elsif item[:notice_one_month_instructor_confirmation].blank? || item[:change_digest] == '0'
+        notice_one_month = false
+        break
+      end
+    end
+    return notice_one_month
+  end
+  #勤怠お知らせ2回目#
+  def notice_one_month_invalid_2?
+    notice_one_month = true
+    notice_edit_params.each do |id, item|
+      if item[:notice_one_month_instructor_confirmation_2].blank? && item[:change_digest_2] == '0'
+        next
+      elsif item[:notice_one_month_instructor_confirmation_2].blank? || item[:change_digest_2] == '0'
+        notice_one_month = false
+        break
+      end
+    end
+    return notice_one_month
+  end
+  #勤怠お知らせ3回目#
+  def notice_one_month_invalid_3?
+    notice_one_month = true
+    notice_edit_params.each do |id, item|
+      if item[:notice_one_month_instructor_confirmation_3].blank? && item[:change_digest_3] == '0'
+        
+        next
+      elsif item[:notice_one_month_instructor_confirmation_3].blank? || item[:change_digest_3] == '0'
+        notice_one_month = false
+        break
+      end
+    end
+    return notice_one_month
+  end
+  #勤怠お知らせ4回目#
+  def notice_one_month_invalid_4?
+    notice_one_month = true
+    notice_edit_params.each do |id, item|
+      if item[:notice_one_month_instructor_confirmation_4].blank? && item[:change_digest_4] == '0'
+        next
+      elsif item[:notice_one_month_instructor_confirmation_4].blank? || item[:change_digest_4] == '0'
+        notice_one_month = false
+        break
+      end
+    end
+    return notice_one_month
+  end
+  #勤怠お知らせ5回目#
+  def notice_one_month_invalid_5?
+    notice_one_month = true
+    notice_edit_params.each do |id, item|
+      if item[:notice_one_month_instructor_confirmation_5].blank? && item[:change_digest_5] == '0'
+        next
+      elsif item[:notice_one_month_instructor_confirmation_5].blank? || item[:change_digest_5] == '0'
         notice_one_month = false
         break
       end
@@ -58,134 +113,203 @@ module AttendancesHelper
     return notice_one_month
   end
   
+  #残業お知らせ1回目#
   def notice_overwork_invalid?
     notice_overwork = true
     notice_overwork_params.each do |id, item|
-      if    item[:instructor_confirmation_app].blank? && item[:instructor_confirmation_app_2].blank? && item[:instructor_confirmation_app_3].blank? && 
-            item[:overwork_change] == '0' && item[:overwork_change_2] == '0' && item[:overwork_change_3] == '0'
-        notice_overwork = false
+      if item[:instructor_confirmation_app].blank? && item[:overwork_change] == '0'
         next
-      elsif item[:instructor_confirmation_app].blank? && item[:instructor_confirmation_app_2].blank? && item[:instructor_confirmation_app_3].blank? ||
-            item[:overwork_change] == '0' && item[:overwork_change_2] == '0' && item[:overwork_change_3] == '0'
+      elsif item[:instructor_confirmation_app].blank? || item[:overwork_change] == '0'
         notice_overwork = false
+        break
+      end
+    end
+    return notice_overwork
+  end
+  #残業お知らせ2回目#
+  def notice_overwork_invalid_2?
+    notice_overwork = true
+    notice_overwork_params.each do |id, item|
+      if item[:instructor_confirmation_app_2].blank? && item[:overwork_change_2] == '0'
+        next
+      elsif item[:instructor_confirmation_app_2].blank? || item[:overwork_change_2] == '0'
+        notice_overwork = false
+        break
+      end
+    end
+    return notice_overwork
+  end
+  #残業お知らせ3回目#
+  def notice_overwork_invalid_3?
+    notice_overwork = true
+    notice_overwork_params.each do |id, item|
+      if item[:instructor_confirmation_app_3].blank? && item[:overwork_change_3] == '0'
+        next
+      elsif item[:instructor_confirmation_app_3].blank? || item[:overwork_change_3] == '0'
+        notice_overwork = false
+        break
+        
+      end
+    end
+    return notice_overwork
+  end
+  #残業お知らせ4回目#
+  def notice_overwork_invalid_4?
+    notice_overwork = true
+    notice_overwork_params.each do |id, item|
+      if    item[:instructor_confirmation_app_4].blank? && item[:overwork_change_4] == '0'
+        next
+      elsif item[:instructor_confirmation_app_4].blank? || item[:overwork_change_4] == '0'
+        notice_overwork = false
+        break
+      end
+    end
+    return notice_overwork
+  end
+  #残業お知らせ5回目#
+  def notice_overwork_invalid_5?
+    notice_overwork = true
+    notice_overwork_params.each do |id, item|
+      if    item[:instructor_confirmation_app_5].blank? && item[:overwork_change_5] == '0'
+        next
+      elsif item[:instructor_confirmation_app_5].blank? || item[:overwork_change_5] == '0'
+        notice_overwork = false
+        break
       end
     end
     return notice_overwork
   end
   
+  #所属長承認お知らせ1回目#
   def approval_invalid?
     approval = true
     approval_params.each do |id, item|
       if item[:approval_application].blank?
         approval = false
-        next
-      elsif item[:approval_application].blank?
-        approval = false
+        break
       end
     end
     return approval
   end
-  
+  #所属長承認お知らせ2回目#
   def approval_invalid_2?
     approval = true
     approval_params.each do |id, item|
       if item[:approval_application_2].blank?
         approval = false
+        break
       end
     end
     return approval
   end
-  
+  #所属長承認お知らせ3回目#
   def approval_invalid_3?
     approval = true
     approval_params.each do |id, item|
       if item[:approval_application_3].blank?
         approval = false
+        break
       end
     end
     return approval
   end
-  
+  #所属長承認お知らせ4回目#
   def approval_invalid_4?
     approval = true
     approval_params.each do |id, item|
       if item[:approval_application_4].blank?
         approval = false
+        break
       end
     end
     return approval
   end
-  
+  #所属長承認お知らせ5回目#
   def approval_invalid_5?
     approval = true
     approval_params.each do |id, item|
       if item[:approval_application_5].blank?
         approval = false
+        break
       end
       
     end
     return approval
   end
   
+  #所属長承認申請1回目#
   def notice_approval_invalid?
     notice_approval = true
     notice_approval_params.each do |id, item|
-      if item[:approval_confirmation].blank? && item[:approval_change] == '0'  
-        notice_approval = false
+      if item[:approval_confirmation].blank? && item[:approval_change] == '0'
         next
       elsif item[:approval_confirmation].blank? || item[:approval_change] == '0'
         notice_approval = false
+        break
       end
     end
     return notice_approval
   end
+  #所属長承認申請2回目#
   def notice_approval_invalid_2?
     notice_approval = true
     notice_approval_params.each do |id, item|
-      if item[:approval_confirmation_2].blank? && item[:approval_change_2] == '0'  
-        notice_approval = false
+      if item[:approval_confirmation_2].blank? && item[:approval_change_2] == '0'
         next
       elsif item[:approval_confirmation_2].blank? || item[:approval_change_2] == '0'
         notice_approval = false
+        break
       end
     end
     return notice_approval
   end
+  #所属長承認申請3回目#
   def notice_approval_invalid_3?
     notice_approval = true
     notice_approval_params.each do |id, item|
-      if item[:approval_confirmation_3].blank? && item[:approval_change_3] == '0'  
-        notice_approval = false
+      if item[:approval_confirmation_3].blank? && item[:approval_change_3] == '0'
         next
       elsif item[:approval_confirmation_3].blank? || item[:approval_change_3] == '0'
         notice_approval = false
+        break
       end
     end
     return notice_approval
   end
+  #所属長承認申請4回目#
   def notice_approval_invalid_4?
     notice_approval = true
     notice_approval_params.each do |id, item|
-      if item[:approval_confirmation_4].blank? && item[:approval_change_4] == '0'  
-        notice_approval = false
+      if item[:approval_confirmation_4].blank? && item[:approval_change_4] == '0'
         next
       elsif item[:approval_confirmation_4].blank? || item[:approval_change_4] == '0'
         notice_approval = false
+        break
       end
     end
     return notice_approval
   end
+  #所属長承認申請5回目#
   def notice_approval_invalid_5?
     notice_approval = true
     notice_approval_params.each do |id, item|
-      if item[:approval_confirmation_5].blank? && item[:approval_change_5] == '0'  
-        notice_approval = false
+      if item[:approval_confirmation_5].blank? && item[:approval_change_5] == '0'
         next
       elsif item[:approval_confirmation_5].blank? || item[:approval_change_5] == '0'
         notice_approval = false
+        break
       end
     end
     return notice_approval
+  end
+  
+  def overwork_invalid?
+      if @attendance.instructor_confirmation.blank?
+        over = false
+      else
+        over = false
+      end
+    return over
   end
   
   def user_attendances_month_date

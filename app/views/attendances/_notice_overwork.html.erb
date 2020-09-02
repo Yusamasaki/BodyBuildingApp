@@ -35,25 +35,49 @@
                   <td><%= format_basic_info(day.expected_end_time) if day.expected_end_time.present? %></td>
                   <td><%= format_basic_info(day.designated_work_end_time) %></td>
                   <td>
-                    <%= after_hours(day.designated_work_end_time, day.expected_end_time) %>
-                  </td> 
+                    <% if day.next_day.present? && day.expected_end_time <= day.designated_work_end_time %>
+                      <%= working_times(day.designated_work_end_time, day.expected_end_time.tomorrow) %>
+                    <% else %>
+                      <%= working_times(day.designated_work_end_time, day.expected_end_time) %>
+                    <% end %>
+                    </td> 
                   <td><%= day.business_processing_contents %></td>
                   <td>
                     <% if day.instructor_confirmation_app.blank? %>
                       <%= attendance.select :instructor_confirmation_app, 
                         { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
-                       %> 
-                     <% elsif day.instructor_confirmation_app_2.blank? %>
-                       <%= attendance.select :instructor_confirmation_app_2, 
+                      %> 
+                    <% elsif day.instructor_confirmation_app_2.blank? %>
+                      <%= attendance.select :instructor_confirmation_app_2, 
                         { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
-                       %> 
-                     <% elsif day.instructor_confirmation_app_3_blank? %>
-                       <%= attendance.select :instructor_confirmation_app_3, 
+                      %> 
+                    <% elsif day.instructor_confirmation_app_3.blank? %>
+                      <%= attendance.select :instructor_confirmation_app_3, 
                         { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
-                       %>
-                     <% end %>
+                      %>
+                    <% elsif day.instructor_confirmation_app_4.blank? %>
+                      <%= attendance.select :instructor_confirmation_app_4, 
+                        { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
+                      %>
+                    <% else %>
+                      <%= attendance.select :instructor_confirmation_app_5, 
+                        { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
+                      %>
+                    <% end %>
                   </td>
-                  <td><%= attendance.check_box :overwork_change %></td>
+                  <td>
+                    <% if day.overwork_change.blank? %>
+                      <%= attendance.check_box :overwork_change %>
+                    <% elsif day.overwork_change_2.blank? %>
+                      <%= attendance.check_box :overwork_change_2 %>
+                    <% elsif day.overwork_change_3.blank? %>
+                      <%= attendance.check_box :overwork_change_3 %>
+                    <% elsif day.overwork_change_4.blank? %>
+                      <%= attendance.check_box :overwork_change_4 %>
+                    <% else %>
+                      <%= attendance.check_box :overwork_change_5 %>
+                    <% end %>
+                  </td>
                   <td><%= link_to "確認", show_Confirmation_user_path(user), class: "btn btn-primary" %></td>
                 </tr>
               <% end %>

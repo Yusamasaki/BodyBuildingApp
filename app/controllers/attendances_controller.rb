@@ -79,7 +79,7 @@ class AttendancesController < ApplicationController
   
   def update_notice_one_month
     @user = User.find(params[:id])
-    if notice_one_month_invalid?
+    if notice_one_month_invalid? || notice_one_month_invalid_2? || notice_one_month_invalid_3? || notice_one_month_invalid_4? || notice_one_month_invalid_5?
       notice_edit_params.each do |id, item|
         attendance = Attendance.find(id)
         attendance.update_attributes!(item)
@@ -112,7 +112,7 @@ class AttendancesController < ApplicationController
   
   def update_notice_overwork_request
     @user = User.find(params[:id])
-      if notice_overwork_invalid?
+      if notice_overwork_invalid? || notice_overwork_invalid_2? || notice_overwork_invalid_3? || notice_overwork_invalid_4? || notice_overwork_invalid_5?
         notice_overwork_params.each do |id, item|
         attendance = Attendance.find(id) 
         attendance.update_attributes!(item)
@@ -162,18 +162,23 @@ class AttendancesController < ApplicationController
     # １ヶ月分の勤怠情報を扱います。
     def attendances_params
       params.require(:user).permit(attendances: [:started_at, :finished_at, :started_at_before, :finished_at_before, :started_at_before_2, :finished_at_before_2,
-                                                 :started_at_before_3, :finished_at_before_3, :note, :one_month_instructor_confirmation, 
-                                                 :one_month_instructor_confirmation_2, :one_month_instructor_confirmation_3])[:attendances]
+                                                 :started_at_before_3, :finished_at_before_3, :started_at_before_4, :finished_at_before_4, :started_at_before_5,
+                                                 :finished_at_before_5, :note, :one_month_instructor_confirmation, :one_month_instructor_confirmation_2, 
+                                                 :one_month_instructor_confirmation_3, :one_month_instructor_confirmation_4,
+                                                 :one_month_instructor_confirmation_5])[:attendances]
     end
     
     def notice_edit_params
       params.require(:user).permit(attendances: [:notice_one_month_instructor_confirmation, :notice_one_month_instructor_confirmation_2, :notice_one_month_instructor_confirmation_3,
-                                                 :change_digest, :change_digest_2, :change_digest_3,])[:attendances]
+                                                 :notice_one_month_instructor_confirmation_4, :notice_one_month_instructor_confirmation_5,
+                                                 :change_digest, :change_digest_2, :change_digest_3, :change_digest_4, :change_digest_5,])[:attendances]
     end
     
     def notice_overwork_params 
-      params.require(:user).permit(attendances: [:instructor_confirmation_app, :instructor_confirmation_app_2, :instructor_confirmation_app_3, 
-                                                 :overwork_change, :overwork_change_2, :overwork_change_3])[:attendances]
+      params.require(:user).permit(attendances: [:instructor_confirmation_app, :instructor_confirmation_app_2, 
+                                                 :instructor_confirmation_app_3, :instructor_confirmation_app_4, :instructor_confirmation_app_5, 
+                                                 :overwork_change, :overwork_change_2, :overwork_change_3, :overwork_change_4,
+                                                 :overwork_change_5])[:attendances]
     end
     
     def notice_approval_params

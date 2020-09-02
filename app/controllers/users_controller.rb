@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     @users = User.all
     @attendance = @user.attendances.find_by(worked_on: @first_day)
     @worked_sum = @attendances.where.not(started_at: nil).count
-    
+    @attendancess = @user.attendances.where( worked_on: @first_day..@last_day).order(:worked_on).where(notice_one_month_instructor_confirmation: "2")
     respond_to do |format|
       format.html
       format.csv
@@ -126,8 +126,9 @@ class UsersController < ApplicationController
   def update_overwork_request
     @day = Date.parse(params[:day])
     @attendance = @user.attendances.find_by(worked_on: @day)
-    if @attendance.update_attributes(overwork_request_params)
-      flash[:success] = "残業申請のお知らせを更新しました。"
+    @attendance.update_attributes(overwork_request_params)
+    if @attendance.instructor_confirmation.present?
+      flash[:success] = "残業を申請しました。"
       redirect_to user_url(date: params[:date])
     else
       flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
@@ -158,8 +159,8 @@ class UsersController < ApplicationController
     end
     
     def overwork_request_params 
-      params.require(:attendance).permit(:expected_end_time, :next_day,
-                                         :business_processing_contents, :instructor_confirmation,
-                                         :instructor_confirmation_2, :instructor_confirmation_3)
+      params.require(:attendance).permit(:expected_end_time, :next_day, :business_processing_contents, 
+                                         :instructor_confirmation, :instructor_confirmation_2, :instructor_confirmation_3, 
+                                         :instructor_confirmation_4, :instructor_confirmation_5)
     end
 end

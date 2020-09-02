@@ -1,0 +1,187 @@
+<% @nakaA = "上長Aへ残業申請中" %>
+<% @nakaB = "上長Bへ残業申請中" %>
+<% @nakaC = "上長Cへ残業申請中" %>
+<% @yesA = "上長Aから残業承認済" %>
+<% @yesB = "上長Bから残業承認済" %>
+<% @yesC = "上長Cから残業承認済" %>
+<% @noA = "上長Aから残業否認されました" %>
+<% @noB = "上長Bから残業否認されました" %>
+<% @noC = "上長Cから残業否認されました" %>
+
+
+<% if day.instructor_confirmation_5.present? && day.instructor_confirmation_app_5.blank? %>
+  <% if day.instructor_confirmation_5 == "1" %>
+    <%= @nakaA %>
+  <% elsif day.instructor_confirmation_5 == "2" %>
+    <%= @nakaB %>
+  <% elsif day.instructor_confirmation_5 == "3" %>
+    <%= @nakaC %>
+  <% end %>
+<% elsif day.instructor_confirmation_4.present? && day.instructor_confirmation_app_4.blank? %>
+  <% if day.instructor_confirmation_4 == "1" %>
+    <%= @nakaA %>
+  <% elsif day.instructor_confirmation_4 == "2" %>
+    <%= @nakaB %>
+  <% elsif day.instructor_confirmation_4 == "3" %>
+    <%= @nakaC %>
+  <% end %>
+<% elsif day.instructor_confirmation_3.present? && day.instructor_confirmation_app_3.blank? %>
+  <% if day.instructor_confirmation_3 == "1" %>
+    <%= @nakaA %>
+  <% elsif day.instructor_confirmation_3 == "2" %>
+    <%= @nakaB %>
+  <% elsif day.instructor_confirmation_3 == "3" %>
+    <%= @nakaC %>
+  <% end %>
+<% elsif day.instructor_confirmation_2.present? && day.instructor_confirmation_app_2.blank? %>
+  <% if day.instructor_confirmation_2 == "1" %>
+    <%= @nakaA %>
+  <% elsif day.instructor_confirmation_2 == "2" %>
+    <%= @nakaB %>
+  <% elsif day.instructor_confirmation_2 == "3" %>
+    <%= @nakaC %>
+  <% end %>
+<% elsif day.instructor_confirmation.present? && day.instructor_confirmation_app.blank? %>
+  <% if day.instructor_confirmation == "1" %>
+    <%= @nakaA %>
+  <% elsif day.instructor_confirmation == "2" %>
+    <%= @nakaB %>
+  <% elsif day.instructor_confirmation == "3" %>
+    <%= @nakaC %>
+  <% end %>
+
+<% elsif day.instructor_confirmation_app_5.present? %>
+  <% if day.instructor_confirmation_5 == "1" %>
+    <% if day.instructor_confirmation_app_5 == "1" %>
+      <%= @nakaA %>
+    <% elsif day.instructor_confirmation_app_5 == "2" %>
+      <%= @yesA %>
+    <% elsif day.instructor_confirmation_app_5 == "3" %>
+      <%= @noA %>
+    <% end %>
+  <% elsif day.instructor_confirmation_5 == "2" %>
+    <% if day.instructor_confirmation_app_5 == "1" %>
+      <%= @nakaB %>
+    <% elsif day.instructor_confirmation_app_5 == "2" %>
+      <%= @yesB %>
+    <% elsif day.instructor_confirmation_app_5 == "3" %>
+      <%= @noB %>
+    <% end %>
+  <% elsif day.instructor_confirmation_5 == "3" %>
+    <% if day.instructor_confirmation_app_5 == "1" %>
+      <%= @nakaC %>
+    <% elsif day.instructor_confirmation_app_5 == "2" %>
+      <%= @yesC %>
+    <% elsif day.instructor_confirmation_app_5 == "3" %>
+      <%= @noC %>
+    <% end %>
+  <% end %>
+    
+<% elsif day.instructor_confirmation_app_4.present? %>
+  <% if day.instructor_confirmation_4 == "1" %>
+    <% if day.instructor_confirmation_app_4 == "1" %>
+      <%= @nakaA %>
+    <% elsif day.instructor_confirmation_app_4 == "2" %>
+      <%= @yesA %>
+    <% elsif day.instructor_confirmation_app_4 == "3" %>
+      <%= @noA %>
+    <% end %>
+  <% elsif day.instructor_confirmation_4 == "2" %>
+    <% if day.instructor_confirmation_app_4 == "1" %>
+      <%= @nakaB %>
+    <% elsif day.instructor_confirmation_app_4 == "2" %>
+      <%= @yesB %>
+    <% elsif day.instructor_confirmation_app_4 == "3" %>
+      <%= @noB %>
+    <% end %>
+  <% elsif day.instructor_confirmation_4 == "3" %>
+    <% if day.instructor_confirmation_app_4 == "1" %>
+      <%= @nakaC %>
+    <% elsif day.instructor_confirmation_app_4 == "2" %>
+      <%= @yesC %>
+    <% elsif day.instructor_confirmation_app_4 == "3" %>
+      <%= @noC %>
+    <% end %>
+  <% end %>
+  
+<% elsif day.instructor_confirmation_app_3.present? %>
+  <% if day.instructor_confirmation_3 == "1" %>
+    <% if day.instructor_confirmation_app_3 == "1" %>
+      <%= @nakaA %>
+    <% elsif day.instructor_confirmation_app_3 == "2" %>
+      <%= @yesA %>
+    <% elsif day.instructor_confirmation_app_3 == "3" %>
+      <%= @noA %>
+    <% end %>
+  <% elsif day.instructor_confirmation_3 == "2" %>
+    <% if day.instructor_confirmation_app_3 == "1" %>
+      <%= @nakaB %>
+    <% elsif day.instructor_confirmation_app_3 == "2" %>
+      <%= @yesB %>
+    <% elsif day.instructor_confirmation_app_3 == "3" %>
+      <%= @noB %>
+    <% end %>
+  <% elsif day.instructor_confirmation_3 == "3" %>
+    <% if day.instructor_confirmation_app_3 == "1" %>
+      <%= @nakaC %>
+    <% elsif day.instructor_confirmation_app_3 == "2" %>
+      <%= @yesC %>
+    <% elsif day.instructor_confirmation_app_3 == "3" %>
+      <%= @noC %>
+    <% end %>
+  <% end %>
+    
+<% elsif day.instructor_confirmation_app_2.present? %>
+  <% if day.instructor_confirmation_2 == "1" %>
+    <% if day.instructor_confirmation_app_2 == "1" %>
+      <%= @nakaA %>
+    <% elsif day.instructor_confirmation_app_2 == "2" %>
+      <%= @yesA %>
+    <% elsif day.instructor_confirmation_app_2 == "3" %>
+      <%= @noA %>
+    <% end %>
+  <% elsif day.instructor_confirmation_2 == "2" %>
+    <% if day.instructor_confirmation_app_2 == "1" %>
+      <%= @nakaB %>
+    <% elsif day.instructor_confirmation_app_2 == "2" %>
+      <%= @yesB %>
+    <% elsif day.instructor_confirmation_app_2 == "3" %>
+      <%= @noB %>
+    <% end %>
+  <% elsif day.instructor_confirmation_2 == "3" %>
+    <% if day.instructor_confirmation_app_2 == "1" %>
+      <%= @nakaC %>
+    <% elsif day.instructor_confirmation_app_2 == "2" %>
+      <%= @yesC %>
+    <% elsif day.instructor_confirmation_app_2 == "3" %>
+      <%= @noC %>
+    <% end %>
+  <% end %>
+  
+<% elsif day.instructor_confirmation_app.present? %>
+  <% if day.instructor_confirmation == "1" %>
+    <% if day.instructor_confirmation_app == "1" %>
+      <%= @nakaA %>
+    <% elsif day.instructor_confirmation_app == "2" %>
+      <%= @yesA %>
+    <% elsif day.instructor_confirmation_app == "3" %>
+      <%= @noA %>
+    <% end %>
+  <% elsif day.instructor_confirmation == "2" %>
+    <% if day.instructor_confirmation_app == "1" %>
+      <%= @nakaC %>
+    <% elsif day.instructor_confirmation_app == "2" %>
+      <%= @yesC %>
+    <% elsif day.instructor_confirmation_app == "3" %>
+      <%= @noC %>
+    <% end %>
+  <% elsif day.instructor_confirmation == "3" %>
+    <% if day.instructor_confirmation_app == "1" %>
+      <%= @nakaC %>
+    <% elsif day.instructor_confirmation_app == "2" %>
+      <%= @yesC %>
+    <% elsif day.instructor_confirmation_app == "3" %>
+      <%= @noC %>
+    <% end %>
+  <% end %>
+<% end %>

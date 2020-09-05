@@ -11,7 +11,7 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 100 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true
-  validates :department, length: { in: 2..50 }, allow_blank: true
+  validates :affiliation, length: { in: 2..50 }, allow_blank: true
   validates :basic_time, presence: true
   validates :work_time, presence: true
   has_secure_password
@@ -63,9 +63,9 @@ class User < ApplicationRecord
 
   # 更新を許可するカラムを定義
   def self.updatable_attributes
-    ["name", "email", "department",
+    ["name", "email", "affiliation",
     "password", "employee_number",
-     "uid",  "basic_time",
-     "admin"]
+     "uid",  "basic_time", "designated_work_start_time", "designated_work_end_time",
+     "admin", "superior"]
   end
 end

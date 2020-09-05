@@ -45,12 +45,12 @@
                     <td><%= l(day.worked_on, format: :short) %></td>
                     <td><%= $days_of_the_week[day.worked_on.wday] %></td>
                     <td><%= format_basic_info(day.expected_end_time) if day.expected_end_time.present? %></td>
-                    <td><%= format_basic_info(day.designated_work_end_time) %></td>
+                    <td><%= format_basic_info(user.designated_work_end_time) %></td>
                     <td>
-                      <% if day.next_day.present? && day.expected_end_time <= day.designated_work_end_time %>
-                        <%= working_times(day.designated_work_end_time, day.expected_end_time.tomorrow) %>
+                      <% if day.next_day.present? && day.expected_end_time <= user.designated_work_end_time %>
+                        <%= working_times(user.designated_work_end_time, day.expected_end_time.tomorrow) %>
                       <% else %>
-                        <%= working_times(day.designated_work_end_time, day.expected_end_time) %>
+                        <%= working_times(user.designated_work_end_time, day.expected_end_time) %>
                       <% end %>
                     </td> 
                     <td><%= day.business_processing_contents %></td>

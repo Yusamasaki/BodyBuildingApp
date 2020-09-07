@@ -265,7 +265,7 @@ class ApplicationController < ActionController::Base
     @approval_A_11111 = Attendance.where(approval_application_5: '1').where(approval_confirmation_5: '1').count
     @approval_A_2 = Attendance.where(approval_application: '1').where(approval_confirmation: '2').count
     @approval_A_22 = Attendance.where(approval_application_2: '1').where(approval_confirmation_2: '2').count
-    @approval_A_222 = Attendance.where(approval_confirmation_3: '1').count
+    @approval_A_222 = Attendance.where(approval_application_3: '1').where(approval_confirmation_3: '1').count
     @approval_A_2222 = Attendance.where(approval_application_4: '1').where(approval_confirmation_4: '2').count
     @approval_A_22222 = Attendance.where(approval_application_5: '1').where(approval_confirmation_5: '2').count
     @approval_A_3 = Attendance.where(approval_application: '1').where(approval_confirmation: '3').count
@@ -284,7 +284,7 @@ class ApplicationController < ActionController::Base
     @approval_B_11111 = Attendance.where(approval_application_5: '2').where(approval_confirmation_5: '1').count
     @approval_B_2 = Attendance.where(approval_application: '2').where(approval_confirmation: '2').count
     @approval_B_22 = Attendance.where(approval_application_2: '2').where(approval_confirmation_2: '2').count
-    @approval_B_222 = Attendance.where(approval_confirmation_3: '2').count
+    @approval_B_222 = Attendance.where(approval_application_3: '2').where(approval_confirmation_3: '2').count
     @approval_B_2222 = Attendance.where(approval_application_4: '2').where(approval_confirmation_4: '2').count
     @approval_B_22222 = Attendance.where(approval_application_5: '2').where(approval_confirmation_5: '2').count
     @approval_B_3 = Attendance.where(approval_application: '2').where(approval_confirmation: '3').count

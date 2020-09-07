@@ -1,4 +1,7 @@
 class BasesController < ApplicationController
+  before_action :logged_in_user, only: [:show, :edit_base, :update_base, :new, :create, :destroy]
+  before_action :correct_user, only: [:show, :edit_base, :update_base, :new, :create, :destroy]
+  before_action :admin_user, only: [:show, :edit_base, :update_base, :new, :create, :destroy]
   
   def show
     @bases = Base.all
@@ -14,6 +17,7 @@ class BasesController < ApplicationController
       flash[:success] = "拠点情報を更新しました。"
       redirect_to @base
     else
+      flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました"
       render :edit
     end
   end
@@ -28,6 +32,7 @@ class BasesController < ApplicationController
       flash[:success] = "拠点を追加しました。"
       redirect_to bases_url
     else
+      flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました"
       redirect_to bases_url
     end
   end

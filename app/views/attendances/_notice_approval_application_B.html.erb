@@ -5,9 +5,11 @@
     <% @users.each do |user| %>
     <% @atten = Attendance.where(user_id: user.id) %>
     <% @atten.each do |at| %>
-    <% if at.approval_application.present? && at.approval_confirmation.blank? || at.approval_application_2.present? && at.approval_confirmation_2.blank? || 
-          at.approval_application_3.present? && at.approval_confirmation_3.blank? || at.approval_application_4.present? && at.approval_confirmation_4.blank? ||
-          at.approval_application_5.present? && at.approval_confirmation_5.blank? %>
+    <% if at.approval_application == '2' && at.approval_confirmation.blank?     ||
+          at.approval_application_2 == '2' && at.approval_confirmation_2.blank? || 
+          at.approval_application_3 == '2' && at.approval_confirmation_3.blank? || 
+          at.approval_application_4 == '2' && at.approval_confirmation_4.blank? ||
+          at.approval_application_5 == '2' && at.approval_confirmation_5.blank? %>
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>

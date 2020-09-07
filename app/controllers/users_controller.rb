@@ -3,9 +3,10 @@ class UsersController < ApplicationController
                                   :edit_basic_info, :update_basic_info, :edit_overwork_request, :update_overwork_request,
                                   :approval_application]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy,
-                                        :edit_basic_info, :update_basic_info, :edit_overwork_request, :update_overwork_request]
-  before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:index, :destroy, :edit_basic_info, :update_basic_info]
+                                        :edit_basic_info, :update_basic_info, :edit_overwork_request, :update_overwork_request,
+                                        :index_attendance]
+  before_action :correct_user, only: [:edit, :update, :index_attendance]
+  before_action :admin_user, only: [:index, :destroy, :edit_basic_info, :update_basic_info, :index_attendance]
   before_action :set_one_month, only: [:show, :show_Confirmation, :edit_overwork_request, :update_overwork_request, :approval_application]
   before_action :admin_or_correct_user, only: :show
   before_action :notice, only: :show  
@@ -54,20 +55,11 @@ class UsersController < ApplicationController
   end
   
   def create
-    if current_user.new_record?
-      @user = User.new(user_params)
-      @user.save
-      log_in @user
-      flash[:success] = '新規作成に成功しました。'
-      redirect_to @user
-    else
-      @users = User.all
-      @users.each do |user|
-        user = User.find(user_id)
-        user.update_attributes!()
-        flash[:success] = "ユーザー情報を更新しました。"
-      end
-    end
+    @user = User.new(user_params)
+    @user.save
+    log_in @user
+    flash[:success] = '新規作成に成功しました。'
+    redirect_to @user
   end
 
   def edit

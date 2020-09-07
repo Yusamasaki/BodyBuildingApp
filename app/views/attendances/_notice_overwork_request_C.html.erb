@@ -9,8 +9,8 @@
       <% if at.instructor_confirmation == '3'   && at.instructor_confirmation_app.blank?   ||
             at.instructor_confirmation_2 == '3' && at.instructor_confirmation_app_2.blank? || 
             at.instructor_confirmation_3 == '3' && at.instructor_confirmation_app_3.blank? ||
-            at.instructor_confirmation_4 == '1' && at.instructor_confirmation_app_4.blank? || 
-            at.instructor_confirmation_5 == '1' && at.instructor_confirmation_app_5.blank? %>
+            at.instructor_confirmation_4 == '3' && at.instructor_confirmation_app_4.blank? || 
+            at.instructor_confirmation_5 == '3' && at.instructor_confirmation_app_5.blank? %>
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -38,8 +38,8 @@
                 <% if day.instructor_confirmation == '3'   && day.instructor_confirmation_app.blank?   ||
                       day.instructor_confirmation_2 == '3' && day.instructor_confirmation_app_2.blank? || 
                       day.instructor_confirmation_3 == '3' && day.instructor_confirmation_app_3.blank? ||
-                      day.instructor_confirmation_4 == '1' && day.instructor_confirmation_app_4.blank? || 
-                      day.instructor_confirmation_5 == '1' && day.instructor_confirmation_app_5.blank? %>
+                      day.instructor_confirmation_4 == '3' && day.instructor_confirmation_app_4.blank? || 
+                      day.instructor_confirmation_5 == '3' && day.instructor_confirmation_app_5.blank? %>
                 <%= f.fields_for "attendances[]", day do |attendance| %>
                   <tr>
                     <td><%= l(day.worked_on, format: :short) %></td>

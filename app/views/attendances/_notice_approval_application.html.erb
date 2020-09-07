@@ -5,7 +5,11 @@
     <% @users.each do |user| %>
     <% @atten = Attendance.where(user_id: user.id) %>
     <% @atten.each do |at| %>
-    <% if at.approval_application == '1' && at.approval_confirmation.blank? %>
+    <% if at.approval_application == '1' && at.approval_confirmation.blank?     ||
+          at.approval_application_2 == '1' && at.approval_confirmation_2.blank? || 
+          at.approval_application_3 == '1' && at.approval_confirmation_3.blank? ||
+          at.approval_application_4 == '1' && at.approval_confirmation_4.blank? ||
+          at.approval_application_5 == '1' && at.approval_confirmation_5.blank? %>
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -48,7 +52,6 @@
                     { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
                   %>
                 <% end %>
-                %>
               </td>
               <td>
                 <% if at.approval_confirmation.blank? %>

@@ -87,7 +87,7 @@
                       <td><%= day.finished_at_before_3.floor_to(15.minutes).min if day.finished_at_before_3.present? %></td>
                       <td><%= day.started_at_before_4.hour if day.started_at_before_4.present? %></td>
                       <td><%= day.started_at_before_4.floor_to(15.minutes).min if day.started_at_before_4.present? %></td>
-      111                <td><%= day.finished_at_before_4.hour if day.finished_at_before_4.present? %></td>
+                      <td><%= day.finished_at_before_4.hour if day.finished_at_before_4.present? %></td>
                       <td><%= day.finished_at_before_4.floor_to(15.minutes).min if day.finished_at_before_4.present? %></td>
                     <!-- 5回目申請 -->
                     <% else %>

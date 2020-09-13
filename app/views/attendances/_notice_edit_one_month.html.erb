@@ -70,7 +70,7 @@
                       <td><%= day.finished_at_before_2.hour if day.finished_at_before.present? %></td>
                       <td><%= day.finished_at_before_2.floor_to(15.minutes).min if day.finished_at_before.present? %></td>
                     <!-- 3回目申請 -->
-                    <% elsif day.notice_one_month_instructor_confirmation_3.blank? %>
+         111           <% elsif day.notice_one_month_instructor_confirmation_3.blank? %>
                       <td><%= day.started_at_before_2.hour if day.started_at_before_2.present? %></td>
                       <td><%= day.started_at_before_2.floor_to(15.minutes).min if day.started_at_before_2.present? %></td>
                       <td><%= day.finished_at_before_2.hour if day.finished_at_before_2.present? %></td>

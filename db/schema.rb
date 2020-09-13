@@ -65,9 +65,14 @@ ActiveRecord::Schema.define(version: 20200229193421) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "designated_work_start_time", default: "2020-09-08 01:00:00"
-    t.datetime "designated_work_end_time", default: "2020-09-08 10:00:00"
+    t.datetime "designated_work_start_time", default: "2020-09-13 01:00:00"
+    t.datetime "designated_work_end_time", default: "2020-09-13 10:00:00"
     t.datetime "expected_end_time"
+    t.datetime "expected_end_time_dummy"
+    t.datetime "expected_end_time_dummy_2"
+    t.datetime "expected_end_time_dummy_3"
+    t.datetime "expected_end_time_dummy_4"
+    t.datetime "expected_end_time_dummy_5"
     t.string "next_day"
     t.string "business_processing_contents"
     t.string "instructor_confirmation"
@@ -95,8 +100,8 @@ ActiveRecord::Schema.define(version: 20200229193421) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
-    t.datetime "designated_work_start_time", default: "2020-09-08 01:00:00"
-    t.datetime "designated_work_end_time", default: "2020-09-08 10:00:00"
+    t.datetime "designated_work_start_time", default: "2020-09-13 01:00:00"
+    t.datetime "designated_work_end_time", default: "2020-09-13 10:00:00"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest"
@@ -104,8 +109,8 @@ ActiveRecord::Schema.define(version: 20200229193421) do
     t.boolean "admin", default: false
     t.string "department"
     t.string "affiliation"
-    t.datetime "basic_time", default: "2020-09-07 23:00:00"
-    t.datetime "work_time", default: "2020-09-07 22:30:00"
+    t.datetime "basic_time", default: "2020-09-12 23:00:00"
+    t.datetime "work_time", default: "2020-09-12 22:30:00"
     t.boolean "superior", default: false
     t.boolean "superiorA", default: false
     t.boolean "superiorB", default: false

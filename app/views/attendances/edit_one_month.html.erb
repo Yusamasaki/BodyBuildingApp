@@ -127,8 +127,8 @@
               <% if day.notice_one_month_instructor_confirmation.blank? %>
                 <%= attendance.select :one_month_instructor_confirmation, 
                   {"上長A": 1, "上長B": 2, "上長C": 3}, { include_blank: ''}
-                %>
-              <% elsif day.notice_one_month_instructor_confirmation_2.blank? %>
+                  %>
+                <% elsif day.notice_one_month_instructor_confirmation_2.blank? %>
                 <%= attendance.select :one_month_instructor_confirmation_2, 
                   {"上長A": 1, "上長B": 2, "上長C": 3}, { include_blank: ''}
                 %>

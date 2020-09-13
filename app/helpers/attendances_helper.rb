@@ -46,6 +46,70 @@ module AttendancesHelper
     return attendances
   end
   
+  def attendances_invalid_2?
+    attendances = true
+    attendances_params.each do |id, item|
+      if item[:started_at_before_2].blank? && item[:finished_at_before_2].blank? && item[:one_month_instructor_confirmation_2].blank?
+        next
+      elsif item[:started_at_before_2].blank? || item[:finished_at_before_2].blank? || item[:one_month_instructor_confirmation_2].blank?
+        attendances = false
+        break
+      elsif item[:started_at_before_2] > item[:finished_at_before_2]
+        attendances = false
+        break
+      end
+    end
+    return attendances
+  end
+  
+  def attendances_invalid_3?
+    attendances = true
+    attendances_params.each do |id, item|
+      if item[:started_at_before_3].blank? && item[:finished_at_before_3].blank? && item[:one_month_instructor_confirmation_3].blank?
+        next
+      elsif item[:started_at_before_3].blank? || item[:finished_at_before_3].blank? || item[:one_month_instructor_confirmation_3].blank?
+        attendances = false
+        break
+      elsif item[:started_at_before_3] > item[:finished_at_before_3]
+        attendances = false
+        break
+      end
+    end
+    return attendances
+  end
+  
+  def attendances_invalid_4?
+    attendances = true
+    attendances_params.each do |id, item|
+      if item[:started_at_before_4].blank? && item[:finished_at_before_4].blank? && item[:one_month_instructor_confirmation_4].blank?
+        next
+      elsif item[:started_at_before_4].blank? || item[:finished_at_before_4].blank? || item[:one_month_instructor_confirmation_4].blank?
+        attendances = false
+        break
+      elsif item[:started_at_before_4] > item[:finished_at_before_4]
+        attendances = false
+        break
+      end
+    end
+    return attendances
+  end
+  
+  def attendances_invalid_5?
+    attendances = true
+    attendances_params.each do |id, item|
+      if item[:started_at_before_5].blank? && item[:finished_at_before_5].blank? && item[:one_month_instructor_confirmation_5].blank?
+        next
+      elsif item[:started_at_before_5].blank? || item[:finished_at_before_5].blank? || item[:one_month_instructor_confirmation_5].blank?
+        attendances = false
+        break
+      elsif item[:started_at_before_5] > item[:finished_at_before_5]
+        attendances = false
+        break
+      end
+    end
+    return attendances
+  end
+  
   #勤怠お知らせ1回目#
   def notice_one_month_invalid?
     notice_one_month = true
@@ -304,12 +368,98 @@ module AttendancesHelper
   end
   
   def overwork_invalid?
-      if @attendance.instructor_confirmation.blank?
-        over = false
-      else
-        over = false
+    overwork = true
+    overwork_request_params.each do |id, item|
+      if item[:instructor_confirmation].blank? && item[:expected_end_time].nil?
+        next
+      elsif item[:instructor_confirmation].blank?
+        overwork = false
+        break
+      elsif item[:expected_end_time].blank?
+        overwork = false
+        break 
+      elsif item[:expected_end_time].present? && item[:next_day] == '1' && item[:expected_end_time] >= @user.designated_work_end_time
+        overwork = false
+        break 
       end
-    return over
+    end
+    return overwork
+  end
+  
+  def overwork_invalid_2?
+    overwork = true
+    overwork_request_params.each do |id, item|
+      if item[:instructor_confirmation_2].blank? && item[:expected_end_time].nil?
+        next
+      elsif item[:instructor_confirmation_2].blank?
+        overwork = false
+        break
+      elsif item[:expected_end_time].blank?
+        overwork = false
+        break 
+      elsif item[:expected_end_time].present? && item[:next_day] == '1' && item[:expected_end_time] >= @user.designated_work_end_time
+        overwork = false
+        break 
+      end
+    end
+    return overwork
+  end
+  
+  def overwork_invalid_3?
+    overwork = true
+    overwork_request_params.each do |id, item|
+      if item[:instructor_confirmation_3].blank? && item[:expected_end_time].nil?
+        next
+      elsif item[:instructor_confirmation_3].blank?
+        overwork = false
+        break
+      elsif item[:expected_end_time].blank?
+        overwork = false
+        break 
+      elsif item[:expected_end_time].present? && item[:next_day] == '1' && item[:expected_end_time] >= @user.designated_work_end_time
+        overwork = false
+        break 
+      end
+    end
+    return overwork
+  end
+  
+  def overwork_invalid_4?
+    overwork = true
+    overwork_request_params.each do |id, item|
+      if item[:instructor_confirmation_4].blank? && item[:expected_end_time].nil?
+        next
+      elsif item[:instructor_confirmation_4].blank?
+        overwork = false
+        break
+      elsif item[:expected_end_time].blank?
+        overwork = false
+        break 
+      elsif item[:expected_end_time].present? && item[:next_day] == '1' && item[:expected_end_time] >= @user.designated_work_end_time
+        overwork = false
+        break 
+      end
+    end
+    return overwork
+  end
+  
+  def overwork_invalid_5?
+    overwork = true
+    overwork_request_params.each do |id, item|
+      if item[:instructor_confirmation_5].blank? && item[:expected_end_time].nil?
+        next
+      elsif item[:instructor_confirmation_5].blank?
+        overwork = false
+        break
+      elsif item[:expected_end_time].blank?
+        overwork = false
+        break 
+      elsif item[:expected_end_time].present? && item[:next_day] == '1' && item[:expected_end_time] >= @user.designated_work_end_time
+        overwork = false
+        break 
+      end
+    end
+    return overwork
   end
   
   def user_attendances_month_date

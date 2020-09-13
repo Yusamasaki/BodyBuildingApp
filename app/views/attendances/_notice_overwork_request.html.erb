@@ -59,19 +59,19 @@
                         <%= attendance.select :instructor_confirmation_app, 
                           { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
                          %> 
-                       <% elsif day.instructor_confirmation_app_2.blank? %>
+                      <% elsif day.instructor_confirmation_app_2.blank? %>
                          <%= attendance.select :instructor_confirmation_app_2, 
                           { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
                          %> 
-                       <% elsif day.instructor_confirmation_app_3.blank? %>
+                      <% elsif day.instructor_confirmation_app_3.blank? %>
                          <%= attendance.select :instructor_confirmation_app_3, 
                           { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
                          %>
-                        <% elsif day.instructor_confirmation_app_4.blank? %>
+                      <% elsif day.instructor_confirmation_app_4.blank? %>
                          <%= attendance.select :instructor_confirmation_app_4, 
                           { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
                          %>
-                        <% else %>
+                      <% else %>
                          <%= attendance.select :instructor_confirmation_app_5, 
                           { "申請中": 1, "承認": 2, "否認": 3 },{ include_blank: '' }
                          %>

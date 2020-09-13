@@ -117,9 +117,11 @@ class UsersController < ApplicationController
       
   def update_overwork_request
     @day = Date.parse(params[:day])
-    @attendance = @user.attendances.find_by(worked_on: @day)
-    @attendance.update_attributes(overwork_request_params)
-    if @attendance.instructor_confirmation.present?
+    if overwork_invalid? || overwork_invalid_2? || overwork_invalid_3? || overwork_invalid_4? || overwork_invalid_5?
+      overwork_request_params.each do |id, item|
+        attendance = Attendance.find(id)
+        attendance.update_attributes!(item)
+      end
       flash[:success] = "残業を申請しました。"
       redirect_to user_url(date: params[:date])
     else
@@ -127,6 +129,9 @@ class UsersController < ApplicationController
       redirect_to user_url(date: params[:date])
     end
   end
+  
+  
+  
   
   private
 
@@ -151,8 +156,8 @@ class UsersController < ApplicationController
     end
     
     def overwork_request_params 
-      params.require(:attendance).permit(:expected_end_time, :next_day, :business_processing_contents, 
-                                         :instructor_confirmation, :instructor_confirmation_2, :instructor_confirmation_3, 
-                                         :instructor_confirmation_4, :instructor_confirmation_5)
+      params.require(:user).permit(attendances: [:expected_end_time, :next_day, :business_processing_contents, 
+                                                 :instructor_confirmation, :instructor_confirmation_2, :instructor_confirmation_3, 
+                                                 :instructor_confirmation_4, :instructor_confirmation_5])[:attendances]
     end
 end

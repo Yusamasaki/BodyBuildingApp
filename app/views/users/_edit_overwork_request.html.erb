@@ -9,7 +9,8 @@
         <span aria-hidden="true">&times;</span>
       </button>
       <h1 class="modal-title">【 残業申請 】</h1><br>
-      <%= form_with(model: @attendance, url: update_overwork_request_user_path(@user, day: day.worked_on), local: true, method: :patch) do |f| %>
+      <%= form_with(model: @user, url: update_overwork_request_user_path(@user, day: day.worked_on), local: true, method: :patch) do |f| %>
+      <%= f.fields_for "attendances[]", day do |attendance| %>
       <table class="table table-bordered table-overwork">
         <thead>
           <tr>
@@ -26,96 +27,96 @@
             <tr>
               <td><%= l(@day, format: :short) %></td>
               <td><%= $days_of_the_week[@day.wday] %></td>
-              <td><%= f.time_field :expected_end_time, class: "form-control" %></td>
-              <td><%= f.check_box :next_day %></td>
-              <td><%= f.text_field :business_processing_contents, class: "form-control" %></td>
+              <td><%= attendance.time_field :expected_end_time, class: "form-control" %></td>
+              <td><%= attendance.check_box :next_day %></td>
+              <td><%= attendance.text_field :business_processing_contents, class: "form-control" %></td>
               <td>
                 <% if @user.superiorA? %>
                   <% if day.instructor_confirmation_app.blank? %>
-                    <%= f.select :instructor_confirmation, 
+                    <%= attendance.select :instructor_confirmation, 
                       { "上長B": 2, "上長C": 3 },{ include_blank: '' }
                     %>
                   <% elsif day.instructor_confirmation_app_2.blank? %>
-                    <%= f.select :instructor_confirmation_2, 
+                    <%= attendance.select :instructor_confirmation_2, 
                       { "上長B": 2, "上長C": 3 },{ include_blank: '' }
                     %>
                   <% elsif day.instructor_confirmation_app_3.blank? %>
-                    <%= f.select :instructor_confirmation_3, 
+                    <%= attendance.select :instructor_confirmation_3, 
                       { "上長B": 2, "上長C": 3 },{ include_blank: '' }
                     %>
                   <% elsif day.instructor_confirmation_app_4.blank? %>
-                    <%= f.select :instructor_confirmation_4, 
+                    <%= attendance.select :instructor_confirmation_4, 
                       { "上長B": 2, "上長C": 3 },{ include_blank: '' }
                     %>
                   <% else %>
-                    <%= f.select :instructor_confirmation_5, 
+                    <%= fattendance.select :instructor_confirmation_5, 
                       { "上長B": 2, "上長C": 3 },{ include_blank: '' }
                     %>
                   <% end %>
                   
                 <% elsif @user.superiorB? %>
                   <% if day.instructor_confirmation_app.blank? %>
-                    <%= f.select :instructor_confirmation, 
+                    <%= attendance.select :instructor_confirmation, 
                       { "上長A": 1, "上長C": 3 },{ include_blank: '' }
                     %>
                   <% elsif day.instructor_confirmation_app_2.blank? %>
-                    <%= f.select :instructor_confirmation_2, 
+                    <%= fattendance.select :instructor_confirmation_2, 
                       { "上長A": 1, "上長C": 3 },{ include_blank: '' }
                     %>
                   <% elsif day.instructor_confirmation_app_3.blank? %>
-                    <%= f.select :instructor_confirmation_3, 
+                    <%= attendance.select :instructor_confirmation_3, 
                       { "上長A": 1, "上長C": 3 },{ include_blank: '' }
                     %>
                   <% elsif day.instructor_confirmation_app_4.blank? %>
-                    <%= f.select :instructor_confirmation_4, 
+                    <%= attendance.select :instructor_confirmation_4, 
                       { "上長A": 1, "上長C": 3 },{ include_blank: '' }
                     %>
                   <% else %>
-                    <%= f.select :instructor_confirmation_5, 
+                    <%= attendance.select :instructor_confirmation_5, 
                       { "上長A": 1, "上長C": 3 },{ include_blank: '' }
                     %>
                   <% end %>
                 <% elsif @user.superiorC? %>
                   <% if day.instructor_confirmation_app.blank? %>
-                    <%= f.select :instructor_confirmation, 
+                    <%= attendance.select :instructor_confirmation, 
                       { "上長A": 1, "上長B": 2 },{ include_blank: '' }
                     %>
                   <% elsif day.instructor_confirmation_app_2.blank? %>
-                    <%= f.select :instructor_confirmation_2, 
+                    <%= attendance.select :instructor_confirmation_2, 
                       { "上長A": 1, "上長B": 2 },{ include_blank: '' }
                     %>
                   <% elsif day.instructor_confirmation_app_3.blank? %>
-                    <%= f.select :instructor_confirmation_3, 
+                    <%= attendance.select :instructor_confirmation_3, 
                       { "上長A": 1, "上長B": 2 },{ include_blank: '' }
                     %>
                   <% elsif day.instructor_confirmation_app_4.blank? %>
-                    <%= f.select :instructor_confirmation_4, 
+                    <%= attendance.select :instructor_confirmation_4, 
                       { "上長A": 1, "上長B": 2 },{ include_blank: '' }
                     %>
                   <% else %>
-                    <%= f.select :instructor_confirmation_5, 
+                    <%= attendance.select :instructor_confirmation_5, 
                       { "上長A": 1, "上長B": 2 },{ include_blank: '' }
                     %>
                   <% end %>
                 <% else %>
                   <% if day.instructor_confirmation_app.blank? %>
-                    <%= f.select :instructor_confirmation, 
+                    <%= attendance.select :instructor_confirmation, 
                       { "上長A": 1, "上長B": 2, "上長C": 3 },{ include_blank: '' }
                     %>
                   <% elsif day.instructor_confirmation_app_2.blank? %>
-                    <%= f.select :instructor_confirmation_2, 
+                    <%= attendance.select :instructor_confirmation_2, 
                       { "上長A": 1, "上長B": 2, "上長C": 3 },{ include_blank: '' }
                     %>
                   <% elsif day.instructor_confirmation_app_3.blank? %>
-                    <%= f.select :instructor_confirmation_3, 
+                    <%= attendance.select :instructor_confirmation_3, 
                       { "上長A": 1, "上長B": 2, "上長C": 3 },{ include_blank: '' }
                     %>
                   <% elsif day.instructor_confirmation_app_4.blank? %>
-                    <%= f.select :instructor_confirmation_4, 
+                    <%= attendance.select :instructor_confirmation_4, 
                       { "上長A": 1, "上長B": 2, "上長C": 3 },{ include_blank: '' }
                     %>
                   <% else %>
-                    <%= f.select :instructor_confirmation_5, 
+                    <%= attendance.select :instructor_confirmation_5, 
                       { "上長A": 1, "上長B": 2, "上長C": 3 },{ include_blank: '' }
                     %>
                   <% end %>
@@ -128,6 +129,7 @@
       <div class="center">
         <%= f.submit yield(:button_text), class: "btn btn-primary" %>
       </div>
+      <% end %>
       <% end %>
     </div>
     <% end %>

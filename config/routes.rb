@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   
-  resources :posts do
-    post '/callback' => 'linebot#callback'
-  end
+  post '/callback' => 'linebot#callback'
   
   root 'static_pages#top'
   get '/signup', to: 'users#new'

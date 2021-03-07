@@ -1,0 +1,23 @@
+<% provide(:title, @user.name) %>
+
+
+<div class="title">【<%= body_part_select3 %>】 のトレーニング種目一覧</div><br>
+
+
+<div class="row"> 
+  <div class="col-md-10 col-md-offset-1">
+    <table class="table table-hover">          
+      <tbody>
+        <% @traning_menus.each do |menu| %>
+        <tr>
+          <td><h2><%= link_to menu, workouts_traning_contents_user_path(id:@user, body_part: params[:body_part], traning_event: menu), class: "btn btn-lg box10 width_300px_height_50px" %></h2></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <h2>
+      <%= link_to "戻る", workouts_bodypart_menu_index_user_path(@user), class: "btn btn-lg btn-default btn-form" %>
+      <%= link_to "TOPへ", user_days_path(@user), class: "btn btn-lg" %>
+    </h2>
+  </div>    
+</div>

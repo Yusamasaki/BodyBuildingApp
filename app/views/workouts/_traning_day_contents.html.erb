@@ -1,0 +1,54 @@
+<% provide(:title, @user.name) %>
+
+<!--
+<div class="row"> 
+  <div class="col-md-10 col-md-offset-1">
+      <= high_chart('my_chart', @graph) %>
+  </div>
+</div>
+-->
+
+
+<div class="modal-dialog modal-lg modal-dialog-center">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h1 class="modal-title"><%= l(@day.worked_on, format: :short) %></h1><br>
+      <div class="row"> 
+        <div class="col-md-10 col-md-offset-1">
+          <table class="table table-hover box10">
+            <thead>
+              <tr>
+                <th class="center"><%= Workout.human_attribute_name  :traning_set %></th>
+                <th class="center"><%= Workout.human_attribute_name  :target_muscle %></th>
+                <th class="center"><%= Workout.human_attribute_name  :traning_kg %></th>
+                <th class="center"><%= Workout.human_attribute_name  :traning_rep %></th>
+              </tr>
+            </thead>
+            
+            
+            <tbody>
+              <% @days.each do |day| %>
+              <% @workouts = Workout.where(traning_event: params[:traning_event]).where(day_id: day.id).order(:traning_set) %>
+              <% @workouts.each do |work| %>
+                <tr>
+                  <td class="center"><%= work.traning_set %></td>
+                  <td class="center"><%= work.target_muscle %></td>
+                  <td class="center"><%= work.traning_kg %></td>
+                  <td class="center"><%= work.traning_rep %></td>
+                </tr>
+            <% end %>
+            <% end %>
+            </tbody>
+          </table>
+          <h2>
+          <%= link_to "戻る", workouts_traning_contents_user_path(id: @user, body_part: params[:body_part], traning_event: params[:traning_event]), class: "btn btn-lg btn-default btn-form" %>
+          <%= link_to "TOPへ", user_days_path(@user), class: "btn btn-lg" %>
+          </h2>
+        </div>    
+      </div>
+    </div>
+  </div>
+</div>

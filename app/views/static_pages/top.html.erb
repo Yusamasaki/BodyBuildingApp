@@ -1,6 +1,25 @@
 <% provide(:title, "Top") %>
-<div class="center jumbotron">
-  <h1>勤怠管理システム</h1>
-  <p><%= link_to "ログイン", login_path, class: "btn btn-lg btn-primary" %></p>
-  <p><%= link_to "アカウント作成はこちら", signup_path, class: "btn btn-lg" %></p>
+
+<div class="example">
+  <%= image_tag 'UNADJUSTEDNONRAW_thumb_9c8.png' %>
+  <p> 
+    <% if logged_in? %>
+      <%= link_to "アカウント作成", signup_path, class: "btn btn-lg btn-success #{"disabled" unless current_user.admin?}" %>
+    <% else %>
+      <%= link_to "アカウント作成", signup_path, class: "btn btn-lg btn-success", remote: true %><br>
+    <% end %>
+  </p>
+  <q>
+    <% if logged_in? %>
+      <%= link_to "ログイン状態です", "", class: "btn btn-lg btn-primary", remote: true, disabled: "disabled" %>
+    <% else %>
+      <%= link_to "ログイン", login_path, class: "btn btn-lg btn-primary", remote: true %>
+    <% end %>
+  </q>
+  <h1>
+    No pain, no gain!<br><br>
+    Let's start!
+  </h1>
 </div>
+<div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

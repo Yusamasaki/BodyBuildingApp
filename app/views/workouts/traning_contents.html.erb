@@ -1,0 +1,52 @@
+<% provide(:title, @user.name) %>
+
+<!--
+<div class="row"> 
+  <div class="col-md-10 col-md-offset-1">
+      <= high_chart('my_chart', @graph) %>
+  </div>
+</div>
+-->
+
+
+
+<div class="row"> 
+  <div class="col-md-10 col-md-offset-1">
+    <table class="table table-bordered user-table">
+    <tr>
+      <td class="title">
+          <%= link_to "←", workouts_traning_contents_user_path(@user, body_part: params[:body_part], traning_event: params[:traning_event], date: @first_day.prev_month), class: "btn btn-default btn-primary" %>
+          <%= l(@first_day, format: :middle) %><%= @workout.traning_event %>一覧
+          <%= link_to "→", workouts_traning_contents_user_path(@user, body_part: params[:body_part], traning_event: params[:traning_event], date: @first_day.next_month), class: "btn btn-default btn-primary" %>
+      </td>
+    </tr>
+  </table>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th class="center"><%= Workout.human_attribute_name  :worked_on %></th>
+        </tr>
+      </thead>
+      
+      
+      <tbody>
+        <% @days.each do |day| %>
+        <% @workouts = Workout.where(traning_event: params[:traning_event]).where(day_id: day.id).distinct.pluck(:worked_on) %>
+        <% @workouts.each do |work| %>
+          <tr>
+            <td class="center"><%= link_to l(day.worked_on, format: :short), 
+                                workouts_traning_day_contents_user_path(@user, day_id: day.id, traning_event: params[:traning_event], body_part: params[:body_part]), 
+                                class: "btn btn-lg box10 width_height_100px", remote: true %>
+            </td>
+          </tr>
+      <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <h2>
+    <%= link_to "戻る", workouts_traning_menu_user_path(id: @user, body_part: params[:body_part]), class: "btn btn-lg btn-default btn-form" %>
+    <%= link_to "TOPへ", user_days_path(@user), class: "btn btn-lg" %>
+    </h2>
+  </div>    
+</div>
+<div id="traning-day-contents" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

@@ -1,0 +1,40 @@
+<% provide(:title, @user.name) %>
+
+<h1>トレーニングメニュー一覧</h1>
+
+<div class="row"> 
+  <div class="col-md-10 col-md-offset-1">
+    <%= link_to "新規作成", new_user_traning_menu_path, class: "btn btn-lg btn-primary pull-right" %>
+  </div>
+</div>
+
+<div class="row"> 
+  <div class="col-md-10 col-md-offset-1">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th class="center"><%= TraningMenu.human_attribute_name  :traning_event %></th>
+          <th class="center"><%= TraningMenu.human_attribute_name  :body_part %></th>
+          <th class="center"><%= TraningMenu.human_attribute_name  :target_muscle %></th>
+        </tr>
+      </thead>
+          
+      <tbody>
+        <% @traning_menus.each do |menu| %>
+          <tr>
+            <td class="center"><%= menu.traning_event %></td>
+            <td class="center"><%= menu.body_part %></td>
+            <td class="center"><%= menu.target_muscle %></td>
+            
+            <td class="center">
+              <%= link_to "編集", edit_user_traning_menu_path(@user, menu), class: "btn btn-success" %>
+              <%= link_to "削除", user_traning_menu_path(@user, menu), method: :delete,
+              data: { confirm: "「#{menu.traning_event}」を削除します。よろしいですか？" }, class: "btn btn-danger" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <h2><%= link_to "戻る", user_days_path(@user), class: "btn btn-lg btn-default btn-form" %></h2>
+  </div>    
+</div>

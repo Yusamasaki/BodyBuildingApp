@@ -10,116 +10,56 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200229193421) do
+ActiveRecord::Schema.define(version: 20210307141757) do
 
-  create_table "attendances", force: :cascade do |t|
+  create_table "days", force: :cascade do |t|
     t.date "worked_on"
-    t.datetime "started_at"
-    t.datetime "finished_at"
-    t.datetime "started_at_before"
-    t.datetime "started_at_before_2"
-    t.datetime "started_at_before_3"
-    t.datetime "started_at_before_4"
-    t.datetime "started_at_before_5"
-    t.datetime "finished_at_before"
-    t.datetime "finished_at_before_2"
-    t.datetime "finished_at_before_3"
-    t.datetime "finished_at_before_4"
-    t.datetime "finished_at_before_5"
-    t.string "note"
-    t.string "one_month_instructor_confirmation"
-    t.string "one_month_instructor_confirmation_2"
-    t.string "one_month_instructor_confirmation_3"
-    t.string "one_month_instructor_confirmation_4"
-    t.string "one_month_instructor_confirmation_5"
-    t.string "notice_one_month_instructor_confirmation"
-    t.string "notice_one_month_instructor_confirmation_2"
-    t.string "notice_one_month_instructor_confirmation_3"
-    t.string "notice_one_month_instructor_confirmation_4"
-    t.string "notice_one_month_instructor_confirmation_5"
-    t.string "change_digest"
-    t.string "change_digest_2"
-    t.string "change_digest_3"
-    t.string "change_digest_4"
-    t.string "change_digest_5"
-    t.string "overwork_change"
-    t.string "overwork_change_2"
-    t.string "overwork_change_3"
-    t.string "overwork_change_4"
-    t.string "overwork_change_5"
-    t.string "approval_change"
-    t.string "approval_change_2"
-    t.string "approval_change_3"
-    t.string "approval_change_4"
-    t.string "approval_change_5"
-    t.string "approval_confirmation"
-    t.string "approval_confirmation_2"
-    t.string "approval_confirmation_3"
-    t.string "approval_confirmation_4"
-    t.string "approval_confirmation_5"
-    t.string "approval_application"
-    t.string "approval_application_2"
-    t.string "approval_application_3"
-    t.string "approval_application_4"
-    t.string "approval_application_5"
+    t.string "body_part"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "designated_work_start_time", default: "2020-09-13 01:00:00"
-    t.datetime "designated_work_end_time", default: "2020-09-13 10:00:00"
-    t.datetime "expected_end_time"
-    t.datetime "expected_end_time_dummy"
-    t.datetime "expected_end_time_dummy_2"
-    t.datetime "expected_end_time_dummy_3"
-    t.datetime "expected_end_time_dummy_4"
-    t.datetime "expected_end_time_dummy_5"
-    t.string "next_day"
-    t.string "business_processing_contents"
-    t.string "instructor_confirmation"
-    t.string "instructor_confirmation_2"
-    t.string "instructor_confirmation_3"
-    t.string "instructor_confirmation_4"
-    t.string "instructor_confirmation_5"
-    t.string "instructor_confirmation_app"
-    t.string "instructor_confirmation_app_2"
-    t.string "instructor_confirmation_app_3"
-    t.string "instructor_confirmation_app_4"
-    t.string "instructor_confirmation_app_5"
-    t.index ["user_id"], name: "index_attendances_on_user_id"
+    t.index ["user_id"], name: "index_days_on_user_id"
   end
 
-  create_table "bases", force: :cascade do |t|
-    t.string "basename"
-    t.string "basenumber"
-    t.string "baseinfo"
+  create_table "traning_menus", force: :cascade do |t|
+    t.string "traning_event"
+    t.string "body_part"
+    t.string "target_muscle"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["basenumber"], name: "index_bases_on_basenumber"
+    t.index ["user_id"], name: "index_traning_menus_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
-    t.datetime "designated_work_start_time", default: "2020-09-13 01:00:00"
-    t.datetime "designated_work_end_time", default: "2020-09-13 10:00:00"
+    t.string "affiliation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest"
     t.string "remember_digest"
     t.boolean "admin", default: false
-    t.string "department"
-    t.string "affiliation"
-    t.datetime "basic_time", default: "2020-09-12 23:00:00"
-    t.datetime "work_time", default: "2020-09-12 22:30:00"
-    t.boolean "superior", default: false
-    t.boolean "superiorA", default: false
-    t.boolean "superiorB", default: false
-    t.boolean "superiorC", default: false
-    t.boolean "generalA", default: false
-    t.boolean "generalB", default: false
-    t.integer "uid"
-    t.integer "employee_number"
+    t.datetime "basic_time", default: "2021-03-07 23:00:00"
+    t.datetime "work_time", default: "2021-03-07 22:30:00"
     t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
+  create_table "workouts", force: :cascade do |t|
+    t.date "worked_on"
+    t.string "body_part"
+    t.string "traning_event"
+    t.string "target_muscle"
+    t.integer "traning_set"
+    t.string "traning_kg"
+    t.string "traning_rep"
+    t.string "note"
+    t.integer "user_id"
+    t.integer "day_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["day_id"], name: "index_workouts_on_day_id"
+    t.index ["user_id"], name: "index_workouts_on_user_id"
   end
 
 end

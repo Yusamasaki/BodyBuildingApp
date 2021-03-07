@@ -1,0 +1,48 @@
+
+<% provide(:title, 'New Workout') %>
+
+<div class="modal-dialog modal-lg modal-dialog-center">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h1 class="modal-title">新規作成</h1><br>
+      <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+          <%= form_with(model: @workout, url: user_day_workouts_path(@user, day_id: params[:day_id]), local: true, method: :post) do |f| %>
+            <%= render partial: 'shared/error_messages', locals: { obj: @workout } %>
+             
+            <%= f.label :traning_event, class: "label-form" %><%= link_to "種目追加", traning_menus_new_workouts_user_path(id: @user, day_id: params[:day_id], body_part: params[:body_part]), class: "btn btn-default btn-primary", remote: true %>
+            <%= f.select :traning_event, options_for_select(@traning_menus.distinct.pluck(:traning_event){|c|[c[:traning_event]]}),
+                 {include_blank: '選択してください'}, {class: 'form-control box10'}
+            %>
+              
+            <%= f.label :target_muscle, class: "label-form" %>
+            <% target_muscle %>
+            <%= f.select :target_muscle, options_for_select(@sample_array.map{|c|[c[:name]]}),
+                {include_blank: '選択してください'}, {class: 'form-control box10'} %>
+            
+            <%= f.label :traning_set, class: "label-form" %>
+            <%= f.text_field :traning_set, class: "form-control box10" %>
+            
+            <%= f.label :traning_kg, class: "label-form" %>
+            <%= f.text_field :traning_kg, class: "form-control box10" %>
+            
+            <%= f.label :traning_rep, class: "label-form" %>
+            <%= f.text_field :traning_rep, class: "form-control box10" %>
+            
+            <%= f.label :note, class: "label-form" %>
+            <%= f.text_area :note, rows: 5, class: "form-control box10 note" %><br>
+            
+            <div class="row">
+              <div class="col-md-4 col-md-offset-4">
+                <%= f.submit "新規登録", class: "btn btn-lg btn-primary btn-form" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

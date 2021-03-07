@@ -1,0 +1,59 @@
+<h1><%= @user.name %></h1><br>
+
+<div class="row"> 
+  <div class="col-md-10 col-md-offset-1">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <td></td>
+        </tr>
+      </thead>
+          
+      <tbody>
+        <tr>
+          <td>
+            <h2>
+              <%= link_to "胸", workouts_traning_menu_user_path(@user, body_part: 1) %>
+            </h2>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h2>
+              <%= link_to "背中", workouts_traning_menu_user_path(@user, body_part: 2) %>
+            </h2>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h2>
+              <%= link_to "脚", workouts_traning_menu_user_path(@user, body_part: 3) %>
+            </h2>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h2>
+              <%= link_to "肩", workouts_traning_menu_user_path(@user, body_part: 4) %>
+            </h2>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h2>
+              <%= link_to "腕", workouts_traning_menu_user_path(@user, body_part: 5) %>
+            </h2>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h2>
+              <%= link_to "腹筋", workouts_traning_menu_user_path(@user, body_part: 6) %>
+            </h2>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2><%= link_to "戻る", user_days_path(@user), class: "btn btn-lg btn-default btn-form" %></h2>
+  </div>    
+</div>

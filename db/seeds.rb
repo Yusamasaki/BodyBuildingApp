@@ -1,74 +1,40 @@
 
 # coding: utf-8
 
-User.create!( name: "Sample User",
+User.create!( name: "遊佐 正樹",
               email: "sample@email.com",
               password: "password",
-              affiliation: "フリーランス部",
               password_confirmation: "password",
-              employee_number: 1,
-              uid: 1,
-              basic_time: Time.current.change(hour: 8, min: 0, sec: 0),
-              admin: true,
-              superior: false
+              admin: true
             )
-User.create!( name: "上長A",
-              email: "superiorA@email.com",
+User.create!( name: "伊達 勇気",
+              email: "sample1@email.com",
               password: "password",
               password_confirmation: "password",
-              affiliation: "フリーランス部",
-              employee_number: 2,
-              uid: 2,
-              basic_time: Time.current.change(hour: 8, min: 0, sec: 0),
-              admin: false,
-              superiorA: true,
-              superior: true
+              admin: false
             )
-User.create!( name: "上長B",
-              email: "superiorB@email.com",
+User.create!( name: "竈門 禰豆子",
+              email: "sample2@email.com",
               password: "password",
               password_confirmation: "password",
-              affiliation: "フリーランス部",
-              employee_number: 3,
-              uid: 3,
-              basic_time: Time.current.change(hour: 8, min: 0, sec: 0),
-              admin: false,
-              superiorB: true,
-              superior: true
+              admin: false
             )
-User.create!( name: "上長C",
-              email: "superiorC@email.com",
+User.create!( name: "我妻 善逸",
+              email: "sample3@email.com",
               password: "password",
               password_confirmation: "password",
-              affiliation: "フリーランス部",
-              employee_number: 4,
-              uid: 4,
-              basic_time: Time.current.change(hour: 8, min: 0, sec: 0),
-              admin: false,
-              superiorC: true,
-              superior: true
+              admin: false
             )
-User.create!( name: "一般A",
-              email: "generalA@email.com",
+User.create!( name: "嘴平 伊之助",
+              email: "sample4@email.com",
               password: "password",
               password_confirmation: "password",
-              affiliation: "フリーランス部",
-              employee_number: 5,
-              uid: 5,
-              basic_time: Time.current.change(hour: 8, min: 0, sec: 0),
-              admin: false,
-              generalA: true,
-              superior: false
+              admin: false
             )
-User.create!( name: "一般B",
-              email: "generalB@email.com",
+User.create!( name: "栗花落 カナヲ",
+              email: "sample5@email.com",
               password: "password",
               password_confirmation: "password",
-              affiliation: "フリーランス部",
-              employee_number: 6,
-              uid: 6,
-              basic_time: Time.current.change(hour: 8, min: 0, sec: 0),
-              admin: false,
-              generalB: true,
-              superior: true
+              admin: false
             )
+

@@ -1,5 +1,7 @@
 class User < ApplicationRecord
-  has_many :attendances, dependent: :destroy
+  has_many :days, dependent: :destroy
+  has_many :workouts, dependent: :destroy
+  has_many :traning_menus, dependent: :destroy
   # 「remember_token」という仮想の属性を作成します。
   attr_accessor :remember_token
   scope :get_by_name, ->(name) {where("name like ?", "%#{name}%")}

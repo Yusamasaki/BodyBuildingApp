@@ -1,0 +1,43 @@
+
+<div class="modal-dialog modal-lg modal-dialog-center">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h1 class="modal-title"><%= @workout.traning_event %></h1><br>
+      <div class="row"> 
+        <div class="col-md-10 col-md-offset-1">
+          <table class="table table-hover box10">
+            <thead>
+              <th class="center"><%= Workout.human_attribute_name  :traning_set %></th>
+              <th class="center"><%= Workout.human_attribute_name  :target_muscle %></th>
+              <th class="center"><%= Workout.human_attribute_name  :traning_kg %></th>
+              <th class="center"><%= Workout.human_attribute_name  :traning_rep %></th>
+              <th class="center"><%= Workout.human_attribute_name  :note %></th>
+              <th class="center"></th>
+            </thead>
+            
+            <% @workouts = Workout.where(day_id: params[:day_id], traning_event: params[:traning_event]) %>
+            <% @workouts.each do |work| %>
+            <tbody>
+              <tr>
+                <td class="center"><%= work.traning_set %>セット目</td>
+                <td class="center"><%= work.target_muscle %></td>
+                <td class="center"><%= work.traning_kg %></td>
+                <td class="center"><%= work.traning_rep %></td>
+                <td class="center"><%= work.note %></td>
+                <td class="center">
+                  <%= link_to "編集", edit_user_day_workout_path(user_id: current_user, day_id: params[:day_id], id: work.id), class: "btn btn-success" %>
+                  <%= link_to "削除", user_day_workout_path(user_id: current_user, day_id: params[:day_id], id: work.id), method: :delete,
+                  data: { confirm: "「#{work.body_part}」を削除します。よろしいですか？" }, class: "btn btn-danger" %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>    
+      </div>
+    </div>
+  </div>
+</div>

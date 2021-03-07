@@ -1,0 +1,40 @@
+<% provide(:title, @user.name) %>
+
+<h1><%= l(@day.worked_on, format: :short2) %>のトレーニング内容</h1><br>
+
+<div class="row"> 
+  <div class="col-md-10 col-md-offset-1">
+    <%= link_to "新規作成", workouts_index_bodypart_user_path(id: @user, day_id: params[:day_id]), remote: true, class: "btn btn-lg btn-primary pull-right" %>
+  </div>
+</div>
+
+<div class="row"> 
+  <div class="col-md-10 col-md-offset-1">
+    <table class="table table-hover">
+      <thead>
+        <th class="center"><%= Workout.human_attribute_name  :traning_event %></th>
+        <th class="center"></th>
+      </thead>
+          
+      <% @workouts = Workout.where(day_id: params[:day_id]).distinct.pluck(:traning_event) %>
+      <% @workouts.each do |work| %>
+        <tbody>
+            <tr>
+              <td class="center"><%= link_to work, workouts_index_menu_modal_user_path(id: @user, day_id: @day, traning_event: work ), class: "btn btn-lg box10 height_50px", remote: true %></td>
+            </tr>
+          
+        </tbody>
+      <% end %>
+        <tfoot>
+          <tr>
+            <td class= "center"><%= link_to "戻る", user_days_path(@user), class: "btn btn-lg btn-default btn-form" %></td>
+          </tr>
+        </tfoot>
+    </table>
+    <h2>
+  </div>    
+</div>
+<div id="index-menu-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="index-bodypart" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="new-workouts" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

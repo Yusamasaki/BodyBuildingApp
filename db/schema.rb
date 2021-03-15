@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(version: 20210307141757) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
-    t.string "affiliation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest"
@@ -44,7 +43,6 @@ ActiveRecord::Schema.define(version: 20210307141757) do
   end
 
   create_table "workouts", force: :cascade do |t|
-    t.date "worked_on"
     t.string "body_part"
     t.string "traning_event"
     t.string "target_muscle"

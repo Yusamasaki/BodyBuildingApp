@@ -1,7 +1,6 @@
 class CreateWorkouts < ActiveRecord::Migration[5.1]
   def change
     create_table :workouts do |t|
-      t.date :worked_on
       t.string :body_part
       t.string :traning_event
       t.string :target_muscle

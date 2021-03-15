@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   
-  post '/callback' => 'linebot#callback'
+
+  get 'auth/:provider/callback', to: 'sessions#google_create'
+  get 'auth/failure', to: redirect('/')
+  get 'signout', to: 'sessions#destroy', as: 'signout'
+
   
   root 'static_pages#top'
   get '/signup', to: 'users#new'
@@ -8,9 +12,8 @@ Rails.application.routes.draw do
   # ログイン機能
   get    '/login', to: 'sessions#new'
   post   '/login', to: 'sessions#create'
+  post   '/login', to: 'sessions#google_create'
   delete '/logout', to: 'sessions#destroy'
-  
-  post '/callback', to: 'linebot#callback'
   
   resources :users do
     collection { post :import }

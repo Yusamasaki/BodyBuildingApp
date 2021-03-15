@@ -15,6 +15,16 @@ class SessionsController < ApplicationController
       render :new
     end
   end
+  
+  def google_create
+    user = User.from_omniauth(request.env["omniauth.auth"])
+    if user.save
+      session[:user_id] = user.id
+      redirect_to root_path
+    else
+      redirect_to new_session_path
+    end
+  end
 
   def destroy
      # ログイン中の場合のみログアウト処理を実行します。

@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_many :days, dependent: :destroy
   has_many :workouts, dependent: :destroy
   has_many :traning_menus, dependent: :destroy
+  
   # 「remember_token」という仮想の属性を作成します。
   attr_accessor :remember_token
   scope :get_by_name, ->(name) {where("name like ?", "%#{name}%")}
@@ -13,9 +14,6 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 100 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true
-  validates :affiliation, length: { in: 2..50 }, allow_blank: true
-  validates :basic_time, presence: true
-  validates :work_time, presence: true
   
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
@@ -53,14 +51,16 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, nil)
   end
   
-  def self.import(file)
-    CSV.foreach(file.path, headers: true) do |row|
-      # IDが見つかれば、レコードを呼び出し、見つかれなければ、新しく作成
-      user = find_by(id: row["id"]) || new
-      # CSVからデータを取得し、設定する
-      user.attributes = row.to_hash.slice(*updatable_attributes)
-      # 保存する
-      user.save
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.name = auth.info.name
+      user.email = auth.info.email
+      user.image = auth.info.image
+      user.oauth_token = auth.credentials.token
+      user.oauth_expires_at = Time.at(auth.credentials.expires_at)
+      return user
     end
   end
 
@@ -68,9 +68,7 @@ class User < ApplicationRecord
   # 更新を許可するカラムを定義
   def self.updatable_attributes
     ["name", "email", "affiliation",
-    "password", "employee_number",
-     "uid",  "basic_time", "designated_work_start_time", "designated_work_end_time",
-     "admin", "superior"]
+    "password", "admin"]
   end
   
   

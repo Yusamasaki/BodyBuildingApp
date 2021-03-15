@@ -17,11 +17,11 @@ gem 'jbuilder',     '~> 2.5'
 gem 'rounding'
 gem 'activerecord-import'
 gem 'rename'
-gem 'ransack'
-gem 'lazy_high_charts'
-gem 'bootstrap_form', '~> 4.0'
-gem 'gon'
-gem 'line-bot-api'
+gem 'omniauth-google-oauth2', '0.5.4'
+
+group :development, :test do
+  gem 'dotenv-rails'
+end
 
 group :development, :test do
   gem 'sqlite3'

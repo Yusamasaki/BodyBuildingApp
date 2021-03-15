@@ -65,9 +65,6 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
   
-  def meals_input
-  end
-  
 private
 
     def user_params

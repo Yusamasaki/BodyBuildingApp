@@ -14,6 +14,7 @@
       <%= link_to "ログイン状態です", "", class: "btn btn-lg btn-primary", remote: true, disabled: "disabled" %>
     <% else %>
       <%= link_to "ログイン", login_path, class: "btn btn-lg btn-primary", remote: true %>
+      <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
     <% end %>
   </q>
   <h1>

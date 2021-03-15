@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   include DaysHelper
   include WorkoutsHelper
   
+  helper_method :current_user
   
   
   $days_of_the_week = %w{日 月 火 水 木 金 土}
@@ -24,6 +25,10 @@ class ApplicationController < ActionController::Base
         flash[:danger] = "ログインしてください。"
         redirect_to login_url
       end
+    end
+    
+    def current_user
+      User.find(session[:user_id]) if session[:user_id]
     end
     
     # アクセスしたユーザーが現在ログインしているユーザーか確認します。

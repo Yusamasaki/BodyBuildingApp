@@ -17,7 +17,8 @@ gem 'jbuilder',     '~> 2.5'
 gem 'rounding'
 gem 'activerecord-import'
 gem 'rename'
-gem 'omniauth-google-oauth2', '0.5.4'
+gem 'omniauth', '1.9.1'
+gem 'omniauth-google-oauth2'
 
 group :development, :test do
   gem 'dotenv-rails'

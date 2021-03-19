@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
   
 
-  get 'auth/:provider/callback', to: 'sessions#google_create'
-  get 'auth/failure', to: redirect('/')
-  get 'signout', to: 'sessions#destroy', as: 'signout'
+  get '/auth/:provider/callback',    to: 'sessions#google_create',      as: :auth_callback
+  get 'auth/failure',                to: redirect('/'),                 as: :auth_failure
 
   
   root 'static_pages#top'
@@ -12,7 +11,6 @@ Rails.application.routes.draw do
   # ログイン機能
   get    '/login', to: 'sessions#new'
   post   '/login', to: 'sessions#create'
-  post   '/login', to: 'sessions#google_create'
   delete '/logout', to: 'sessions#destroy'
   
   resources :users do

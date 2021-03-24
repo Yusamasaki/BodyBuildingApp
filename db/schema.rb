@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210307141757) do
+ActiveRecord::Schema.define(version: 20210321203016) do
 
   create_table "days", force: :cascade do |t|
     t.date "worked_on"
@@ -19,6 +19,11 @@ ActiveRecord::Schema.define(version: 20210307141757) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_days_on_user_id"
+  end
+
+  create_table "sns_credentials", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "traning_menus", force: :cascade do |t|
@@ -34,6 +39,11 @@ ActiveRecord::Schema.define(version: 20210307141757) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
+    t.string "provider"
+    t.string "uid"
+    t.string "image"
+    t.string "oauth_token"
+    t.datetime "oauth_expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest"

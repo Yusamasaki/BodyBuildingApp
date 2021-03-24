@@ -10,7 +10,7 @@
       <tbody>
         <% @traning_menus.each do |menu| %>
         <tr>
-          <td><h2><%= link_to menu, workouts_traning_contents_user_path(id:@user, body_part: params[:body_part], traning_event: menu), class: "btn btn-lg box10 width_300px_height_50px" %></h2></td>
+          <td><h2><%= link_to menu.traning_event, workouts_traning_contents_user_path(id:@user, body_part: params[:body_part], traning_event: menu.traning_event), class: "btn btn-lg box10 width_300px_height_50px" %></h2></td>
         </tr>
         <% end %>
       </tbody>

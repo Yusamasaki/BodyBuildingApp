@@ -11,19 +11,35 @@ class SessionsController < ApplicationController
         flash[:info] = 'ログインしました'
         redirect_back_or user_days_url(user)
     else
-      flash.now[:danger] = '認証に失敗しました。'
-      render :new
     end
   end
   
-  def google_create
-    user = User.from_omniauth(request.env["omniauth.auth"])
-    if user.save
-      session[:user_id] = user.id
-      redirect_to root_path
-    else
-      redirect_to new_session_path
+  def sns_create
+    if request.env['omniauth.auth'].present?
+      # Googleログイン
+      @user  = User.from_omniauth(request.env['omniauth.auth'])
+      result = @user.save(context: :google_create)
+      gg       = "google"
     end
+    if result
+      log_in @user
+      flash[:success] = "#{gg}アカウントでログインしました。" 
+      redirect_back_or user_days_url(@user)
+    else
+      if gg.present?
+        flash[:danger] = "ログイン出来ませんでした" 
+        redirect_to auth_failure_path
+      else
+        render 'new'
+      end
+    end
+  end
+  
+  #認証に失敗した際の処理
+  def auth_failure
+    
+    @user = User.new
+    render '任意のアクション'
   end
 
   def destroy
@@ -32,4 +48,5 @@ class SessionsController < ApplicationController
     flash[:success] = 'ログアウトしました。'
     redirect_to root_url
   end
+  
 end

@@ -1,4 +1,4 @@
-
+<div>
   <table class="table table-bordered user-table box10">
     <tr>
       <td>
@@ -20,54 +20,39 @@
   
   
   <table class="table table-bordered table-condensed table-hover box10" id="table-attendances">
-    <thead>
-      <tr>
-        <th>日付</th>
-        <th>曜日</th>
-        <th>対象部位</th>
-        <th>一覧表示</th>
-        
-      </tr>
-    </thead>
     <% @days.each do |day| %>
-    <tbody>
-      
+    <tbody class="inline-block">
         <% if Date.current == day.worked_on %>
           <tr class="password_field">
         <% else %>
           <tr>
         <% end %>
-            <td><%= l(day.worked_on, format: :short) %></td>
-            <td>
-              <% if day.worked_on.wday == 6 %>
-                <font color="blue"><%= $days_of_the_week[day.worked_on.wday] %></font>
-              <% elsif day.worked_on.wday == 0 %>
-                <font color="red"><%= $days_of_the_week[day.worked_on.wday] %></font>
-              <% else %>
-                <%= $days_of_the_week[day.worked_on.wday] %>
-              <% end %>
-            </td>
-            
-            <td>
-              <% @day = @user.days.find_by(id: day.id) %>
-              <% @workouts = @day.workouts.all.distinct.pluck(:target_muscle) %>
-              <% @workouts.each do |workout| %>
-                <p class="btn btn-primary"><%= workout %></p>
-              <% end %>
-            </td>
-            <td>
-              <%= link_to "一覧表示", user_day_workouts_path(@user, day_id: day.id), class: "btn btn-primary" %></td>
+            <td class="size">
+              <a><%= l(day.worked_on, format: :short) %></a>
+              <a>
+                <% if day.worked_on.wday == 6 %>
+                  <font color="blue">(<%= $days_of_the_week[day.worked_on.wday] %>)</font>
+                <% elsif day.worked_on.wday == 0 %>
+                  <font color="red">(<%= $days_of_the_week[day.worked_on.wday] %>)</font>
+                <% else %>
+                  (<%= $days_of_the_week[day.worked_on.wday] %>)
+                <% end %>
+              </a><br><br>
+              <b>
+                <% @day = @user.days.find_by(id: day.id) %>
+                <% @workouts = @day.workouts.all.distinct.pluck(:target_muscle) %>
+                <% @workouts.each do |workout| %>
+                  <p class="btn btn-primary"><%= workout %></p>
+                <% end %>
+              </b><br><br>
+              <c>
+                <%= link_to "一覧表示", user_day_workouts_path(@user, day_id: day.id), class: "btn btn-primary" %>
+              </c>
             </td>
           </tr>
         
     </tbody>
     <% end %>
-    
-    <tfoot>
-      <tr>
-        <td></td>
-      </tr>
-    </tfoot>
   </table>
-
+</div>
 <div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

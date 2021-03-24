@@ -18,7 +18,8 @@ class TraningMenusController < ApplicationController
       flash[:success] = "トレーニング種目を新規追加しました。 日別のトレーニング種目で選択できます。"
       redirect_to user_days_url(id: @user, body_part: params[:body_part] )
     else
-      render :new
+      flash[:danger] = "トレーニング種目の追加に失敗しました。"
+      redirect_to user_days_url(id: @user, body_part: params[:body_part] )
     end
   end
   

@@ -28,7 +28,8 @@
             ユーザー登録がまだの場合は<%= link_to "こちら", signup_path %>
           </p>
           <p>
-            <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
+            Googleアカウントでログインはこちら→→
+            <%= link_to image_tag('google_icon.png', class: 'google_icon'), '/auth/google_oauth2' %>
           </p>
         </div>
       </div>

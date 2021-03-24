@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     @user.save
     log_in @user
     flash[:success] = '新規作成に成功しました。'
-    redirect_to @user
+    redirect_to user_days_url(@user)
   end
 
   def edit
@@ -48,9 +48,15 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    @user.destroy
-    flash[:success] = "#{@user.name}のデータを削除しました。"
-    redirect_to users_url
+    if @user.admin?
+      @user.destroy
+      flash[:success] = "#{@user.name}のデータを削除しました。"
+      redirect_to users_url
+    else
+      @user.destroy
+      flash[:success] = "#{@user.name}のデータを削除しました。"
+      redirect_to root_url
+    end
   end
   
   def edit_basic_info

@@ -16,7 +16,7 @@ class User < ApplicationRecord
                     uniqueness: true
   
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  validates :password, presence: false, on: :facebook_login, length: { minimum: 6 }, allow_nil: true
       
   # 渡された文字列のハッシュ値を返します。
   def User.digest(string)
@@ -52,16 +52,26 @@ class User < ApplicationRecord
   end
   
   def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
-      user.provider = auth.provider
-      user.uid = auth.uid
-      user.name = auth.info.name
+    # emailの提供は必須とする
+    user = User.where('email = ?', auth.info.email).first
+    if user.blank?
+      user = User.create!(
+        uid: auth.uid,
+        name: auth.info.name,
+        email: auth.info.email,
+        oauth_token: auth.credentials.token,
+        oauth_expires_at: Time.at(auth.credentials.expires_at),
+        password: "password",
+        password_confirmation: "password"
+        )
+    else
+      user.uid   = auth.uid
+      user.name  = auth.info.name
       user.email = auth.info.email
-      user.image = auth.info.image
-      user.oauth_token = auth.credentials.token
+      user.oauth_token      = auth.credentials.token
       user.oauth_expires_at = Time.at(auth.credentials.expires_at)
-      return user
     end
+    user
   end
 
 

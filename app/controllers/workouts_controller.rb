@@ -26,7 +26,8 @@ class WorkoutsController < ApplicationController
       flash[:success] = "新規作成しました。"
       redirect_to user_day_workouts_url @user
     else
-      render :new
+      flash[:danger] = "新規作成に失敗しました。"
+      redirect_to user_day_workouts_url @user
     end
   end
   
@@ -58,7 +59,7 @@ class WorkoutsController < ApplicationController
   end
   
   def traning_menu
-    @traning_menus = @user.traning_menus.where(body_part: params[:body_part]).distinct.pluck(:traning_event)
+    @traning_menus = @user.traning_menus.where(body_part: params[:body_part])
   end
   
   def traning_contents
@@ -70,11 +71,9 @@ class WorkoutsController < ApplicationController
     
     @workout = TraningMenu.find_by(traning_event: params[:traning_event])
     
-    days = @days.pluck(:worked_on)
+    #days = @days.pluck(:worked_on)
     
-    books = @days.each{ |day| Workout.where(day_id: day.id) 
-      debugger
-    }
+    #books = days.map{ |day| Workout.where(worked_on: day)
     
     #@graph = LazyHighCharts::HighChart.new('graph') do |f|
     #  f.title(text: '本 月間登録推移')

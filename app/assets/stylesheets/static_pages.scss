@@ -16,7 +16,7 @@
 
 .example p {
   position: absolute;
-  top: 80%;
+  top: 75%;
   left: 75%;
   -ms-transform: translate(-50%,-50%);
   -webkit-transform: translate(-50%,-50%);
@@ -28,7 +28,7 @@
   
 .example q {
   position: absolute;
-  top: 80%;
+  top: 75%;
   left: 90%;
   -ms-transform: translate(-50%,-50%);
   -webkit-transform: translate(-50%,-50%);
@@ -38,6 +38,7 @@
   
   /*文字の装飾は省略*/
   }
+  
   
 .example h1 {
   position: absolute;

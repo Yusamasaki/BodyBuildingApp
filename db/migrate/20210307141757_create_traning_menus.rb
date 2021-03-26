@@ -7,6 +7,7 @@ class CreateTraningMenus < ActiveRecord::Migration[5.1]
       t.string :target_muscle
       
       t.references :user, foreign_key: true
+      t.references :day, foreign_key: true
       
       t.timestamps
     end

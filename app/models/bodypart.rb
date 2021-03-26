@@ -1,0 +1,2 @@
+class Bodypart < ApplicationRecord
+end

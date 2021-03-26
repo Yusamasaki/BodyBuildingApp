@@ -11,8 +11,7 @@
     </tr>
     <tr>
       <td>
-        <%= link_to "トレーニング種目追加", new_user_traning_menu_path(@user), class: "btn btn-default btn-primary", remote: true %>
-        <%= link_to "トレーニング種目別一覧", workouts_bodypart_menu_index_user_path(@user), class: "btn btn-default btn-success" %>
+        <%= link_to "トレーニング種目追加", workouts_bodypart_select_user_path(@user, day_id: ""), class: "btn btn-default btn-primary" %>
       </td>
       
     </tr>
@@ -55,4 +54,3 @@
     <% end %>
   </table>
 </div>
-<div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

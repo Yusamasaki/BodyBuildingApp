@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210321203016) do
+ActiveRecord::Schema.define(version: 20210324210631) do
+
+  create_table "bodyparts", force: :cascade do |t|
+    t.string "body_part"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "days", force: :cascade do |t|
     t.date "worked_on"
@@ -21,18 +27,15 @@ ActiveRecord::Schema.define(version: 20210321203016) do
     t.index ["user_id"], name: "index_days_on_user_id"
   end
 
-  create_table "sns_credentials", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "traning_menus", force: :cascade do |t|
     t.string "traning_event"
     t.string "body_part"
     t.string "target_muscle"
     t.integer "user_id"
+    t.integer "day_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["day_id"], name: "index_traning_menus_on_day_id"
     t.index ["user_id"], name: "index_traning_menus_on_user_id"
   end
 

@@ -1,7 +1,7 @@
 class WorkoutsController < ApplicationController
-      before_action :set_user, only: [:bodypart_menu, :bodypart_menu_index, :traning_menu, :traning_contents, :index_bodypart, :index_menu_modal, :traning_day_contents]
+      before_action :set_user, only: [:bodypart_menu, :bodypart_menu_index, :traning_menu, :traning_lists, :index_bodypart, :index_menu_modal, :traning_day_contents]
   before_action :logged_in_user, only: [:index, :new, :create, :edit, :update, :destroy, :bodypart_menu, 
-                                        :bodypart_menu_index, :traning_menu, :traning_contents, :index_bodypart, :index_menu_modal, :traning_day_contents]
+                                        :bodypart_menu_index, :traning_menu, :traning_lists, :index_bodypart, :index_menu_modal, :traning_day_contents]
   before_action :work_set, only: [:workout, :new, :show, :index, :create, :edit, :destroy, :update]
   before_action :work_day, only: [:new, :index, :edit]
   before_action :day_id_set, only: [:index, :create, :edit, :update, :destroy]
@@ -24,10 +24,10 @@ class WorkoutsController < ApplicationController
     @workout = @day.workouts.new(workout_params)
     if @workout.save
       flash[:success] = "新規作成しました。"
-      redirect_to user_day_workouts_url @user
+      redirect_to user_day_workouts_url(@user, day_id: params[:day_id], body_part: params[:body_part])
     else
       flash[:danger] = "新規作成に失敗しました。"
-      redirect_to user_day_workouts_url @user
+      redirect_to user_day_workouts_url(@user, day_id: params[:day_id], body_part: params[:body_part])
     end
   end
   
@@ -39,7 +39,7 @@ class WorkoutsController < ApplicationController
     @workout = @day.workouts.find(params[:id])
     if @workout.update_attributes(workout_params)
       flash[:success] = "ユーザー情報を更新しました。"
-      redirect_to user_day_workouts_url @user
+      redirect_to user_day_workouts_url(@user, day_id: params[:day_id], body_part: params[:body_part])
     else
       render :edit      
     end
@@ -52,17 +52,7 @@ class WorkoutsController < ApplicationController
     redirect_to user_day_workouts_url @user
   end
   
-  def bodypart_menu
-  end
-  
-  def bodypart_menu_index
-  end
-  
-  def traning_menu
-    @traning_menus = @user.traning_menus.where(body_part: params[:body_part])
-  end
-  
-  def traning_contents
+  def traning_lists
     @first_day = params[:date].nil? ?
     Date.current.beginning_of_month : params[:date].to_date
     @last_day = @first_day.end_of_month
@@ -81,9 +71,6 @@ class WorkoutsController < ApplicationController
     #  f.series(name: '登録数', data: books)
     #  f.series(name: '登録数', data: books)
     #end
-  end
-  
-  def index_bodypart
   end
   
   def index_menu_modal
@@ -110,6 +97,10 @@ class WorkoutsController < ApplicationController
     #  f.series(name: '登録数', data: books)
     #  f.series(name: '登録数', data: books)
     #end
+  end
+  
+  def bodypart_select
+    @bodyparts = Bodypart.all
   end
   
   private

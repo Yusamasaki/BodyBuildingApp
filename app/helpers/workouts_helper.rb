@@ -1,38 +1,6 @@
 module WorkoutsHelper
       
-  def body_part_select(work)
-    if work.body_part == '1' 
-      "胸"
-    elsif work.body_part == '2'
-      "背中"
-    elsif work.body_part == '3'
-      "脚"
-    elsif work.body_part == '4'
-      "肩"
-    elsif work.body_part == '5'
-      "腕"
-    elsif work.body_part == '6'
-      "腹筋"
-    end
-  end
-  
-  def target_muscle(workout)
-    if workout == '1' 
-      "胸"
-    elsif workout == '2'
-      "背中"
-    elsif workout == '3'
-      "脚"
-    elsif workout == '4'
-      "肩"
-    elsif workout == '5'
-      "腕"
-    elsif workout == '6'
-      "腹筋"
-    end
-  end
-  
-  def body_part_select3
+  def body_part_select
     if params[:body_part] == '1' 
       "胸"
     elsif params[:body_part] == '2'

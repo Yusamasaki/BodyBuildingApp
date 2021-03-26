@@ -13,28 +13,11 @@ User.create!( name: "伊達 勇気",
               password_confirmation: "password",
               admin: false
             )
-User.create!( name: "竈門 禰豆子",
-              email: "sample2@email.com",
-              password: "password",
-              password_confirmation: "password",
-              admin: false
-            )
-User.create!( name: "我妻 善逸",
-              email: "sample3@email.com",
-              password: "password",
-              password_confirmation: "password",
-              admin: false
-            )
-User.create!( name: "嘴平 伊之助",
-              email: "sample4@email.com",
-              password: "password",
-              password_confirmation: "password",
-              admin: false
-            )
-User.create!( name: "栗花落 カナヲ",
-              email: "sample5@email.com",
-              password: "password",
-              password_confirmation: "password",
-              admin: false
-            )
+            
+Bodypart.create!(
+                [
+                { body_part: "胸" }, { body_part: "背中" }, { body_part: "脚" }, 
+                { body_part: "肩" }, { body_part: "腕" }, { body_part: "腹筋" } 
+                ]
+                )
 

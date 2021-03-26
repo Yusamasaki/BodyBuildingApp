@@ -1,0 +1,27 @@
+<% provide(:title, current_user.name) %>
+
+<h1>部位選択</h1>
+
+<div class="row"> 
+  <div class="col-md-10 col-md-offset-1">
+    <table class="table table-hover">
+      <% @bodyparts.each do |bodypart| %>
+        <tbody>
+          <tr>
+            <td class="center">
+              <% if params[:body_part] == "" %>
+                <%= link_to bodypart.body_part, new_user_day_workout_path(current_user, day_id: params[:day_id], body_part: bodypart.id), 
+                    class: "btn btn-lg box10 width_height_100px", remote: true %>
+              <% else %>
+                <%= link_to bodypart.body_part, user_traning_menus_path(current_user, day_id: params[:day_id], body_part: bodypart.id), 
+                    class: "btn btn-lg box10 width_height_100px" %>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+    </table>
+    <h2><%= link_to "戻る", user_days_path(current_user), class: "btn btn-lg btn-default btn-form" %></h2>
+  </div>    
+</div>
+
+<div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

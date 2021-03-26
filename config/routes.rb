@@ -12,21 +12,16 @@ Rails.application.routes.draw do
   post   '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   
-  resources :users do
+  resources :users, :only => [:edit, :update, :destroy] do
     collection { post :import }
     member do
+      get 'edit_basic_info'
       
-      get 'workouts/bodypart_menu'
-      get 'workouts/bodypart_menu_index'
-      get 'workouts/traning_menu'
-      get 'workouts/traning_contents'
+      get 'workouts/bodypart_select'
+      
+      get 'workouts/traning_lists'
       get 'workouts/traning_day_contents'
-      
-      get 'workouts/index_bodypart'
       get 'workouts/index_menu_modal'
-      
-      get 'traning_menus/new_workouts'
-      post 'traning_menus/new_workouts_create'
       
     end
     resources :days do

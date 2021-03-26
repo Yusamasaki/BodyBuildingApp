@@ -1,40 +1,44 @@
 <% provide(:title, @user.name) %>
-
-<h1>トレーニングメニュー一覧</h1>
+<br><br>
+<div class="title">【<%= body_part_select %>】 のトレーニング種目一覧</div><br>
 
 <div class="row"> 
   <div class="col-md-10 col-md-offset-1">
-    <%= link_to "新規作成", new_user_traning_menu_path, class: "btn btn-lg btn-primary pull-right" %>
+    <h2><%= link_to "トレーニング種目追加", new_user_traning_menu_path(@user, day_id: params[:day_id], body_part: params[:body_part]), class: "btn btn-lg btn-default btn-primary", remote: true %></h2>
   </div>
 </div>
 
 <div class="row"> 
   <div class="col-md-10 col-md-offset-1">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th class="center"><%= TraningMenu.human_attribute_name  :traning_event %></th>
-          <th class="center"><%= TraningMenu.human_attribute_name  :body_part %></th>
-          <th class="center"><%= TraningMenu.human_attribute_name  :target_muscle %></th>
-        </tr>
-      </thead>
-          
+    <table class="table table-hover">          
       <tbody>
         <% @traning_menus.each do |menu| %>
-          <tr>
-            <td class="center"><%= menu.traning_event %></td>
-            <td class="center"><%= menu.body_part %></td>
-            <td class="center"><%= menu.target_muscle %></td>
-            
-            <td class="center">
-              <%= link_to "編集", edit_user_traning_menu_path(@user, menu), class: "btn btn-success" %>
-              <%= link_to "削除", user_traning_menu_path(@user, menu), method: :delete,
+        <tr>
+          <td><h3 class="center"><%= menu.traning_event %></h3></td>
+          <td><h3 class="center">
+              <%= link_to "編集", edit_user_traning_menu_path(@user, menu, body_part: params[:body_part], day_id: params[:day_id]), class: "btn btn-success" %>
+              <%= link_to "削除", user_traning_menu_path(@user, menu, body_part: params[:body_part], day_id: params[:day_id]), method: :delete,
               data: { confirm: "「#{menu.traning_event}」を削除します。よろしいですか？" }, class: "btn btn-danger" %>
-            </td>
-          </tr>
+          </h3></td>
+          <td><h3 class="center">
+            <% if params[:day_id].blank? %>
+              <%= link_to "日別一覧", workouts_traning_lists_user_path(@user, day_id: params[:day_id], body_part: params[:body_part], traning_event: menu.traning_event), class: "btn btn-primary"%>
+            <% end %>
+          </h3></td>
+        </tr>
         <% end %>
       </tbody>
     </table>
-    <h2><%= link_to "戻る", user_days_path(@user), class: "btn btn-lg btn-default btn-form" %></h2>
+    <h2>
+      <% if params[:day_id].present? %>
+        <% @day = Day.find(params[:day_id]) %>
+        <%= link_to "#{@day.worked_on}の新規作成画面に戻る", new_user_day_workout_path(@user, body_part: params[:body_part], day_id: params[:day_id]),remote: true, class: "btn btn-lg btn-default" %>
+      <% else %>
+        <%= link_to "戻る", workouts_bodypart_select_user_path(@user, body_part: params[:body_part], day_id: params[:day_id]), class: "btn btn-lg btn-default btn-form" %>
+        <%= link_to "TOPへ", user_days_path(current_user), class: "btn btn-lg" %>
+      <% end %>
+    </h2>
   </div>    
 </div>
+
+<div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

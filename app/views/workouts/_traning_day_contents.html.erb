@@ -30,21 +30,19 @@
             
             
             <tbody>
-              <% @days.each do |day| %>
-              <% @workouts = Workout.where(traning_event: params[:traning_event]).where(day_id: day.id).order(:traning_set) %>
+              <% @workouts = @day.workouts.where(traning_event: params[:traning_event]).order(:traning_set) %>
               <% @workouts.each do |work| %>
                 <tr>
-                  <td class="center"><%= work.traning_set %></td>
+                  <td class="center"><%= work.traning_set %>セット目</td>
                   <td class="center"><%= work.target_muscle %></td>
                   <td class="center"><%= work.traning_kg %></td>
                   <td class="center"><%= work.traning_rep %></td>
-                </tr>
-            <% end %>
+                </tr>   
             <% end %>
             </tbody>
           </table>
           <h2>
-          <%= link_to "戻る", workouts_traning_contents_user_path(id: @user, body_part: params[:body_part], traning_event: params[:traning_event]), class: "btn btn-lg btn-default btn-form" %>
+          <%= link_to "戻る", workouts_traning_lists_user_path(id: @user, day_id: params[:day_id], body_part: params[:body_part], traning_event: params[:traning_event]), class: "btn btn-lg btn-default btn-form" %>
           <%= link_to "TOPへ", user_days_path(@user), class: "btn btn-lg" %>
           </h2>
         </div>    

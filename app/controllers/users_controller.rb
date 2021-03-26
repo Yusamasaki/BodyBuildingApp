@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :meals_input, :workout]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy,:edit_basic_info, :update_basic_info, :meals_input]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:index, :destroy, :edit_basic_info, :update_basic_info]
+  before_action :admin_user, only: [:index, :edit_basic_info, :update_basic_info]
   before_action :admin_or_correct_user, only: :show
   before_action :admin_false, only: :show
   
@@ -48,15 +48,11 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    if @user.admin?
-      @user.destroy
-      flash[:success] = "#{@user.name}のデータを削除しました。"
-      redirect_to users_url
-    else
-      @user.destroy
-      flash[:success] = "#{@user.name}のデータを削除しました。"
-      redirect_to root_url
-    end
+    @user.destroy
+    log_out
+    flash[:success] = "#{@user.name}のデータを削除しました。"
+    
+    redirect_to root_url
   end
   
   def edit_basic_info

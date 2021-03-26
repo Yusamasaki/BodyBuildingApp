@@ -3,7 +3,7 @@
 <h1>編集</h1>
 <div class="row">
   <div class="col-md-4 col-md-offset-4">
-    <%= form_with(model: @workout, url: user_day_workout_path(@user), local: true, method: :patch) do |f| %>
+    <%= form_with(model: @workout, url: user_day_workout_path(@user, day_id: params[:day_id], body_part: params[:body_part]), local: true, method: :patch) do |f| %>
       <%= render partial: 'shared/error_messages', locals: { obj: @workout } %>
       
       <%= f.label :target_muscle, class: "label-form" %>

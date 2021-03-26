@@ -15,9 +15,9 @@
     <table class="table table-bordered user-table">
     <tr>
       <td class="title">
-          <%= link_to "←", workouts_traning_contents_user_path(@user, body_part: params[:body_part], traning_event: params[:traning_event], date: @first_day.prev_month), class: "btn btn-default btn-primary" %>
+          <%= link_to "←", workouts_traning_lists_user_path(@user, body_part: params[:body_part], traning_event: params[:traning_event], date: @first_day.prev_month), class: "btn btn-default btn-primary" %>
           <%= l(@first_day, format: :middle) %><%= @workout.traning_event %>一覧
-          <%= link_to "→", workouts_traning_contents_user_path(@user, body_part: params[:body_part], traning_event: params[:traning_event], date: @first_day.next_month), class: "btn btn-default btn-primary" %>
+          <%= link_to "→", workouts_traning_lists_user_path(@user, body_part: params[:body_part], traning_event: params[:traning_event], date: @first_day.next_month), class: "btn btn-default btn-primary" %>
       </td>
     </tr>
   </table>
@@ -44,7 +44,7 @@
       </tbody>
     </table>
     <h2>
-    <%= link_to "戻る", workouts_traning_menu_user_path(id: @user, body_part: params[:body_part]), class: "btn btn-lg btn-default btn-form" %>
+    <%= link_to "戻る", user_traning_menus_path(@user, body_part: params[:body_part], day_id: params[:day_id]), class: "btn btn-lg btn-default btn-form" %>
     <%= link_to "TOPへ", user_days_path(@user), class: "btn btn-lg" %>
     </h2>
   </div>    

@@ -10,10 +10,10 @@
       <h1 class="modal-title">新規作成</h1><br>
       <div class="row">
         <div class="col-md-4 col-md-offset-4">
-          <%= form_with(model: @workout, url: user_day_workouts_path(@user, day_id: params[:day_id]), local: true, method: :post) do |f| %>
+          <%= form_with(model: @workout, url: user_day_workouts_path(@user, day_id: params[:day_id], body_part: params[:body_part]), local: true, method: :post) do |f| %>
             <%= render partial: 'shared/error_messages', locals: { obj: @workout } %>
              
-            <%= f.label :traning_event, class: "label-form" %><%= link_to "種目追加", new_user_traning_menu_path(user_id: @user, day_id: params[:day_id], body_part: params[:body_part]), class: "btn btn-default btn-primary", remote: true %>
+            <%= f.label :traning_event, class: "label-form" %><%= link_to "種目追加", user_traning_menus_path(@user, day_id: params[:day_id], body_part: params[:body_part]), class: "btn btn-default btn-primary" %>
             <%= f.select :traning_event, options_for_select(@traning_menus.distinct.pluck(:traning_event){|c|[c[:traning_event]]}),
                  {include_blank: '選択してください'}, {class: 'form-control box10'}
             %>

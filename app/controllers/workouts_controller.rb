@@ -1,8 +1,8 @@
 class WorkoutsController < ApplicationController
-      before_action :set_user, only: [:bodypart_menu, :bodypart_menu_index, :traning_menu, :traning_lists, :index_bodypart, :index_menu_modal, :traning_day_contents]
-  before_action :logged_in_user, only: [:index, :new, :create, :edit, :update, :destroy, :bodypart_menu, 
-                                        :bodypart_menu_index, :traning_menu, :traning_lists, :index_bodypart, :index_menu_modal, :traning_day_contents]
-  before_action :work_set, only: [:workout, :new, :show, :index, :create, :edit, :destroy, :update]
+      before_action :set_user, only: [:bodypart_menu, :traning_lists, :index_menu_modal, :traning_day_contents]
+  before_action :logged_in_user, only: [:index, :new, :create, :edit, :update, :destroy, :bodypart_select,
+                                        :traning_lists, :index_menu_modal, :traning_day_contents]
+  before_action :user_id_set, only: [:new, :show, :index, :create, :edit, :destroy, :update]
   before_action :work_day, only: [:new, :index, :edit]
   before_action :day_id_set, only: [:index, :create, :edit, :update, :destroy]
   
@@ -107,10 +107,6 @@ class WorkoutsController < ApplicationController
     
     def workout_params
       params.require(:workout).permit(:worked_on, :body_part, :traning_event, :target_muscle, :traning_set, :traning_kg, :traning_rep, :note)
-    end
-    
-    def workout_search_params
-      params.fetch(:search, {}).permit(:body_part)
     end
   
 end

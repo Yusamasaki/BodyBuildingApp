@@ -1,18 +1,17 @@
 class TraningMenusController < ApplicationController
+  
+  before_action :user_id_set, only: [:index, :new, :create, :edit, :update, :destroy]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
       
   def index
-    @user = User.find(params[:user_id])
     @traning_menus = @user.traning_menus.where(body_part: params[:body_part])
   end
   
   def new
-    @user = User.find(params[:user_id])
     @traning_menu = @user.traning_menus.new
   end
   
   def create
-    @user = User.find(params[:user_id])
-    
     @traning_menu = @user.traning_menus.new(traning_menu_params)
     if @traning_menu.save
       flash[:success] = "トレーニング種目を新規追加しました。"
@@ -25,12 +24,10 @@ class TraningMenusController < ApplicationController
   
   
   def edit
-    @user = User.find(params[:user_id])
     @traning_menu = @user.traning_menus.find(params[:id])
   end
   
   def update
-    @user = User.find(params[:user_id])
     @traning_menu = @user.traning_menus.find(params[:id])
     if @traning_menu.update_attributes(traning_menu_params)
       flash[:success] = "トレーニング種目を更新しました。"
@@ -42,7 +39,6 @@ class TraningMenusController < ApplicationController
   end
   
   def destroy
-    @user = User.find(params[:user_id])
     @traning_menu = @user.traning_menus.find(params[:id])
     @traning_menu.destroy
     flash[:success] = "削除しました。"

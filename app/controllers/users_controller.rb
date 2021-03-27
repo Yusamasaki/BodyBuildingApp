@@ -1,10 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :meals_input, :workout]
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy,:edit_basic_info, :update_basic_info, :meals_input]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :update_basic_info]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:index, :edit_basic_info, :update_basic_info]
-  before_action :admin_or_correct_user, only: :show
-  before_action :admin_false, only: :show
   
   def index
     @users = User.all
@@ -55,30 +52,9 @@ class UsersController < ApplicationController
     redirect_to root_url
   end
   
-  def edit_basic_info
-  end
-  
-  def update_basic_info
-    if @user.update_attributes(basic_info_params)
-      flash[:success] = "#{@user.name}の基本情報を更新しました。" 
-    else
-      flash[:danger] = "#{@user.name}の更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
-    end
-    redirect_to users_url
-  end
-  
 private
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, 
-                                   :target_body_weight, :target_body_weight_date, :admin)
-    end
-    
-    def basic_info_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
-    end
-    
-    def basic_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
 end

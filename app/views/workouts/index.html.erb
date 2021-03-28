@@ -1,4 +1,4 @@
-<% provide(:title, @user.name) %>
+<% provide(:title, "#{l(@day.worked_on, format: :short)}のトレーニング内容") %>
 
 <h1><%= l(@day.worked_on, format: :short2) %>のトレーニング内容</h1><br>
 

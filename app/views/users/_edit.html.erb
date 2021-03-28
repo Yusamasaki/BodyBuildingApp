@@ -11,8 +11,4 @@
   <%= f.password_field :password, class: "form-control" %>
 
   <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
-  
-  <%= link_to "アカウント削除", user_path(current_user), method: :delete,
-            data: { confirm: "削除してよろしいですか？" },
-            class: "btn btn-danger btn-block" %></br>
 <% end %>

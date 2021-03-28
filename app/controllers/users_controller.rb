@@ -1,20 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :update_basic_info]
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
+  before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :logged_in_user, only: [:edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
-  
-  def index
-    @users = User.all
-    @user = User.new
-  end
-  
-  def show
-    @users = User.all
-    respond_to do |format|
-      format.html
-      format.csv
-    end
-  end
   
   def new
     if logged_in? && !current_user.admin?

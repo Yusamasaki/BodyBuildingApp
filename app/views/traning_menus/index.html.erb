@@ -10,7 +10,13 @@
 
 <div class="row"> 
   <div class="col-md-10 col-md-offset-1">
-    <table class="table table-hover">          
+    <table class="table table-hover">
+      <thead>
+        <th class="center"><%= TraningMenu.human_attribute_name  :traning_event %></th>
+        <th></th>
+        <th></th>
+      </thead>
+      
       <tbody>
         <% @traning_menus.each do |menu| %>
         <tr>

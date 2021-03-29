@@ -9,9 +9,6 @@ class WorkoutsController < ApplicationController
   def index
     @workouts = @day.workouts.where(user_id: params[:user_id])
     
-    #@q = Workout.where(user_id: params[:user_id], day_id: params[:day_id]).ransack(params[:q])
-    #@workouts = @q.result(distinct: true).paginate(page: params[:page], per_page: 20 )
-    
   end
   
   def new
@@ -38,7 +35,7 @@ class WorkoutsController < ApplicationController
   def update
     @workout = @day.workouts.find(params[:id])
     if @workout.update_attributes(workout_params)
-      flash[:success] = "ユーザー情報を更新しました。"
+      flash[:success] = "更新しました。"
       redirect_to user_day_workouts_url(@user, day_id: params[:day_id], body_part: params[:body_part])
     else
       render :edit      
@@ -60,6 +57,7 @@ class WorkoutsController < ApplicationController
     @days = @user.days.where( worked_on: @first_day..@last_day).order(:worked_on)
     
     @workout = TraningMenu.find_by(traning_event: params[:traning_event])
+    
     
     #days = @days.pluck(:worked_on)
     

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   post   '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   
-  resources :users, :only => [:edit, :update, :destroy] do
+  resources :users, :only => [:edit, :update, :destroy ] do
     collection { post :import }
     member do
       get 'edit_basic_info'
@@ -24,11 +24,11 @@ Rails.application.routes.draw do
       get 'workouts/index_menu_modal'
       
     end
-    resources :days do
-      resources :workouts do
+    resources :days, :only => [:index] do
+      resources :workouts, :only => [:index, :new, :create, :edit, :update] do
       end
     end
-    resources :traning_menus do
+    resources :traning_menus, :only => [:index, :new, :create, :edit, :update] do
     end
   end
   

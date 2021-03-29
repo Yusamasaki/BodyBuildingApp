@@ -9,9 +9,12 @@
       
       <%= f.label :traning_event, class: "label-form" %>
       <%= f.text_field :traning_event, class: "form-control box10" %><br>
+      
+      <%= f.label :body_part, class: "label-form" %>
+      <%= f.select :body_part, { "胸": 1, "背中": 2, "脚": 3, "肩": 4, "腕": 5, "腹筋": 6 },{ include_blank: '部位を選択して下さい' }, {class: 'form-control box10'} %>
 
       <%= f.submit "更新", class: "btn btn-primary btn-form" %>
-      <%= link_to "キャンセル", user_traning_menus_path(@user), class: "btn btn-default btn-form" %>
+      <%= link_to "キャンセル", user_traning_menus_path(@user, day_id: params[:day_id], body_part: params[:body_part]), class: "btn btn-default btn-form" %>
     <% end %>
   </div>
 </div>

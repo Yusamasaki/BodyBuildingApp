@@ -13,13 +13,15 @@
     <table class="table table-hover">
       <thead>
         <th class="center"><%= Workout.human_attribute_name  :traning_event %></th>
+        <th></th>
       </thead>
           
       <% @workouts = Workout.where(day_id: params[:day_id]).distinct.pluck(:traning_event) %>
       <% @workouts.each do |work| %>
         <tbody>
             <tr>
-              <td class="center"><%= link_to work, workouts_index_menu_modal_user_path(id: @user, day_id: @day, traning_event: work ), class: "btn btn-lg box10 height_50px", remote: true %></td>
+              <td><h3 class="center"><%= work %></h3></td>
+              <td><h3 class="center"><%= link_to "詳細", workouts_index_menu_modal_user_path(id: @user, day_id: @day, traning_event: work ), class: "btn btn-lg btn-primary", remote: true %></h3></td>
             </tr>
           
         </tbody>

@@ -42,7 +42,7 @@
             </tbody>
           </table>
           <h2>
-          <%= link_to "戻る", workouts_traning_lists_user_path(id: @user, day_id: params[:day_id], body_part: params[:body_part], traning_event: params[:traning_event]), class: "btn btn-lg btn-default btn-form" %>
+          <%= link_to "戻る", workouts_traning_lists_user_path(id: @user, day_id: '', body_part: params[:body_part], traning_event: params[:traning_event]), class: "btn btn-lg btn-default btn-form" %>
           <%= link_to "TOPへ", user_days_path(@user), class: "btn btn-lg" %>
           </h2>
         </div>    

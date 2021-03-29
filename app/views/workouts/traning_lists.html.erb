@@ -27,7 +27,7 @@
         <% @workouts.each do |work| %>
           <tbody>
             <tr>
-              <td class="center"
+              <td class="center">
                 <%= link_to l(day.worked_on, format: :short), 
                     workouts_traning_day_contents_user_path(@user, day_id: day.id, traning_event: params[:traning_event], body_part: params[:body_part]), 
                     class: "btn btn-lg box10 width_height_100px", remote: true %>

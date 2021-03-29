@@ -23,7 +23,7 @@
                 <%= link_to "ログアウト", logout_path, method: :delete %>
               </li>
               <li><%= link_to "アカウント削除", user_path(current_user), method: :delete,
-                      data: { confirm: "#{current_user.name}のアカウントを削除してよろしいですか？" }, class: "btn-danger" %></li>
+                      data: { confirm: "#{current_user.name}のアカウントを削除してよろしいですか？" }, class: "logout" %></li>
             </ul>
           </li>
         <% end %>

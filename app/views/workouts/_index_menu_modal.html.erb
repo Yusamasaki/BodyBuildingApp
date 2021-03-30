@@ -28,7 +28,7 @@
                 <td class="center"><%= work.traning_rep %></td>
                 <td class="center"><%= work.note %></td>
                 <td class="center">
-                  <%= link_to "編集", edit_user_day_workout_path(user_id: current_user, day_id: params[:day_id], id: work.id), class: "btn btn-success" %>
+                  <%= link_to "編集", edit_user_day_workout_path(user_id: current_user, day_id: params[:day_id], id: work.id, traning_event: work.traning_event, body_part: params[:body_part]), class: "btn btn-success" %>
                   <%= link_to "削除", user_day_workout_path(user_id: current_user, day_id: params[:day_id], id: work.id), method: :delete,
                   data: { confirm: "「#{work.traning_event}, #{work.traning_set}セット目」を削除します。よろしいですか？" }, class: "btn btn-danger" %>
                 </td>

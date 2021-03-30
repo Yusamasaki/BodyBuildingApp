@@ -17,6 +17,10 @@
             <%= f.select :traning_event, options_for_select(@traning_menus.distinct.pluck(:traning_event){|c|[c[:traning_event]]}),
                  {include_blank: '選択してください'}, {class: 'form-control box10'}
             %>
+            
+            <%= f.label :body_part, class: "label-form" %>
+            <%= f.select :body_part, options_for_select(@body_parts.map{|c|[c[:body_part], c[:id]]}),
+                {include_blank: false}, {class: 'form-control box10'} %>
               
             <%= f.label :target_muscle, class: "label-form" %>
             <% target_muscle %>

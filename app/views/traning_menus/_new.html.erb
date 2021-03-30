@@ -16,6 +16,7 @@
             <%= f.label :traning_event, class: "label-form" %>
             <%= f.text_field :traning_event, class: "form-control box10" %><br>
             
+            <%= f.label :body_part, class: "label-form" %>
             <%= f.select :body_part, options_for_select(@body_parts.map{|c|[c[:body_part], c[:id]]}),
                 {include_blank: false}, {class: 'form-control box10'} %>
             

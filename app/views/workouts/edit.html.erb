@@ -10,7 +10,9 @@
       <%= f.text_field :target_muscle, class: "form-control box10" %>
       
       <%= f.label :traning_event, class: "label-form" %>
-      <%= f.text_field :traning_event, class: "form-control box10" %>
+      <%= f.select :traning_event, options_for_select(@traning_menus.map{|c|[c[:traning_event]]}),
+                   {include_blank: false}, {class: 'form-control box10'}
+      %>
       
       <%= f.label :traning_set, class: "label-form" %>
       <%= f.text_field :traning_set, class: "form-control box10" %>

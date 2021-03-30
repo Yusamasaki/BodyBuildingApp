@@ -15,6 +15,7 @@ class WorkoutsController < ApplicationController
     @users = User.all
     @workout = Workout.new(user_id: params[:user_id], day_id: params[:day_id], body_part: params[:body_part])
     @traning_menus = @user.traning_menus.where(body_part: params[:body_part])
+    @body_parts = Bodypart.where(id: params[:body_part])
   end
   
   def create
@@ -30,6 +31,7 @@ class WorkoutsController < ApplicationController
   
   def edit
     @workout = @day.workouts.find(params[:id])
+    @traning_menus = @user.traning_menus.where(traning_event: params[:traning_event])
   end
   
   def update

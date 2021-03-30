@@ -4,7 +4,7 @@
   <%= image_tag 'UNADJUSTEDNONRAW_thumb_9c8.png' %>
   <p> 
     <% if logged_in? %>
-      <%= link_to "アカウント作成", signup_path, class: "btn btn-lg btn-success #{"disabled" unless current_user.admin?}" %>
+      <%= link_to "アカウント作成", signup_path, class: "btn btn-lg btn-success #{"disabled"}" %>
     <% else %>
       <%= link_to "アカウント作成", signup_path, class: "btn btn-lg btn-success", remote: true %><br>
     <% end %>

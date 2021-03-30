@@ -7,7 +7,10 @@
       <%= render partial: 'shared/error_messages', locals: { obj: @workout } %>
       
       <%= f.label :target_muscle, class: "label-form" %>
-      <%= f.text_field :target_muscle, class: "form-control box10" %>
+      <% target_muscle %>
+      <%= f.select :target_muscle, options_for_select(@sample_array.map{|c|[c[:name]]}),
+          {include_blank: false}, {class: 'form-control box10'} %>
+            
       
       <%= f.label :traning_event, class: "label-form" %>
       <%= f.select :traning_event, options_for_select(@traning_menus.map{|c|[c[:traning_event]]}),

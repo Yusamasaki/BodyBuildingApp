@@ -31,7 +31,7 @@ class WorkoutsController < ApplicationController
   
   def edit
     @workout = @day.workouts.find(params[:id])
-    @traning_menus = @user.traning_menus.where(traning_event: params[:traning_event])
+    @traning_menus = @user.traning_menus.where(body_part: params[:body_part])
   end
   
   def update

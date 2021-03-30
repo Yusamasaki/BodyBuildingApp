@@ -22,7 +22,7 @@
     </tr>
   </table>
     <% @days.each do |day| %>
-      <% @workouts = Workout.where(traning_event: params[:traning_event]).where(day_id: day.id).distinct.pluck(:worked_on) %>
+      <% @workouts = Workout.where(traning_event: params[:traning_event]).where(day_id: day.id) %>
       <% @workouts.each do |work| %>
         <table class="table table-hover">
           <thead>

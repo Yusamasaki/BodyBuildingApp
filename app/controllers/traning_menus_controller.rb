@@ -16,7 +16,6 @@ class TraningMenusController < ApplicationController
     @traning_menu = @user.traning_menus.new(traning_menu_params)
     if @traning_menu.save
       flash[:success] = "トレーニング種目を新規追加しました。"
-      debugger
       redirect_to user_traning_menus_url(@user, day_id: params[:day_id], body_part: params[:body_part])
     else
       flash[:danger] = "トレーニング種目の追加に失敗しました。"

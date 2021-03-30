@@ -25,10 +25,10 @@ Rails.application.routes.draw do
       
     end
     resources :days, :only => [:index] do
-      resources :workouts, :only => [:index, :new, :create, :edit, :update] do
+      resources :workouts do
       end
     end
-    resources :traning_menus, :only => [:index, :new, :create, :edit, :update] do
+    resources :traning_menus do
     end
   end
   

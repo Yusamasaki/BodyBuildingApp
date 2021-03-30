@@ -16,9 +16,13 @@
             <%= f.label :traning_event, class: "label-form" %>
             <%= f.text_field :traning_event, class: "form-control box10" %><br>
             
-            <%= f.label :body_part, class: "label-form" %>
-            <%= f.select :body_part, { "胸": 1, "背中": 2, "脚": 3, "肩": 4, "腕": 5, "腹筋": 6 },{ include_blank: '部位を選択して下さい' }, {class: 'form-control box10'} %>
-              
+            <%= f.select :body_part, options_for_select(@body_parts.map{|c|[c[:body_part], c[:id]]}),
+                {include_blank: false}, {class: 'form-control box10'} %>
+            
+            <!-- 廃止　-->
+            <!--<= f.label :body_part, class: "label-form" %>
+            <= f.select :body_part, { "胸": 1, "背中": 2, "脚": 3, "肩": 4, "腕": 5, "腹筋": 6 },{ include_blank: '部位を選択して下さい' }, {class: 'form-control box10'} >
+            -->
             
             <p class="center"><%= f.submit "新規登録", class: "btn btn-lg btn-primary btn-form" %></p>
           <% end %>

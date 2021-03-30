@@ -4,14 +4,12 @@
 User.create!( name: "遊佐 正樹",
               email: "sample@email.com",
               password: "password",
-              password_confirmation: "password",
-              admin: true
+              password_confirmation: "password"
             )
 User.create!( name: "伊達 勇気",
               email: "sample1@email.com",
               password: "password",
-              password_confirmation: "password",
-              admin: false
+              password_confirmation: "password"
             )
             
 Bodypart.create!(

@@ -59,16 +59,6 @@ class WorkoutsController < ApplicationController
     @workout = TraningMenu.find_by(traning_event: params[:traning_event])
     
     
-    #days = @days.pluck(:worked_on)
-    
-    #books = days.map{ |day| Workout.where(worked_on: day)
-    
-    #@graph = LazyHighCharts::HighChart.new('graph') do |f|
-    #  f.title(text: '本 月間登録推移')
-    #  f.xAxis(categories: days)
-    #  f.series(name: '登録数', data: books)
-    #  f.series(name: '登録数', data: books)
-    #end
   end
   
   def index_menu_modal

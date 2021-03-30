@@ -20,7 +20,6 @@ gem 'rename'
 gem 'omniauth', '1.9.1'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
-gem 'ransack'
 
 group :development, :test do
   gem 'dotenv-rails'

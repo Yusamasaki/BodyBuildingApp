@@ -41,7 +41,7 @@
         <%= link_to "#{@day.worked_on}の新規作成画面に戻る", new_user_day_workout_path(@user, body_part: params[:body_part], day_id: params[:day_id]),remote: true, class: "btn btn-lg btn-default" %>
       <% else %>
         <%= link_to "戻る", workouts_bodypart_select_user_path(@user, body_part: params[:body_part], day_id: params[:day_id]), class: "btn btn-lg btn-default btn-form" %>
-        <%= link_to "TOPへ", user_days_path(current_user), class: "btn btn-lg" %>
+        <%= link_to "Myカレンダーへ", user_days_path(current_user), class: "btn btn-lg" %>
       <% end %>
     </h2>
   </div>    

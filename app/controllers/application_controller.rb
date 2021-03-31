@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :detect_device
   protect_from_forgery with: :exception
   include UsersHelper
   include SessionsHelper
@@ -58,4 +59,18 @@ class ApplicationController < ActionController::Base
   def day_id_set
     @day = @user.days.find(params[:day_id])
   end
+  
+  private
+    def detect_device
+      case request.user_agent
+        when /iPad/
+            request.variant = :mobile
+        when /iPod/
+            request.variant = :mobile
+        when /iPhone/
+            request.variant = :mobile
+        when /Android/
+            request.variant = :mobile
+      end
+    end
 end

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   post   '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   
-  resources :users, :only => [:edit, :update, :destroy ] do
+  resources :users do
     collection { post :import }
     member do
       get 'edit_basic_info'

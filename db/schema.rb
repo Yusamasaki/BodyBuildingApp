@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20210324210631) do
   create_table "days", force: :cascade do |t|
     t.date "worked_on"
     t.string "body_part"
+    t.datetime "start_time"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -62,6 +63,7 @@ ActiveRecord::Schema.define(version: 20210324210631) do
     t.string "traning_kg"
     t.string "traning_rep"
     t.string "note"
+    t.datetime "start_time"
     t.integer "user_id"
     t.integer "day_id"
     t.datetime "created_at", null: false

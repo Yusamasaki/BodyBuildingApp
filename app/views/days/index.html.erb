@@ -18,6 +18,24 @@
     </tr>
   </table>
   
+  <% @workouts = Workout.all %>
+  <div>
+    <%= month_calendar events: @workouts.each do |date, workouts| %>
+      <div><%= date.day %></div>
+      <div>
+        <% @day = @user.days.find_by(worked_on: date) %>
+        <% @workouts = @day.workouts.all.distinct.pluck(:target_muscle) %>
+        <% @workouts.each do |workout| %>
+          <p class="btn btn-primary"><%= workout %></p>
+          
+        <% end %>
+      </div>
+      
+      <div class="center">
+        <%= link_to "一覧表示/追加", user_day_workouts_path(@user, day_id: "", worked_on: date), class: "" %>
+      </div>
+    <% end %>
+  </div>
   
   <table class="table table-bordered table-condensed table-hover box10" id="table-attendances">
     <% @days.each do |day| %>

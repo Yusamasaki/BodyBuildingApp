@@ -9,6 +9,8 @@ class CreateWorkouts < ActiveRecord::Migration[5.1]
       t.string :traning_rep
       t.string :note
       
+      t.datetime :start_time
+      
       t.references :user, foreign_key: true
       t.references :day, foreign_key: true
       

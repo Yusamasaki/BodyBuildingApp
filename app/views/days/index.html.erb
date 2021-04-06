@@ -1,4 +1,4 @@
-<% provide(:title, 'Myカレンダー') %>
+<% provide(:title, 'マイページ') %>
 <div>
   <table class="table table-bordered user-table box10">
     <tr>
@@ -12,64 +12,48 @@
     </tr>
     <tr>
       <td>
-        <%= link_to "トレーニング種目追加", workouts_bodypart_select_user_path(@user, day_id: ""), class: "btn btn-default btn-primary" %>
+        <%= link_to "トレーニング種目一覧/追加", workouts_bodypart_select_user_path(@user, day_id: ""), class: "btn btn-default btn-primary" %>
       </td>
       
     </tr>
   </table>
   
-  <% @workouts = Workout.all %>
-  <div>
-    <%= month_calendar events: @workouts.each do |date, workouts| %>
-      <div><%= date.day %></div>
-      <div>
-        <% @day = @user.days.find_by(worked_on: date) %>
-        <% @workouts = @day.workouts.all.distinct.pluck(:target_muscle) %>
-        <% @workouts.each do |workout| %>
-          <p class="btn btn-primary"><%= workout %></p>
-          
-        <% end %>
-      </div>
-      
-      <div class="center">
-        <%= link_to "一覧表示/追加", user_day_workouts_path(@user, day_id: "", worked_on: date), class: "" %>
-      </div>
-    <% end %>
-  </div>
-  
   <table class="table table-bordered table-condensed table-hover box10" id="table-attendances">
-    <% @days.each do |day| %>
-    <tbody class="inline-block">
-        <% if Date.current == day.worked_on %>
-          <tr class="password_field">
-        <% else %>
-          <tr>
-        <% end %>
-            <td class="size">
-              <a><%= l(day.worked_on, format: :short) %></a>
-              <a>
-                <% if day.worked_on.wday == 6 %>
-                  <font color="blue">(<%= $days_of_the_week[day.worked_on.wday] %>)</font>
-                <% elsif day.worked_on.wday == 0 %>
-                  <font color="red">(<%= $days_of_the_week[day.worked_on.wday] %>)</font>
-                <% else %>
-                  (<%= $days_of_the_week[day.worked_on.wday] %>)
-                <% end %>
-              </a><br><br>
-              <b>
-                <% @day = @user.days.find_by(id: day.id) %>
-                <% @workouts = @day.workouts.all.distinct.pluck(:target_muscle) %>
-                <% @workouts.each do |workout| %>
-                  <p class="btn btn-primary"><%= workout %></p>
-                <% end %>
-              </b><br><br>
-              <c>
-                <%= link_to "一覧表示", user_day_workouts_path(@user, day_id: day.id), class: "btn btn-primary" %>
-              </c>
-            </td>
-          </tr>
-        
+    
+    <tbody>
+      <tr>
+        <th>日付</th>
+        <th>トレーニング部位</th>
+        <th>一覧表示/追加</th>
+      </tr>
+      <% @days.each do |day| %>
+      <% if Date.current == day.worked_on %>
+        <tr class="password_field">
+      <% else %>
+        <tr>
+      <% end %>
+          <td>
+            <%= l(day.worked_on, format: :short) %>
+            <% if day.worked_on.wday == 6 %>
+              <font color="blue">(<%= $days_of_the_week[day.worked_on.wday] %>)</font>
+            <% elsif day.worked_on.wday == 0 %>
+              <font color="red">(<%= $days_of_the_week[day.worked_on.wday] %>)</font>
+            <% else %>
+              (<%= $days_of_the_week[day.worked_on.wday] %>)
+            <% end %>
+          </td>
+          <td>
+            <% @day = @user.days.find_by(id: day.id) %>
+            <% @workouts = @day.workouts.all.distinct.pluck(:target_muscle) %>
+            <% @workouts.each do |workout| %>
+              <p class="btn btn-primary"><%= workout %></p>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to "一覧表示/追加", user_day_workouts_path(@user, day_id: day.id), class: "btn btn-primary" %>
+          </td>
+        </tr>
+      <% end %>
     </tbody>
-    <% end %>
   </table>
 </div>

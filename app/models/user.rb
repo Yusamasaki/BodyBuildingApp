@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_many :days, dependent: :destroy
   has_many :workouts, dependent: :destroy
   has_many :traning_menus, dependent: :destroy
+  has_many :body_weights, dependent: :destroy
   
   # 「remember_token」という仮想の属性を作成します。
   attr_accessor :remember_token

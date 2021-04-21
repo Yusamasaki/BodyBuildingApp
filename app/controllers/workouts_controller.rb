@@ -1,5 +1,5 @@
 class WorkoutsController < ApplicationController
-      before_action :set_user, only: [:bodypart_menu, :traning_lists, :index_menu_modal, :traning_day_contents]
+  before_action :set_user, only: [:bodypart_menu, :traning_lists, :index_menu_modal, :traning_day_contents]
   before_action :logged_in_user, only: [:index, :new, :create, :edit, :update, :destroy, :bodypart_select,
                                         :traning_lists, :index_menu_modal, :traning_day_contents]
   before_action :user_id_set, only: [:new, :show, :index, :create, :edit, :destroy, :update]

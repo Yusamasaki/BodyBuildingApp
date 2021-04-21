@@ -3,3 +3,11 @@
   "private": true,
   "dependencies": {}
 }
+
+{
+  "name": "chart_js_sample",
+  "private": true,
+  "dependencies": {
+    "chart.js": "^2.7.1" ←★追記
+  }
+} 

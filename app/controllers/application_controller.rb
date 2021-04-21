@@ -49,7 +49,26 @@ class ApplicationController < ActionController::Base
       ActiveRecord::Base.transaction do
         one_month.each { |day| @user.days.create!(worked_on: day) }
       end
-      @works = @user.days.where(worked_on: @first_day..@last_day).order(:worked_on)
+      @days = @user.days.where(worked_on: @first_day..@last_day).order(:worked_on)
+    end
+  rescue ActiveRecord::RecordInvalid
+    flash[:danger] = "ページ情報の取得に失敗しました、再アクセスしてください。"
+    redirect_to root_url
+  end
+  
+  def body_weight_day
+    @first_day = params[:date].nil? ?
+    Date.current.beginning_of_month : params[:date].to_date
+    @last_day = @first_day.end_of_month
+    one_month = [*@first_day..@last_day]
+    
+    @days = @user.body_weights.where( worked_on: @first_day..@last_day).order(:worked_on)
+    
+    unless one_month.count == @days.count
+      ActiveRecord::Base.transaction do
+        one_month.each { |day| @user.body_weights.create!(worked_on: day) }
+      end
+      @days = @user.body_weights.where(worked_on: @first_day..@last_day).order(:worked_on)
     end
   rescue ActiveRecord::RecordInvalid
     flash[:danger] = "ページ情報の取得に失敗しました、再アクセスしてください。"

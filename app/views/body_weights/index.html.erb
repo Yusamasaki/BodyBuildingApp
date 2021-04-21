@@ -1,0 +1,85 @@
+<% provide(:title, 'マイページ') %>
+<div>
+  <table class="table table-bordered user-table box10">
+    <tr>
+      <td>
+        <h1>
+          <%= l(@first_day, format: :middle) %>
+        </h1>
+      </td>
+    </tr>
+  </table>
+  
+  <div><%= column_chart @user.body_weights.where(worked_on: @first_day...@last_day).pluck(:worked_on, :weight) %><</div>
+  
+  <!--<div>
+    <canvas id="myChart" width="400" height="200"></canvas>
+    <script>
+    var graphdays = <== @dayline %>
+    var bodyweights = <== @line %>
+    ctx = document.getElementById("myChart").getContext('2d')
+    myChart = new Chart(ctx, {
+        type: 'bar',
+          data: {
+              labels: graphdays,
+              datasets: [{
+                  label: '# of Votes',
+                  data: bodyweights,
+                  backgroundColor: "rgba(255,0,0,1)",
+                  borderColor: "rgba(0,0,0,0)"
+              }]
+          },
+        
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    })
+    </script>
+  </div> -->
+  
+  <table class="table table-bordered table-condensed table-hover box10" id="table-attendances">
+    
+    <tbody>
+      <tr>
+        <th>日付</th>
+        <th>体重</th>
+        <th>前日比</th>
+        <th></th>
+      </tr>
+      <% @days.each do |day| %>
+      <% if Date.current == day.worked_on %>
+        <tr class="password_field">
+      <% else %>
+        <tr>
+      <% end %>
+          <td>
+            <%= l(day.worked_on, format: :short) %>
+            <% if day.worked_on.wday == 6 %>
+              <font color="blue">(<%= $days_of_the_week[day.worked_on.wday] %>)</font>
+            <% elsif day.worked_on.wday == 0 %>
+              <font color="red">(<%= $days_of_the_week[day.worked_on.wday] %>)</font>
+            <% else %>
+              (<%= $days_of_the_week[day.worked_on.wday] %>)
+            <% end %>
+          </td>
+          <td>
+            <%= day.weight %>
+          </td>
+          <td>
+            
+          </td>
+          <td>
+            <%= link_to "体重入力", edit_user_body_weight_path(@user, day.id, worked_on: day.worked_on), class: "btn btn-sm btn-primary", remote: true %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div id="edit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

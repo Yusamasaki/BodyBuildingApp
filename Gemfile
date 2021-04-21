@@ -21,6 +21,8 @@ gem 'omniauth', '1.9.1'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem 'simple_calendar', '~> 2.0'
+gem "chartkick"
+gem 'chart-js-rails', '~> 0.1.4'
 
 group :development, :test do
   gem 'dotenv-rails'
@@ -45,6 +47,14 @@ end
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
+end
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.6'
+end
+
+group :development, :test do
+  gem 'spring-commands-rspec'
 end
 
 

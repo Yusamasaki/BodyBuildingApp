@@ -13,6 +13,7 @@
     <tr>
       <td>
         <%= link_to "トレーニング種目一覧/追加", workouts_bodypart_select_user_path(@user, day_id: ""), class: "btn btn-default btn-primary" %>
+        <%= link_to "体重一覧", user_body_weights_path(@user, date: params[:date]), class: "btn btn-default btn-primary" %>
       </td>
       
     </tr>

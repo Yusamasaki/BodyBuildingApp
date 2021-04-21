@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   
 
+  get 'body_weights/index'
+
+  get 'body_weights/create'
+
   get '/auth/:provider/callback',    to: 'sessions#sns_create',      as: :auth_callback
   get 'auth/failure',                to: redirect('/'),                 as: :auth_failure
   
@@ -23,12 +27,15 @@ Rails.application.routes.draw do
       get 'workouts/traning_day_contents'
       get 'workouts/index_menu_modal'
       
+      
     end
     resources :days, :only => [:index] do
       resources :workouts do
       end
     end
     resources :traning_menus do
+    end
+    resources :body_weights do
     end
   end
   
